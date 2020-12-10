@@ -1,0 +1,26 @@
+{
+  "name": "intellectual-property-dapp",
+  "version": "1.0.0",
+  "description": "Intellectual property dAPP developed for my third year project at Manchester Metropolitan University.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/deepaksng00/intellectual-property-dapp.git"
+  },
+  "author": "Deepak Singh",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/deepaksng00/intellectual-property-dapp/issues"
+  },
+  "homepage": "https://github.com/deepaksng00/intellectual-property-dapp#readme",
+  "dependencies": {
+    "fs-extra": "^9.0.1",
+    "ganache-cli": "^6.12.1",
+    "mocha": "^8.2.1",
+    "solc": "^0.7.5",
+    "web3": "^1.3.0"
+  }
+}
