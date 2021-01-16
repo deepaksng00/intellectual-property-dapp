@@ -5,4 +5,4 @@ This is a React and Next.JS based decentralised application for my third-year BS
 
 # UML Class Diagram
 
-![](https://github.com/deepaksng00/intellectual-property-dapp/tree/main/design_documentation/uml_class_diagram.png)
+![alt text](https://github.com/deepaksng00/intellectual-property-dapp/blob/main/design_documentation/uml_class_diagram.png)
