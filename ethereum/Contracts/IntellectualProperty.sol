@@ -13,28 +13,28 @@ contract RegisteredIPFactory {
     address[] private deployedDesigns;
     
     /* --- Deploys new intellectual property on the blockchain --- */
-    function createIP(string typeOfIP) public {
-        if (typeOfIP == "TRADEMARK") {
-            string code = "TM";
+    function createIP(string memory typeOfIP) public {
+        if (keccak256(bytes(typeOfIP)) == keccak256(bytes("TRADEMARK"))) {
+            string memory code = "TM";
             uint256 number = deployedTrademarks.length + 1;
-            string id = string(abi.encodePacked(code, number));
-            Trademark newTrademark = new Trademark(id, now, msg.sender);
+            string memory id = string(abi.encodePacked(code, number));
+            Trademark newTrademark = new Trademark(id, block.timestamp, msg.sender);
             deployedTrademarks.push(newTrademark.getAddress());
-        } else if (typeOfIP == "PATENT") {
-            string code = "PT";
+        } else if (keccak256(bytes(typeOfIP)) == keccak256(bytes("PATENT"))) {
+            string memory code = "PT";
             uint256 number = deployedPatents.length + 1;
-            string id = string(abi.encodePacked(code, number));
-            Patent newPatent = new Patent(id, now, msg.sender);
-        } else if (typeOfIP == "DESIGN") {
-            string code = "DS";
+            string memory id = string(abi.encodePacked(code, number));
+            Patent newPatent = new Patent(id, block.timestamp, msg.sender);
+        } else if (keccak256(bytes(typeOfIP)) == keccak256(bytes("DESIGN"))) {
+            string memory code = "DS";
             uint256 number = deployedDesigns.length + 1;
-            string id = string(abi.encodePacked(code, number));
-            Design newDesign = new Design(id, now, msg.sender);
+            string memory id = string(abi.encodePacked(code, number));
+            Design newDesign = new Design(id, block.timestamp, msg.sender);
         }
     }
     
     /* --- Returns all registered intellectual property by type --- */
-    function getRegisteredIP(string typeOfIP) public view returns (address[] memory) {
+    function getRegisteredIP(string memory typeOfIP) public view returns (address[] memory) {
         if (typeOfIP == "TRADEMARK") {
             return deployedTrademarks;
         } else if (typeOfIP == "PATENT") {
@@ -51,7 +51,7 @@ contract IntellectualProperty {
     string private status;
     uint256 private filingDate;
     uint256 private publicationDate;
-    mapping(address => bool) private owners;
+    address[] private owners;
     
     /* --- Modifier to restrict access only to the owners --- */
     modifier restricted() {
@@ -60,17 +60,10 @@ contract IntellectualProperty {
     }
     
     /* --- Constructor with multiple attributes --- */
-    constructor(string ip_id, uint256 filingDate, address owner) {
-        this.ip_id = ip_id;
-        this.filingDate = filingDate;
+    constructor(string memory id, uint256 date, address owner) {
+        ip_id = id;
+        filingDate = date;
         owners.push(owner);
-    }
-    
-    /* --- Constructor with less attributes --- */
-    constructor(string ip_id) {
-        this.ip_id = ip_id;
-        this.filingDate = now;
-        owners.push(msg.sender);
     }
     
     /* --- SETTERS AND GETTERS --- */
@@ -79,11 +72,11 @@ contract IntellectualProperty {
         return address(this);
     }
     
-    function getID() public view returns(string) {
+    function getID() public view returns(string memory) {
         return ip_id;
     }    
     
-    function getStatus() public view returns(string) {
+    function getStatus() public view returns(string memory) {
         return status;
     }
     
@@ -96,11 +89,11 @@ contract IntellectualProperty {
     }
     
     function getOwners() public view returns(address[] memory) {
-        // create array to contain mapping addresses
+        return owners;
     }
     
-    function setStatus(string status) public restricted {
-        this.status = status;
+    function setStatus(string memory inputStatus) public restricted {
+        status = inputStatus;
     }
     
     function setFilingDate(uint256 date) public restricted {
@@ -114,4 +107,16 @@ contract IntellectualProperty {
     function addOwner(address owner) public restricted {
         this.owners.push(owner);
     }
+}
+
+contract Trademark is IntellectualProperty {
+
+}
+
+contract Patent is IntellectualProperty {
+    
+}
+
+contract Design is IntellectualProperty {
+    
 }
