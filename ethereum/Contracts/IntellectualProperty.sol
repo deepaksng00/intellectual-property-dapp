@@ -35,14 +35,29 @@ contract RegisteredIPFactory {
         return deployedTrademarks;
     }
 
-    /* --- Returns all trademarks --- */
+    /* --- Returns all patents --- */
     function getPatents() public view returns (address[] memory) {
         return deployedPatents;
     }
 
-    /* --- Returns all trademarks --- */
+    /* --- Returns all designs --- */
     function getDesigns() public view returns (address[] memory) {
         return deployedDesigns;
+    }
+
+    /* --- Return length of trademarks --- */
+    function getNumOfTrademarks() public view returns (uint) {
+        return deployedTrademarks.length;
+    }
+
+    /* --- Return length of patents --- */
+    function getNumOfPatents() public view returns (uint) {
+        return deployedPatents.length;
+    }
+
+    /* --- Return length of designs --- */
+    function getNumOfDesigns() public view returns (uint) {
+        return deployedDesigns.length;
     }
 }
 
