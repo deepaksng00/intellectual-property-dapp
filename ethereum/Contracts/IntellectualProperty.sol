@@ -1,4 +1,4 @@
-pragma solidity ^0.8.0;
+pragma solidity ^0.7.6;
 // SPDX-License-Identifier: MIT
 
 /* --- Factory contract (manager for deploying new instances of 'IP') --- */
@@ -12,11 +12,9 @@ contract RegisteredIPFactory {
     /* --- Stores all deployed designs --- */
     address[] private deployedDesigns;
 
-
     /* --- Deploys new trademark on the blockchain --- */
     function createTrademark() public {
-        Trademark newTrademark = new Trademark(block.timestamp, msg.sender);
-        deployedTrademarks.push(address(newTrademark));
+        deployedTrademarks.push(address(new Trademark(block.timestamp, msg.sender)));
     }
 
     /* --- Deploys new patent on the blockchain --- */
@@ -26,8 +24,7 @@ contract RegisteredIPFactory {
 
     /* --- Deploys new design on the blockchain --- */
     function createDesign() public {
-        Design newDesign = new Design(block.timestamp, msg.sender);
-        deployedDesigns.push(address(newDesign));
+        deployedDesigns.push(address(new Design(block.timestamp, msg.sender)));
     }
     
     /* --- Returns all trademarks --- */
@@ -62,7 +59,7 @@ contract RegisteredIPFactory {
 }
 
 /* --- Intellectual Property parent contract --- */
-contract IntellectualProperty {
+abstract contract IntellectualProperty {
     string private status;
     uint256 private filingDate;
     uint256 private publicationDate;
@@ -75,7 +72,7 @@ contract IntellectualProperty {
     }
     
     /* --- Constructor with multiple attributes --- */
-    constructor(uint256 date_input, address owner_input) public {
+    constructor(uint256 date_input, address owner_input) {
         filingDate = date_input;
         owner = owner_input;
     }
