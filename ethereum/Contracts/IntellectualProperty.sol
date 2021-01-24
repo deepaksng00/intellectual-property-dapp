@@ -64,10 +64,11 @@ abstract contract IntellectualProperty {
     uint256 private filingDate;
     uint256 private publicationDate;
     address private owner;
+    mapping (address => bool) private co_owners;
     
     /* --- Modifier to restrict access only to the owners --- */
     modifier restricted() {
-        require(msg.sender == owner, "Access denied. Only the owners can access this function.");
+        require(msg.sender == owner || co_owners[msg.sender], "Access denied. Only the owner or co_owners can access this function.");
         _;
     }
     
@@ -94,6 +95,10 @@ abstract contract IntellectualProperty {
     function getOwner() public view returns(address) {
         return owner;
     }
+
+    function check_co_owners(address co_owner) public view returns(bool) {
+        return co_owners[co_owner];
+    }
     
     function setStatus(string memory inputStatus) public restricted {
         status = inputStatus;
@@ -109,6 +114,14 @@ abstract contract IntellectualProperty {
     
     function setOwner(address owner_input) public restricted {
         owner = owner_input;
+    }
+
+    function add_co_owner(address co_owner) public restricted {
+        co_owners[co_owner] = true;
+    }
+
+    function remove_co_owner(address co_owner) public restricted {
+        delete co_owners[co_owner];
     }
 }
 

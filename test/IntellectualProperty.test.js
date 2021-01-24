@@ -82,16 +82,217 @@ describe("Marks the correct owner address", () => {
 describe("Returns the correct number of IP", () => {
 	it("Returns the correct number of trademarks", async () => {
 		const numOfTrademarks = await factory.methods.getNumOfTrademarks().call();
-		assert.ok(1, numOfTrademarks);
+		assert.equal(1, numOfTrademarks);
 	});
 
 	it("Returns the correct number of patents", async () => {
 		const numOfPatents = await factory.methods.getNumOfPatents().call();
-		assert.ok(1, numOfPatents);
+		assert.equal(1, numOfPatents);
 	});
 
 	it("Returns the correct number of designs", async() => {
 		const numOfDesigns = await factory.methods.getNumOfDesigns().call();
-		assert.ok(1, numOfDesigns);
+		assert.equal(1, numOfDesigns);
 	});
 });
+
+/* --- Intellectual Property Functions --- */
+
+/* --- Trademark --- */
+
+describe("Functions for the trademark contract", () => {
+	it("Status sets correctly", async () => {
+		await trademark.methods.setStatus("Active").send({ from: accounts[0], gasLimit: "5000000" });
+		const status = await trademark.methods.getStatus().call();
+		assert.ok(status, "Active");
+	});
+
+	it("Filing date sets correctly", async () => {
+		const filingDate = await trademark.methods.getFilingDate().call();
+		const ip_date = new Date(filingDate * 1000);
+
+		const current_date = new Date();
+
+		const ip_date_complete = ip_date.getFullYear().toString() + "-" + (ip_date.getMonth()+1).toString() + "-" + ip_date.getDate().toString();
+		const current_date_complete = current_date.getFullYear().toString() + "-" + (current_date.getMonth()+1).toString() + "-" + current_date.getDate().toString();
+
+		assert.ok(ip_date_complete, current_date_complete);
+	});
+
+	it("Publication date sets correctly", async () => {
+		const publication_timestamp = new Date("2021-03-01T00:00:00").getTime();
+		await trademark.methods.setPublicationDate(publication_timestamp / 1000).send({ from: accounts[0], gasLimit: "5000000" });
+		
+		const timestamp_from_contract = await trademark.methods.getPublicationDate().call();
+
+		const contract_date = new Date(timestamp_from_contract * 1000);
+		const timestamp_contract = contract_date.getTime();
+
+		assert.equal(publication_timestamp, timestamp_contract);
+	});
+
+	it("Co-owners set correctly", async () => {
+		await trademark.methods.add_co_owner(accounts[1]).send({ from: accounts[0], gasLimit: "5000000" });
+		await trademark.methods.add_co_owner(accounts[2]).send({ from: accounts[1], gasLimit: "5000000" });
+
+		const checkAccount1 = await trademark.methods.check_co_owners(accounts[1]).call();
+		const checkAccount2 = await trademark.methods.check_co_owners(accounts[2]).call();
+		const checkAccount3 = await trademark.methods.check_co_owners(accounts[3]).call();
+
+		assert.equal(checkAccount1, true);
+		assert.equal(checkAccount2, true);
+		assert.equal(checkAccount3, false);
+	});
+
+	it("Co-owners remove correctly", async() => {
+		await trademark.methods.add_co_owner(accounts[1]).send({ from: accounts[0], gasLimit: "5000000" });
+		await trademark.methods.add_co_owner(accounts[2]).send({ from: accounts[1], gasLimit: "5000000" });
+
+		var checkAccount1 = await trademark.methods.check_co_owners(accounts[1]).call();
+		var checkAccount2 = await trademark.methods.check_co_owners(accounts[2]).call();
+
+		assert.equal(checkAccount1, true);
+		assert.equal(checkAccount2, true);
+
+		await trademark.methods.remove_co_owner(accounts[2]).send({ from: accounts[1], gasLimit: "5000000" });
+
+		checkAccount1 = await trademark.methods.check_co_owners(accounts[1]).call();
+		checkAccount2 = await trademark.methods.check_co_owners(accounts[2]).call();
+
+		assert.equal(checkAccount1, true);
+		assert.equal(checkAccount2, false);
+	});
+});
+
+/* --- Parent --- */
+
+describe("Functions for the patent contract", () => {
+	it("Status sets correctly", async () => {
+		await patent.methods.setStatus("Active").send({ from: accounts[0], gasLimit: "5000000" });
+		const status = await patent.methods.getStatus().call();
+		assert.ok(status, "Active");
+	});
+
+	it("Filing date sets correctly", async () => {
+		const filingDate = await patent.methods.getFilingDate().call();
+		const ip_date = new Date(filingDate * 1000);
+
+		const current_date = new Date();
+
+		const ip_date_complete = ip_date.getFullYear().toString() + "-" + (ip_date.getMonth()+1).toString() + "-" + ip_date.getDate().toString();
+		const current_date_complete = current_date.getFullYear().toString() + "-" + (current_date.getMonth()+1).toString() + "-" + current_date.getDate().toString();
+
+		assert.ok(ip_date_complete, current_date_complete);
+	});
+
+	it("Publication date sets correctly", async () => {
+		const publication_timestamp = new Date("2021-03-01T00:00:00").getTime();
+		await patent.methods.setPublicationDate(publication_timestamp / 1000).send({ from: accounts[0], gasLimit: "5000000" });
+		
+		const timestamp_from_contract = await patent.methods.getPublicationDate().call();
+
+		const contract_date = new Date(timestamp_from_contract * 1000);
+		const timestamp_contract = contract_date.getTime();
+
+		assert.equal(publication_timestamp, timestamp_contract);
+	});
+
+	it("Co-owners set correctly", async () => {
+		await patent.methods.add_co_owner(accounts[1]).send({ from: accounts[0], gasLimit: "5000000" });
+		await patent.methods.add_co_owner(accounts[2]).send({ from: accounts[1], gasLimit: "5000000" });
+
+		const checkAccount1 = await patent.methods.check_co_owners(accounts[1]).call();
+		const checkAccount2 = await patent.methods.check_co_owners(accounts[2]).call();
+		const checkAccount3 = await patent.methods.check_co_owners(accounts[3]).call();
+
+		assert.equal(checkAccount1, true);
+		assert.equal(checkAccount2, true);
+		assert.equal(checkAccount3, false);
+	});
+
+	it("Co-owners remove correctly", async() => {
+		await patent.methods.add_co_owner(accounts[1]).send({ from: accounts[0], gasLimit: "5000000" });
+		await patent.methods.add_co_owner(accounts[2]).send({ from: accounts[1], gasLimit: "5000000" });
+
+		var checkAccount1 = await patent.methods.check_co_owners(accounts[1]).call();
+		var checkAccount2 = await patent.methods.check_co_owners(accounts[2]).call();
+
+		assert.equal(checkAccount1, true);
+		assert.equal(checkAccount2, true);
+
+		await patent.methods.remove_co_owner(accounts[2]).send({ from: accounts[1], gasLimit: "5000000" });
+
+		checkAccount1 = await patent.methods.check_co_owners(accounts[1]).call();
+		checkAccount2 = await patent.methods.check_co_owners(accounts[2]).call();
+
+		assert.equal(checkAccount1, true);
+		assert.equal(checkAccount2, false);
+	});
+});
+
+/* --- Design --- */
+
+describe("Functions for the design contract", () => {
+	it("Status sets correctly", async () => {
+		await design.methods.setStatus("Active").send({ from: accounts[0], gasLimit: "5000000" });
+		const status = await design.methods.getStatus().call();
+		assert.ok(status, "Active");
+	});
+
+	it("Filing date sets correctly", async () => {
+		const filingDate = await design.methods.getFilingDate().call();
+		const ip_date = new Date(filingDate * 1000);
+
+		const current_date = new Date();
+
+		const ip_date_complete = ip_date.getFullYear().toString() + "-" + (ip_date.getMonth()+1).toString() + "-" + ip_date.getDate().toString();
+		const current_date_complete = current_date.getFullYear().toString() + "-" + (current_date.getMonth()+1).toString() + "-" + current_date.getDate().toString();
+
+		assert.ok(ip_date_complete, current_date_complete);
+	});
+
+	it("Publication date sets correctly", async () => {
+		const publication_timestamp = new Date("2021-03-01T00:00:00").getTime();
+		await design.methods.setPublicationDate(publication_timestamp / 1000).send({ from: accounts[0], gasLimit: "5000000" });
+		
+		const timestamp_from_contract = await design.methods.getPublicationDate().call();
+
+		const contract_date = new Date(timestamp_from_contract * 1000);
+		const timestamp_contract = contract_date.getTime();
+
+		assert.equal(publication_timestamp, timestamp_contract);
+	});
+
+	it("Co-owners set correctly", async () => {
+		await design.methods.add_co_owner(accounts[1]).send({ from: accounts[0], gasLimit: "5000000" });
+		await design.methods.add_co_owner(accounts[2]).send({ from: accounts[1], gasLimit: "5000000" });
+
+		const checkAccount1 = await design.methods.check_co_owners(accounts[1]).call();
+		const checkAccount2 = await design.methods.check_co_owners(accounts[2]).call();
+		const checkAccount3 = await design.methods.check_co_owners(accounts[3]).call();
+
+		assert.equal(checkAccount1, true);
+		assert.equal(checkAccount2, true);
+		assert.equal(checkAccount3, false);
+	});
+
+	it("Co-owners remove correctly", async() => {
+		await design.methods.add_co_owner(accounts[1]).send({ from: accounts[0], gasLimit: "5000000" });
+		await design.methods.add_co_owner(accounts[2]).send({ from: accounts[1], gasLimit: "5000000" });
+
+		var checkAccount1 = await design.methods.check_co_owners(accounts[1]).call();
+		var checkAccount2 = await design.methods.check_co_owners(accounts[2]).call();
+
+		assert.equal(checkAccount1, true);
+		assert.equal(checkAccount2, true);
+
+		await design.methods.remove_co_owner(accounts[2]).send({ from: accounts[1], gasLimit: "5000000" });
+
+		checkAccount1 = await design.methods.check_co_owners(accounts[1]).call();
+		checkAccount2 = await design.methods.check_co_owners(accounts[2]).call();
+
+		assert.equal(checkAccount1, true);
+		assert.equal(checkAccount2, false);
+	});
+});
+
