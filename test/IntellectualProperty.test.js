@@ -96,6 +96,18 @@ describe("Returns the correct number of IP", () => {
 	});
 });
 
+/* --- Check modifier is working correctly --- */
+describe("Modifier is restricting access correctly for trademarks", () => {
+	it("Only owners can set the status", async () => {
+		try {
+			const result = await trademark.methods.setStatus("Active").send({ from: accounts[00], gasLimit: "5000000"});
+		} catch (error) {
+			assert.fail();
+		}
+		assert.ok(true);
+	});
+});
+
 /* --- Intellectual Property Functions --- */
 
 /* --- Trademark --- */
@@ -295,4 +307,3 @@ describe("Functions for the design contract", () => {
 		assert.equal(checkAccount2, false);
 	});
 });
-
