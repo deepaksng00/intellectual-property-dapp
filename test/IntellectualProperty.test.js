@@ -97,15 +97,32 @@ describe("Returns the correct number of IP", () => {
 });
 
 /* --- Check modifier is working correctly --- */
-describe("Modifier is restricting access correctly for trademarks", () => {
-	it("Only owners can set the status", async () => {
+describe("Modifier is restricting access correctly", () => {
+	it("The owner and the co-owners can call restricted functions", async () => {
 		try {
-			const result = await trademark.methods.setStatus("Active").send({ from: accounts[00], gasLimit: "5000000"});
+			await trademark.methods.setStatus("Active").send({ from: accounts[0], gasLimit: "5000000" });
+			await trademark.methods.add_co_owner(accounts[1]).send({ from: accounts[0], gasLimit: "5000000" });
+			await trademark.methods.setStatus("Expired").send({ from: accounts[1], gasLimit: "5000000" });
 		} catch (error) {
 			assert.fail();
 		}
 		assert.ok(true);
 	});
+
+	it("Non-owners and non-co-owners cannot call restricted functions", async () => {
+		var failed = true;
+		try {
+			await trademark.methods.setStatus("Active").send({ from: accounts[2], gasLimit: "5000000"});
+			failed = true;
+		} catch (error) {
+			failed = false;
+		}
+		if (failed) {
+			assert.fail();
+		} else {
+			assert.ok(true);
+		}
+	});	
 });
 
 /* --- Intellectual Property Functions --- */
