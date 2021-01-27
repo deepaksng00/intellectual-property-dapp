@@ -1,13 +1,14 @@
 import Web3 from "web3";
 
-/* --- Instanciating Web3 --- */
 let web3;
 
-if (typeof window != "undefined" && window.web3 != "undefined") {
-	// JS is running in the browser with Metamask
-	web3 = new web3(window.web3.currentProvider);
+/* --- Check if metamask is being used / JS is client-side --- */
+if (typeof window !== 'undefined' && typeof window.web3 !== 'undefined') {
+	// running client-side with metamask
+	web3 = new Web3(window.ethereum);
+	window.ethereum.enable();
 } else {
-	// JS is running in the server without metamask
+	// running server-side or without metamask
 	const provider = new Web3.providers.HttpProvider("https://rinkeby.infura.io/v3/b73cfce8d0f14c9580a6f63f5175157d");
 	web3 = new Web3(provider);
 }
