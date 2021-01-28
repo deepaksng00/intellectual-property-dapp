@@ -1,0 +1,17 @@
+body, html {
+	margin-left: 2%;
+	margin-right: 2%;
+	margin-top: 2%;
+}
+
+section {
+	height: 100%;
+}
+
+.index-left-container {
+	float: left;
+}
+
+.index-right-container {
+	float: right;
+}
