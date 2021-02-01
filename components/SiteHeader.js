@@ -42,7 +42,6 @@ class SiteHeader extends Component {
     return (
       <div class = "two column row">
         <div class = "eleven wide column">
-          <Header as='h1'>Intellectual Property</Header>
         </div>
         <div class = "five wide column">
           { this.renderStatus() }

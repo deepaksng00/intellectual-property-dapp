@@ -28,13 +28,6 @@ class Index extends Component {
 
 		return (
 			<Layout>
-
-					<div class = "one column row">
-						<div class = "column">
-							<p>Welcome to the intellectual property website.</p>
-						</div>
-					</div>
-
 					<div class = "one column row">
 						<div class = "column">
 							<Input iconPosition='left' type='text' placeholder='Search by Address' action>
@@ -51,16 +44,22 @@ class Index extends Component {
 					</div>
 
 					<div class = "two column row">
-						<div class = "column">
-							<div class = "ui segment">
-								<Header as = "h2">Registering your intellectual property</Header>
-								<p>To register your intellectual property, you must have the MetaMask browser extension install with an Ethereum wallet.</p>
-							</div>
-							<div class = "ui segment">
-								<Header as = "h2">To register your intellectual property, you will need:</Header>
-							</div>
+						<div class = "nine wide column">
+							<Header as = "h3">Registering your intellectual property</Header>
+							<p>To register your intellectual property, you must have the MetaMask browser extension install with an Ethereum wallet.</p>
+							<Header as = "h3">To register your intellectual property, you will need:</Header>
+								<ol class="ui list">
+									<li>The type of intellectual property you are registering</li>
+									<li>The ethereum address of any co-owners of the intellectual property</li>
+									<li>The original file containing the intellectual property</li>
+									<li>The publication date for the intellectual property</li>
+								</ol>
+								<button class="ui button">Start Registering</button>
 						</div>
-						<div class = "column">
+						<div class = "two wide column">
+
+						</div>
+						<div class = "five wide column">
 							<div class="ui icon message">
 							  <i class="exclamation triangle icon"></i>
 							  <div class="content">
@@ -70,9 +69,6 @@ class Index extends Component {
 							    <p>Registering your intellectual property will incur fees. You will be prompted by Metamask informing you of the exact value.</p>
 							  </div>
 							</div>
-						</div>
-						<div class = "column">
-
 						</div>
 					</div>
 			</Layout>
