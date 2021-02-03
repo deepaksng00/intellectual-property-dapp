@@ -1,4 +1,107 @@
 html, body {
-  height: 100%;
-  margin: 1.5%;
+  height: 200vh;
+  font-family: Arial, sans-serif;
+  margin: 0px;
+  padding: 0px;
+}
+
+.grid-container {
+  padding: 2%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 0.2fr 1fr;
+  grid-template-areas:
+    "header header"
+    "welcome ethereum-address"
+    "divider-one divider-one"
+    "search-bar attention"
+    "divider-two divider-two"
+    "footer footer";
+}
+
+.divider-one {
+  grid-area: divider-one;
+  grid-column-start: 1;
+  grid-column-end: 5;
+  width: 100%;
+}
+
+.divider-two {
+  grid-area: divider-two;
+  grid-column-start: 1;
+  grid-column-end: 5;
+  width: 100%;
+}
+
+header {
+  grid-area: header;
+  background-color: black;
+  color: white;
+  padding: 10px;
+  grid-column-start: 1;
+  grid-column-end: 5;
+}
+
+.title {
+  margin: 0;
+}
+
+.welcome {
+  grid-area: welcome;
+  grid-column-start: 1;
+  grid-column-end: 4;
+}
+
+.ethereum-address {
+  grid-area: ethereum-address;
+  grid-column-start: 4;
+  grid-column-end: 5;
+  justify-self: end;
+}
+
+.search-bar {
+  grid-area: search-bar;
+  grid-column-start: 1;
+  grid-column-end: 3;
+}
+
+.search-bar > form {
+  display: flex;
+}
+
+.flex-stretch {
+  flex-grow: 0;
+}
+
+.search-bar > form > input {
+  padding: 1%;
+  border-radius: 5px;
+  border: 1px solid black;
+  font-size: 1em;
+  width: 50%;
+}
+
+.search-bar > form > button {
+  margin-left: 10px;
+  border-radius: 5px;
+  border: 1px solid black;
+  font-size: 1em;
+}
+
+.advanced-search {
+  float: left;
+  margin-top: 2%;
+  margin-bottom: 2%;
+}
+
+.attention {
+  grid-column-start: 4;
+  grid-column-end: 5;
+  justify-self: end;
+}
+
+footer {
+  grid-area: footer;
+  grid-column-start: 1;
+  grid-column-end: 5;
+
 }
