@@ -58,10 +58,10 @@ class Index extends Component {
 						<li>The original file containing the intellectual property</li>
 						<li>The publication date for the intellectual property</li>
 					</ol>
-					<button class="start-register button">Start registration</button>
 				</section>
+				<button class="start-register button">Start registration</button>
 				<section class="grid-item attention">
-					<h3 style={{ color: "red" }}>Attention!</h3>
+					<h3 style={{ color: "#cc3300" }}>Attention!</h3>
 					<p>Registering your intellectual property will incur fees. You will be prompted by Metamask informing you of the exact value.</p>
 				</section>
 			</Layout>
