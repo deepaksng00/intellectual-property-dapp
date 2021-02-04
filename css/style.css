@@ -1,20 +1,25 @@
 html, body {
-  height: 200vh;
   font-family: Arial, sans-serif;
   margin: 0px;
   padding: 0px;
 }
 
+p, ol {
+  line-height: 22px;
+  font-size: 1.1em;
+}
+
 .grid-container {
-  padding: 2%;
   display: grid;
   grid-template-columns: 1fr 1fr 0.2fr 1fr;
   grid-template-areas:
     "header header"
-    "welcome ethereum-address"
+    "nav nav"
+    "welcome welcome"
     "divider-one divider-one"
-    "search-bar attention"
+    "search-bar search-bar"
     "divider-two divider-two"
+    "register attention"
     "footer footer";
 }
 
@@ -22,6 +27,8 @@ html, body {
   grid-area: divider-one;
   grid-column-start: 1;
   grid-column-end: 5;
+  margin-top: 2em;
+  margin-bottom: 2em;
   width: 100%;
 }
 
@@ -29,6 +36,8 @@ html, body {
   grid-area: divider-two;
   grid-column-start: 1;
   grid-column-end: 5;
+  margin-top: 2em;
+  margin-bottom: 2em;
   width: 100%;
 }
 
@@ -41,6 +50,16 @@ header {
   grid-column-end: 5;
 }
 
+nav {
+  grid-area: nav;
+  grid-column-start: 1;
+  grid-column-end: 5;
+  padding: 0;
+  margin-top: 1em;
+  margin-left: 7em;
+  margin-right: 7em;
+}
+
 .title {
   margin: 0;
 }
@@ -48,20 +67,18 @@ header {
 .welcome {
   grid-area: welcome;
   grid-column-start: 1;
-  grid-column-end: 4;
-}
-
-.ethereum-address {
-  grid-area: ethereum-address;
-  grid-column-start: 4;
   grid-column-end: 5;
-  justify-self: end;
+  margin-left: 7em;
+  margin-right: 7em;
+  margin-top: 2em;
 }
 
 .search-bar {
   grid-area: search-bar;
   grid-column-start: 1;
   grid-column-end: 3;
+  margin-left: 7em;
+  margin-right: 7em;
 }
 
 .search-bar > form {
@@ -87,6 +104,13 @@ header {
   font-size: 1em;
 }
 
+.button {
+  border-radius: 5px;
+  border: 1px solid black;
+  font-size: 1em;
+  padding: 5px;
+}
+
 .advanced-search {
   float: left;
   margin-top: 2%;
@@ -94,14 +118,26 @@ header {
 }
 
 .attention {
+  grid-area: attention;
   grid-column-start: 4;
   grid-column-end: 5;
   justify-self: end;
+  margin-right: 7em;
+}
+
+.register {
+  gird-area: register;
+  grid-column-start: 1;
+  grid-column-end: 3;
+  margin-left: 7em;
+  margin-right: 7em;
 }
 
 footer {
   grid-area: footer;
   grid-column-start: 1;
   grid-column-end: 5;
-
+  background-color: black;
+  color: white;
+  margin-top: 4em;
 }
