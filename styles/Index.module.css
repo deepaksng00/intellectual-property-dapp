@@ -1,211 +1,81 @@
 .main_grid_container {
   display: grid;
+  grid-template-areas:
+    "nav"
+    "welcome"
+    "search"
+    "register"
+    "register-button"
+}
+
+.grid_item {
+  margin-left: 5%;
+  margin-right: 5%;
 }
 
 .main_grid_container > nav {
-  background-color: green;
+  margin-top: 1%;
+  grid-area: nav;
 }
 
 .section_welcome {
-  background-color: blue;
+  grid-area: welcome;
+  border-bottom: 2px solid #4d0066;
 }
 
 .section_search {
-  background-color: yellow;
+  grid-area: search;
+  border-bottom: 2px solid #4d0066;
+  padding-bottom: 2%;
 }
 
-.section_register {
-  background-color: pink;
-}
-
-.button_start_register {
-  background-color: grey;
-}
-
-/* html, body {
-  font-family: Arial, sans-serif;
-  margin: 0px;
-  padding: 0px;
-}
-
-p, ol {
-  line-height: 22px;
-  font-size: 1.1em;
-}
-
-h2 {
-  font-size: 2em;
-  color: #4d0066;
-} */
-
-/* .grid-container {
-  display: grid;
-  grid-template-columns: 1fr 1fr 0.2fr 1fr;
-  grid-template-areas:
-    "header header"
-    "nav nav"
-    "welcome welcome"
-    "divider-one divider-one"
-    "search-bar search-bar"
-    "divider-two divider-two"
-    "register attention"
-    "start-register start-register"
-    "footer footer";
-}
-
-.divider-one {
-  grid-area: divider-one;
-  grid-column-start: 1;
-  grid-column-end: 5;
-  margin-top: 2em;
-  margin-bottom: 2em;
-  width: 100%;
-  border: 1px solid #4d0066;
-
-}
-
-.divider-two {
-  grid-area: divider-two;
-  grid-column-start: 1;
-  grid-column-end: 5;
-  margin-top: 2em;
-  margin-bottom: 2em;
-  width: 100%;
-  border: 1px solid #4d0066;
-}
-
-
-
-/* nav {
-  grid-area: nav;
-  grid-column-start: 1;
-  grid-column-end: 5;
-  padding: 0;
-  margin-top: 1em;
-  margin-left: 7em;
-  margin-right: 7em;
-}  */
-
-/* .title {
-  margin-left: 3em;
-  margin-top: 0;
-  margin-bottom: 0;
-}
-
-.welcome {
-  grid-area: welcome;
-  grid-column-start: 1;
-  grid-column-end: 5;
-  margin-left: 7em;
-  margin-right: 7em;
-  margin-top: 1em;
-}
-
-.search-bar {
-  grid-area: search-bar;
-  grid-column-start: 1;
-  grid-column-end: 5;
-  margin-left: 7em;
-  margin-right: 7em;
-}
-
-.search-bar > form {
+.section_search > form {
+  margin-bottom: 2%;
   display: flex;
 }
 
-.flex-stretch {
-  flex-grow: 0;
-}
-
-.search-bar > form > input {
+.section_search > form > input {
   transition: padding 0.5s;
   padding: 1%;
   border-radius: 5px;
-  border: 1px solid black;
-  font-size: 1em;
-  width: 25em;
+  border: 1px solid #4d0066;
+  font-size: 1rem;
+  width: 40%;
 }
 
-.search-bar > form > button {
+.section_search > form > button {
   transition: padding 0.5s;
-  margin-left: 10px;
+  padding: 1%;
   border-radius: 5px;
-  border: 1px solid black;
-  font-size: 1em;
+  border: 1px solid #4d0066;
   background-color: #4d0066;
   color: white;
-  font-weight: bold;
+  font-size: 1rem;
+  margin-left: 1%;
 }
 
-.search-bar > form > button:hover {
-  padding: 1em;
+.section_search > form > button:hover {
+  padding: 1.5%;
 }
 
-.button {
-  border-radius: 5px;
-  border: 1px solid black;
-  font-size: 1em;
-  padding: 5px;
-}
-
-.advanced-search {
-  float: left;
-  margin-top: 1em;
-  margin-bottom: 2%;
-}
-
-.attention {
-  grid-area: attention;
-  grid-column-start: 4;
-  grid-column-end: 5;
-  justify-self: end;
-  margin-right: 7em;
-  border: 1px solid black;
-  padding: 10px;
-  background-color: #4d0066;
-  display: none;
-}
-
-.register {
+.section_register {
   grid-area: register;
-  grid-column-start: 1;
-  grid-column-end: 5;
-  margin-left: 7em;
-  margin-right: 7em;
 }
 
-.start-register {
-  grid-area: start-register;
-  margin-top: 1em;
-  padding: 1.2em;
+.button_start_register {
+  grid-area: register-button;
   background-color: #4d0066;
-  color: white;
-  font-weight: bold;
-  transition: padding 0.5s;
-  border-radius: 30px;
-  grid-column-start: 1;
-  grid-column-end: 5;
-  margin-left: 7em;
-  margin-right: 7em;
-  max-width: 15em;
+  width: 20%;
   justify-self: center;
-
+  padding: 1.2%;
+  border-radius: 30px;
+  font-size: 1.2rem;
+  color: white;
+  margin-top: 2%;
+  margin-bottom: 2%;
+  transition: padding 0.5s;
 }
 
-.start-register:hover {
-  padding: 1.8em;
-} */
-/*
-footer {
-  grid-area: footer;
-  grid-column-start: 1;
-  grid-column-end: 5;
-  background-color: #4d0066;
-  color: white;
-  margin-top: 4em;
+.button_start_register:hover {
+  padding: 2%;
 }
-
-footer > h2 {
-  color: white;
-  margin-left: 3em;
-} */

@@ -7,3 +7,19 @@ html, body {
 .main-container {
   display: grid;
 }
+
+h2 {
+  color: #4d0066;
+}
+
+ol {
+  line-height: 2rem;
+}
+
+p {
+  line-height: 1.6;
+}
+
+footer > h2 {
+  color: white;
+}
