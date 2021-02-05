@@ -3,6 +3,7 @@ import factory from '../ethereum/factory';
 import web3 from '../ethereum/web3';
 import Layout from '../components/Layout';
 import style from '../styles/Index.module.css';
+import { Link } from '../routes';
 
 class Index extends Component {
 	state = {
@@ -18,7 +19,7 @@ class Index extends Component {
 		return (
 			<Layout>
 				<div className={style.main_grid_container}>
-					<nav className={style.grid_item}><a href="#">Home</a></nav>
+					<nav className={style.grid_item}><Link route="/"><a href="#">Home</a></Link></nav>
 					<section className={[style.section_welcome, style.grid_item].join(" ")}>
 						<h2>What is intellectual property?</h2>
 						<p>Intellectual property is something that has been created by the creator's mind, for example: algorithms, stories, paintings or music.</p>
@@ -45,7 +46,7 @@ class Index extends Component {
 							<li>The publication date for the intellectual property</li>
 						</ol>
 					</section>
-					<button className={[style.button_start_register, style.grid_item].join(" ")}>Start registration</button>
+					<Link route="/intellectualproperty/register"><button className={[style.button_start_register, style.grid_item].join(" ")}>Start registration</button></Link>
 				</div>
 			</Layout>
 		);

@@ -17,6 +17,10 @@
   margin: 0;
 }
 
+.title:hover {
+  opacity: 0.8;
+}
+
 .footer {
   background-color: #4d0066;
   color: white;
