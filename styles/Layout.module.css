@@ -1,0 +1,26 @@
+.main_container {
+  margin: 0;
+}
+
+.header {
+  background-color: #4d0066;
+  padding: 10px;
+  justify-content: start;
+  grid-column-start: 1;
+  grid-column-end: 5;
+  display: relative;
+  top: 0;
+  padding-left: 3em;
+}
+
+.title {
+  font-size: 2em;
+  color: white;
+  margin: 0;
+}
+
+.footer {
+  background-color: #4d0066;
+  color: white;
+  padding-left: 3em;
+}
