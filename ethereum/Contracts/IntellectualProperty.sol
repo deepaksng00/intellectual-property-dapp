@@ -223,8 +223,63 @@ contract Patent is IntellectualProperty {
 }
 
 contract Design is IntellectualProperty {
+    string private officeCode;
+    string private languageCode;
+    uint256 private expirationDate;
+    uint256 private statusDate;
+    string private comment;
+    string private designHash;
+
      /* --- Constructor that links to parent contract --- */
     constructor(uint256 date_input, address owner_input) IntellectualProperty(date_input, owner_input) public {
 
+    }
+
+    function getOfficeCode() public view returns(string memory) {
+        return officeCode;
+    }
+
+    function getLanguageCode() public view returns(string memory) {
+        return languageCode;
+    }
+
+    function getExpirationDate() public view returns(uint256) {
+        return expirationDate;
+    }
+
+    function getStatusDate() public view returns(uint256) {
+        return statusDate;
+    }
+
+    function getComment() public view returns(string memory) {
+        return comment;
+    }
+
+    function getDesignHash() public view returns(string memory) {
+        return designHash;
+    }
+
+    function setOfficeCode(string memory code_input) public restricted {
+        officeCode = code_input;
+    }
+
+    function setLanguageCode(string memory code_input) public restricted {
+        languageCode = code_input;
+    }
+
+    function setExpirationDate(uint256 date_input) public restricted {
+        expirationDate = date_input;
+    }
+
+    function setStatusDate(uint256 date_input) public restricted {
+        statusDate = date_input;
+    }
+
+    function setComment(string memory comment_input) public restricted {
+        comment = comment_input;
+    }
+
+    function setDesignHash(string memory hash_input) public restricted {
+        designHash = hash_input;
     }
 }
