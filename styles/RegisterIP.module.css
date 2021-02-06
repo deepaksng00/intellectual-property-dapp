@@ -1,0 +1,102 @@
+.main_grid_container {
+  display: grid;
+  grid-template-areas:
+    "nav"
+    "form";
+}
+
+.grid_item {
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
+.main_grid_container > nav {
+  grid-area: nav;
+  margin-top: 1%;
+  justify-content: center;
+}
+
+.section_form {
+  grid-area: form;
+  margin-top: 2%;
+  display: grid;
+  grid-template-areas:
+    "title_header title_header"
+    "label1 name"
+    "label2 surname"
+    "label3 radioButtons"
+    "label4 file"
+    "submit submit";
+}
+
+.section_form > h2 {
+  grid-area: title_header;
+}
+
+.label1 {
+  grid-area: label1;
+  margin-top: 3%;
+}
+
+.account {
+  grid-area: name;
+  font-size: 1rem;
+  padding: 2%;
+  border: 1px solid #4d0066;
+  border-radius: 5px;
+}
+
+.label2 {
+  grid-area: label2;
+  margin-top: 3%;
+}
+
+.surname {
+  grid-area: surname;
+}
+
+.section_form > input {
+  padding: 1%;
+  border-radius: 5px;
+  border: 1px solid #4d0066;
+  font-size: 1rem;
+  margin-top: 3%;
+}
+
+.radioButtons {
+  grid-area: radioButtons;
+  margin-top: 3%;
+}
+
+.label3 {
+  grid-area: label3;
+  margin-top: 3%;
+}
+
+.file {
+  grid-area: file;
+}
+
+.label4 {
+  grid-area: label4;
+}
+
+.section_form > button {
+  grid-area: submit;
+  background-color: #4d0066;
+  width: 50%;
+  padding: 2%;
+  border: none;
+  border-radius: 30px;
+  font-size: 1.2rem;
+  color: white;
+  margin-top: 2%;
+  margin-bottom: 2%;
+  transition: width 0.5s;
+  justify-self: center;
+  width: 8rem;
+}
+
+.section_form > button:hover {
+  width: 10rem;
+}
