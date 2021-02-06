@@ -3,6 +3,7 @@ import Layout from "../../components/Layout";
 import style from "../../styles/RegisterIP.module.css";
 import { Link } from "../../routes";
 import web3 from "../../ethereum/web3";
+import factory from "../../ethereum/factory";
 
 class RegisterIP extends Component {
   state = {
@@ -18,6 +19,22 @@ class RegisterIP extends Component {
     this.setState({ timestamp });
   }
 
+  submitForm = async (event) => {
+    event.preventDefault();
+    console.log("Creating IP...");
+    document.getElementById("register-label").style.display = "none";
+    document.getElementById("loaderObject").style.display = "block";
+    const address = await web3.eth.getAccounts();
+    await factory.methods.createPatent().send({
+      from: address[0],
+      gasLimit: "5000000"
+    });
+    const addressesOfDeployed = await factory.methods.getPatents().call();
+    console.log("IP created at address: " + addressesOfDeployed);
+    document.getElementById("loaderObject").style.display = "none";
+        document.getElementById("register-label").style.display = "block";
+  }
+
   render() {
     return (
       <Layout>
@@ -28,21 +45,21 @@ class RegisterIP extends Component {
           <form className={[style.grid_item, style.section_form].join(" ")}>
             <h2>Intellectual Property Registration Form</h2>
             <p className={style.label1}>Account: </p>
-            <input className={style.account} type="text" placeholder="Text..." name="test" value={this.state.addresses} readonly/>
+            <input className={style.account} type="text" placeholder="Text..." name="test" value={this.state.addresses} readOnly/>
             <p className={style.label2}>Date: </p>
-            <input className={style.surname} type="text" placeholder="Text..." name="test" value={this.state.timestamp} readonly/>
+            <input className={style.surname} type="text" placeholder="Text..." name="test" value={this.state.timestamp} readOnly/>
             <p className={style.label3}>Type of IP: </p>
             <div className={style.radioButtons}>
               <input type="radio" id="trademark" name="ip_type" value="trademark"/>
-              <label for="trademark">Trademark</label><br/>
+              <label htmlFor="trademark">Trademark</label><br/>
               <input type="radio" id="patent" name="ip_type" value="patent"/>
-              <label for="patent">Patent</label><br/>
+              <label htmlFor="patent">Patent</label><br/>
               <input type="radio" id="design" name="ip_type" value="design"/>
-              <label for="design">Design</label>
+              <label htmlFor="design">Design</label>
             </div>
             <p className={style.label4}>File: </p>
             <input className={style.file} type="file"/>
-            <button type="submit">Register</button>
+            <button type="submit" onClick={this.submitForm}> <div id="loaderObject" className={style.loader}></div><div id="register-label">Register</div></button>
           </form>
         </div>
       </Layout>
