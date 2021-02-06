@@ -161,9 +161,64 @@ contract Trademark is IntellectualProperty {
 }
 
 contract Patent is IntellectualProperty {
+    uint256 private grantDate;
+    string private title;
+    string private addressForService;
+    string private inventorAddress;
+    string private applicantAddress;
+    uint256 private expirationDate;
+
     /* --- Constructor that links to parent contract --- */
     constructor(uint256 date_input, address owner_input) IntellectualProperty(date_input, owner_input) public {
 
+    }
+
+    function getGrantDate() public view returns(uint256) {
+        return grantDate;
+    }
+
+    function getTitle() public view returns(string memory) {
+        return title;
+    }
+
+    function getAddressForService() public view returns(string memory) {
+        return addressForService;
+    }
+
+    function getInventorAddress() public view returns(string memory) {
+        return inventorAddress;
+    }
+
+    function getApplicantAddress() public view returns(string memory) {
+        return applicantAddress;
+    }
+
+    function getExpirationDate() public view returns(uint256) {
+        return expirationDate;
+    }
+
+    function setGrantDate(uint256 date_input) public restricted {
+        grantDate = date_input;
+    }
+
+    function setTitle(string memory title_input) public restricted {
+        title = title_input;
+    }
+
+    function setAddressForService(string memory address_input) public restricted {
+        addressForService = address_input;
+    }
+
+    function setInventorAddress(string memory address_input) public restricted {
+        inventorAddress = address_input;
+    }
+
+    function setApplicantAddress(string memory address_input) public restricted {
+        applicantAddress = address_input;
+    }
+
+    function setExpirationDate(uint256 date_input) public restricted {
+        expirationDate = date_input;
     }
 }
 
