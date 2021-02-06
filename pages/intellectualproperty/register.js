@@ -7,12 +7,15 @@ import web3 from "../../ethereum/web3";
 class RegisterIP extends Component {
   state = {
     addresses: '',
-    select: ''
+    timestamp: ''
   }
 
   async componentDidMount() {
     const addresses = await web3.eth.getAccounts();
     this.setState({ addresses });
+    const currentTime = new Date();
+    const timestamp = ('0' + currentTime.getDate()).slice(-2) + "-" + ('0' + (currentTime.getMonth() + 1)).slice(-2) + "-" + currentTime.getFullYear();
+    this.setState({ timestamp });
   }
 
   render() {
@@ -26,8 +29,8 @@ class RegisterIP extends Component {
             <h2>Intellectual Property Registration Form</h2>
             <p className={style.label1}>Account: </p>
             <input className={style.account} type="text" placeholder="Text..." name="test" value={this.state.addresses} readonly/>
-            <p className={style.label2}>Surname: </p>
-            <input className={style.surname} type="text" placeholder="Text..." name="test"/>
+            <p className={style.label2}>Date: </p>
+            <input className={style.surname} type="text" placeholder="Text..." name="test" value={this.state.timestamp} readonly/>
             <p className={style.label3}>Type of IP: </p>
             <div className={style.radioButtons}>
               <input type="radio" id="trademark" name="ip_type" value="trademark"/>
