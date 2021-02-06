@@ -63,6 +63,7 @@ abstract contract IntellectualProperty {
     string private status;
     uint256 private filingDate;
     uint256 private publicationDate;
+    uint256 private statusDate;
     address private owner;
     mapping (address => bool) private co_owners;
 
@@ -92,6 +93,10 @@ abstract contract IntellectualProperty {
         return publicationDate;
     }
 
+    function getStatusDate() public view returns(uint256) {
+      return statusDate;
+    }
+
     function getOwner() public view returns(address) {
         return owner;
     }
@@ -110,6 +115,10 @@ abstract contract IntellectualProperty {
 
     function setPublicationDate(uint256 date) public restricted {
         publicationDate = date;
+    }
+
+    function setStatusDate(uint256 date) public restricted {
+        statusDate = date;
     }
 
     function setOwner(address owner_input) public restricted {
@@ -226,7 +235,6 @@ contract Design is IntellectualProperty {
     string private officeCode;
     string private languageCode;
     uint256 private expirationDate;
-    uint256 private statusDate;
     string private comment;
     string private designHash;
 
@@ -247,10 +255,6 @@ contract Design is IntellectualProperty {
         return expirationDate;
     }
 
-    function getStatusDate() public view returns(uint256) {
-        return statusDate;
-    }
-
     function getComment() public view returns(string memory) {
         return comment;
     }
@@ -269,10 +273,6 @@ contract Design is IntellectualProperty {
 
     function setExpirationDate(uint256 date_input) public restricted {
         expirationDate = date_input;
-    }
-
-    function setStatusDate(uint256 date_input) public restricted {
-        statusDate = date_input;
     }
 
     function setComment(string memory comment_input) public restricted {
