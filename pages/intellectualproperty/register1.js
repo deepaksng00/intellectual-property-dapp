@@ -9,7 +9,9 @@ class Register1 extends Component {
   state = {
     addresses: '',
     timestamp: '',
-    typeOfIP: ''
+    typeOfIP: '',
+    publicationDate: '',
+    markDesc: ''
   }
 
   async componentDidMount() {
@@ -53,10 +55,40 @@ class Register1 extends Component {
     }
   }
 
+  onChange_publicationDate = (event) => {
+    const publicationDate = document.getElementById("publicationDate").value;
+    this.setState({ publicationDate });
+  }
+
+  onChange_markDesc = (event) => {
+    const markDesc = document.getElementById("markDesc").value;
+    this.setState({ markDesc });
+  }
+
   back_2 = (event) => {
     document.getElementById("register_2").style.display = "none";
     document.getElementById("register_1").style.display = "grid";
     document.getElementById("typeOfIP").style.border = "none";
+  }
+
+  register = async (event) => {
+    const addresses = await web3.eth.getAccounts();
+    // trademark
+    const compiled_trademark = require("../../ethereum/build/Trademark.json");
+    console.log("Creating IP...")
+    await factory.methods.createTrademark().send({
+      from: addresses[0],
+      gasLimit: "5000000"
+    });
+    console.log("IP created, address: ")
+    const trademarks = await factory.methods.getTrademarks().call();
+    const numOfTrademarks = await factory.methods.getNumOfTrademarks().call();
+    const address = trademarks[numOfTrademarks-1];
+    const trademark = await new web3.eth.Contract(compiled_trademark.abi, address);
+    const filingDate_UNIX = await trademark.methods.getFilingDate().call();
+    const trademark_date_obj = new Date(filingDate_UNIX * 1000);
+    const ip_date_complete = trademark_date_obj.getFullYear().toString() + "-" + (trademark_date_obj.getMonth()+1).toString() + "-" + trademark_date_obj.getDate().toString();
+    alert(`The contract has been created! The address is: ${address} and the filing date is: ${ip_date_complete}`);
   }
 
   render() {
@@ -93,23 +125,13 @@ class Register1 extends Component {
           </nav>
           <form className={[style.grid_item_2, style.section_form_2].join(" ")}>
             <h2>Intellectual Property Registration Form 2/2</h2>
-            <p className={style.test}>Test: </p>
-            <input className={style.testEntry} type="text" placeholder="Text..." name="test" value={this.state.addresses} readOnly/>
-            <p className={style.label2}>Date: </p>
-            <input className={style.surname} type="text" placeholder="Text..." name="test" value={this.state.timestamp} readOnly/>
-            <p className={style.label3}>Type of IP: </p>
-            <div className={style.radioButtons}>
-              <input type="radio" id="trademark" name="ip_type" value="trademark"/>
-              <label htmlFor="trademark">Trademark</label><br/>
-              <input type="radio" id="patent" name="ip_type" value="patent"/>
-              <label htmlFor="patent">Patent</label><br/>
-              <input type="radio" id="design" name="ip_type" value="design"/>
-              <label htmlFor="design">Design</label>
-            </div>
-            <p className={style.label4}>File: </p>
-            <input className={style.fileEntry} type="file"/>
+            <p className={style.test}>Publication date: </p>
+            <input className={style.testEntry} type="text" placeholder="DD-MM-YEAR" id="publicationDate" value={this.state.publicationDate} onChange={this.onChange_publicationDate}/>
+            <p className={style.label2}>Mark description: </p>
+            <input className={style.surname} type="text" placeholder="Enter the mark description..." id="markDesc" value={this.state.markDesc} onChange={this.onChange_markDesc}/>
+
             <button className={style.back} type="button" onClick={this.back_2}>Back</button>
-            <button className={style.next} type="button" onClick={this.next_2}>Next</button>
+            <button className={style.next} type="button" onClick={this.register}>Register trademark</button>
           </form>
         </div>
 
