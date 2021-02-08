@@ -46,7 +46,7 @@ class Index extends Component {
 							<li>The publication date for the intellectual property</li>
 						</ol>
 					</section>
-					<Link route="/intellectualproperty/register"><button className={[style.button_start_register, style.grid_item].join(" ")}>Start registration</button></Link>
+					<Link route="/intellectualproperty/register1"><button className={[style.button_start_register, style.grid_item].join(" ")}>Start registration</button></Link>
 				</div>
 			</Layout>
 		);

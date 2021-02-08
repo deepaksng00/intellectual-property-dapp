@@ -1,22 +1,126 @@
-.main_grid_container {
+.main_grid_container_1 {
   display: grid;
   grid-template-areas:
     "nav"
     "form";
 }
 
-.grid_item {
+.grid_item_1 {
   margin-left: 5%;
   margin-right: 5%;
 }
 
-.main_grid_container > nav {
+.main_grid_container_1 > nav {
   grid-area: nav;
   margin-top: 1%;
   justify-content: center;
 }
 
-.section_form {
+.section_form_1 {
+  grid-area: form;
+  margin-top: 2%;
+  display: grid;
+  grid-template-areas:
+    "title_header_1 title_header_1"
+    "accountLabel account"
+    "dateLabel date"
+    "typeOfIPLabel typeOfIP"
+    "fileLabel file"
+    "submit submit";
+}
+
+.section_form_1 > h2 {
+  grid-area: title_header_1;
+}
+
+.accountLabel {
+  grid-area: accountLabel;
+  margin-top: 3%;
+}
+
+.account {
+  grid-area: account;
+  font-size: 1rem;
+  padding: 2%;
+  border: 1px solid #4d0066;
+  border-radius: 5px;
+}
+
+.dateLabel {
+  grid-area: dateLabel;
+  margin-top: 3%;
+}
+
+.date {
+  grid-area: date;
+}
+
+.section_form_1 > input {
+  padding: 1%;
+  border-radius: 5px;
+  border: 1px solid #4d0066;
+  font-size: 1rem;
+  margin-top: 3%;
+}
+
+.typeOfIP {
+  grid-area: typeOfIP;
+  margin-top: 3%;
+  padding: 1%;
+}
+
+.typeOfIPLabel {
+  grid-area: typeOfIPLabel;
+  margin-top: 3%;
+}
+
+.file {
+  grid-area: file;
+}
+
+.fileLabel {
+  grid-area: fileLabel;
+}
+
+.section_form_1 > button {
+  grid-area: submit;
+  background-color: #4d0066;
+  width: 50%;
+  padding: 2%;
+  border: none;
+  border-radius: 30px;
+  font-size: 1.2rem;
+  color: white;
+  margin-top: 2%;
+  margin-bottom: 2%;
+  transition: width 0.5s;
+  justify-self: center;
+  width: 8rem;
+}
+
+.section_form_1 > button:hover {
+  width: 10rem;
+}
+
+.main_grid_container_2 {
+  display: none;
+  grid-template-areas:
+    "nav"
+    "form";
+}
+
+.grid_item_2 {
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
+.main_grid_container_2 > nav {
+  grid-area: nav;
+  margin-top: 1%;
+  justify-content: center;
+}
+
+.section_form_2 {
   grid-area: form;
   margin-top: 2%;
   display: grid;
@@ -25,20 +129,16 @@
     "label1 name"
     "label2 surname"
     "label3 radioButtons"
-    "label4 file"
-    "submit submit";
+    "label4 fileEntry"
+    "back next";
 }
 
-.section_form > h2 {
-  grid-area: title_header;
-}
-
-.label1 {
+.test {
   grid-area: label1;
   margin-top: 3%;
 }
 
-.account {
+.testEntry {
   grid-area: name;
   font-size: 1rem;
   padding: 2%;
@@ -55,7 +155,7 @@
   grid-area: surname;
 }
 
-.section_form > input {
+.section_form_2 > input {
   padding: 1%;
   border-radius: 5px;
   border: 1px solid #4d0066;
@@ -73,16 +173,15 @@
   margin-top: 3%;
 }
 
-.file {
-  grid-area: file;
+.fileEntry {
+  grid-area: fileEntry;
 }
 
 .label4 {
   grid-area: label4;
 }
 
-.section_form > button {
-  grid-area: submit;
+.section_form_2 > button {
   background-color: #4d0066;
   width: 50%;
   padding: 2%;
@@ -93,25 +192,22 @@
   margin-top: 2%;
   margin-bottom: 2%;
   transition: width 0.5s;
-  justify-self: center;
   width: 8rem;
+  justify-self: center;
 }
 
-.section_form > button:hover {
+.section_form_2 > button:hover {
   width: 10rem;
 }
 
-.loader {
-  border: 10px solid #f3f3f3; /* Light grey */
-  border-top: 10px solid #3498db; /* Blue */
-  border-radius: 50%;
-  width: 15px;
-  height: 15px;
-  animation: spin 2s linear infinite;
-  display: none;
+.back {
+  grid-area: back;
 }
 
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+.next {
+  grid-area: next;
+}
+
+.section_form_2 > h2 {
+  grid-area: title_header;
 }

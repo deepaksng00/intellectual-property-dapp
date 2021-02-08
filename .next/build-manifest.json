@@ -29,10 +29,10 @@
       "static/chunks/webpack.js",
       "static/chunks/pages/_error.js"
     ],
-    "/intellectualproperty/register": [
+    "/intellectualproperty/register1": [
       "static/chunks/main.js",
       "static/chunks/webpack.js",
-      "static/chunks/pages/intellectualproperty/register.js"
+      "static/chunks/pages/intellectualproperty/register1.js"
     ]
   },
   "ampFirstPages": []
