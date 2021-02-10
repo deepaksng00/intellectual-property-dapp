@@ -211,3 +211,11 @@
 .section_form_2 > h2 {
   grid-area: title_header;
 }
+
+.main_grid_container_patent {
+  display: none;
+}
+
+.main_grid_container_design {
+  display: none;
+}

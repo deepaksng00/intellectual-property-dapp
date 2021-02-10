@@ -4,6 +4,7 @@ import style from "../../styles/RegisterIP.module.css";
 import { Link } from "../../routes";
 import web3 from "../../ethereum/web3";
 import factory from "../../ethereum/factory";
+import Head from 'next/head';
 
 class Register1 extends Component {
   state = {
@@ -11,7 +12,8 @@ class Register1 extends Component {
     timestamp: '',
     typeOfIP: '',
     publicationDate: '',
-    markDesc: ''
+    markDesc: '',
+    md5: ''
   }
 
   async componentDidMount() {
@@ -29,7 +31,13 @@ class Register1 extends Component {
       alert(`${file.files[0].name} is too big! Max size is 100MB`);
       file.value = "";
     } else {
-        // add code for hashing
+      const reader = new FileReader();
+      reader.onload = () => {
+        var hash = CryptoJS.MD5(CryptoJS.enc.Latin1.parse(reader.result));
+        var md5 = hash.toString(CryptoJS.enc.Hex);
+        this.setState({ md5 });
+      }
+      reader.readAsBinaryString(file.files[0]);
     }
   }
 
@@ -41,17 +49,30 @@ class Register1 extends Component {
       document.getElementById("typeOfIP").style.border = "2px solid red";
       alert("ERROR! You haven't selected the type of intellectual property you want to register!");
     } else {
-      if (radioButtons[0].checked == true) {
-        typeOfIP = 'trademark';
-      } else if (radioButtons[1].checked == true) {
-        typeOfIP = 'patent';
-      } else if (radioButtons[2].checked == true) {
-        typeOfIP = 'design';
-      }
+      if (document.getElementById("file_upload").value == "") {
+        document.getElementById("file_upload").style.border = "2px solid red";
+        alert("ERROR! You haven't selected the file you want to register!");
+      } else {
+        if (radioButtons[0].checked == true) {
+          typeOfIP = 'trademark';
+        } else if (radioButtons[1].checked == true) {
+          typeOfIP = 'patent';
+        } else if (radioButtons[2].checked == true) {
+          typeOfIP = 'design';
+        }
 
-      this.setState({ typeOfIP });
-      document.getElementById("register_1").style.display = "none";
-      document.getElementById("register_2").style.display = "grid";
+        this.setState({ typeOfIP });
+
+        document.getElementById("register_1").style.display = "none";
+
+        if (typeOfIP == 'trademark') {
+          document.getElementById("register_2").style.display = "grid";
+        } else if (typeOfIP == 'patent') {
+          document.getElementById("register_patent").style.display = "grid";
+        } else if (typeOfIP == 'design') {
+          document.getElementById("register_design").style.display = "grid";
+        }
+      }
     }
   }
 
@@ -69,6 +90,7 @@ class Register1 extends Component {
     document.getElementById("register_2").style.display = "none";
     document.getElementById("register_1").style.display = "grid";
     document.getElementById("typeOfIP").style.border = "none";
+    document.getElementById("file_upload").style.border = "none";
   }
 
   register = async (event) => {
@@ -76,7 +98,7 @@ class Register1 extends Component {
     // trademark
     const compiled_trademark = require("../../ethereum/build/Trademark.json");
     console.log("Creating IP...")
-    await factory.methods.createTrademark().send({
+    await factory.methods.createTrademark(this.state.publicationDate, this.state.markDesc, this.state.md5).send({
       from: addresses[0],
       gasLimit: "5000000"
     });
@@ -94,6 +116,10 @@ class Register1 extends Component {
   render() {
     return (
       <Layout>
+        <Head>
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/core.js"></script>
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/md5.js"></script>
+        </Head>
         <div id="register_1" className={style.main_grid_container_1}>
           <nav className={style.grid_item_1}>
             <Link route="/"><a href="#">Home</a></Link> > <Link route="/intellectualproperty/register"><a href="#">Register</a></Link>
@@ -129,12 +155,18 @@ class Register1 extends Component {
             <input className={style.testEntry} type="text" placeholder="DD-MM-YEAR" id="publicationDate" value={this.state.publicationDate} onChange={this.onChange_publicationDate}/>
             <p className={style.label2}>Mark description: </p>
             <input className={style.surname} type="text" placeholder="Enter the mark description..." id="markDesc" value={this.state.markDesc} onChange={this.onChange_markDesc}/>
-
             <button className={style.back} type="button" onClick={this.back_2}>Back</button>
             <button className={style.next} type="button" onClick={this.register}>Register trademark</button>
           </form>
         </div>
 
+        <div id="register_patent" className={style.main_grid_container_patent}>
+
+        </div>
+
+        <div id="register_design" className={style.main_grid_container_design}>
+
+        </div>
       </Layout>
     );
   }
