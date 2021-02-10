@@ -14,19 +14,17 @@ contract RegisteredIPFactory {
 
   /* --- Deploys new trademark on the blockchain --- */
   function createTrademark(uint256 publication_date, string memory mark_desc, string memory hash_input) public {
-    uint256 timeInTenYearsFromNow = block.timestamp + 10 * 365 days;
-    deployedTrademarks.push(address(new Trademark("disabled", block.timestamp, publication_date, block.timestamp, msg.sender, timeInTenYearsFromNow, mark_desc, hash_input)));
+    deployedTrademarks.push(address(new Trademark("disabled", block.timestamp, publication_date, block.timestamp, msg.sender, mark_desc, hash_input)));
   }
 
   /* --- Deploys new patent on the blockchain --- */
-  function createPatent(uint256 publication_date, string memory title, string memory service_address, string memory inventor_address, string memory applicant_address, uint256 expiration_date) public {
-    deployedPatents.push(address(new Patent("disabled", block.timestamp, publication_date, block.timestamp, msg.sender, title, service_address, inventor_address, applicant_address, expiration_date)));
+  function createPatent(uint256 publication_date, string memory title, string memory inventor_address) public {
+    deployedPatents.push(address(new Patent("disabled", block.timestamp, publication_date, block.timestamp, msg.sender, title, inventor_address)));
   }
 
   /* --- Deploys new design on the blockchain --- */
   function createDesign(uint256 publication_date, string memory comment, string memory hash_input) public {
-    uint256 timeInTwentyYearsFromNow = block.timestamp + 20 * 365 days;
-    deployedDesigns.push(address(new Design("disabled", block.timestamp, publication_date, block.timestamp, msg.sender, comment, hash_input, timeInTwentyYearsFromNow)));
+    deployedDesigns.push(address(new Design("disabled", block.timestamp, publication_date, block.timestamp, msg.sender, comment, hash_input)));
   }
 
   /* --- Returns all trademarks --- */
@@ -145,8 +143,8 @@ contract Trademark is IntellectualProperty {
   string private markDesc;
   string private markImageHash;
 
-  constructor(string memory status_input, uint256 filing_date, uint256 publish_date, uint256 status_date, address owner_input, uint256 renewal_date, string memory mark_desc, string memory mark_image_hash) IntellectualProperty(status_input, filing_date, publish_date, status_date, owner_input) public {
-    renewalDate = renewal_date;
+  constructor(string memory status_input, uint256 filing_date, uint256 publish_date, uint256 status_date, address owner_input, string memory mark_desc, string memory mark_image_hash) IntellectualProperty(status_input, filing_date, publish_date, status_date, owner_input) public {
+    renewalDate = block.timestamp + 10 * 365 days;
     markDesc = mark_desc;
     markImageHash = mark_image_hash;
   }
@@ -178,34 +176,22 @@ contract Trademark is IntellectualProperty {
 
 contract Patent is IntellectualProperty {
   string private title;
-  string private addressForService;
   string private inventorAddress;
-  string private applicantAddress;
   uint256 private expirationDate;
 
   /* --- Constructor that links to parent contract --- */
-  constructor(string memory status_input, uint256 filing_date, uint256 publish_date, uint256 status_date, address owner_input, string memory title_input, string memory service_address, string memory inventor_address, string memory applicant_address, uint256 expiration_date) IntellectualProperty(status_input, filing_date, publish_date, status_date, owner_input) public {
+  constructor(string memory status_input, uint256 filing_date, uint256 publish_date, uint256 status_date, address owner_input, string memory title_input, string memory inventor_address) IntellectualProperty(status_input, filing_date, publish_date, status_date, owner_input) public {
     title = title_input;
-    addressForService = service_address;
     inventorAddress = inventor_address;
-    applicantAddress = applicant_address;
-    expirationDate = expiration_date;
+    expirationDate = block.timestamp + 20 * 365 days;
   }
 
   function getTitle() public view returns(string memory) {
     return title;
   }
 
-  function getAddressForService() public view returns(string memory) {
-    return addressForService;
-  }
-
   function getInventorAddress() public view returns(string memory) {
     return inventorAddress;
-  }
-
-  function getApplicantAddress() public view returns(string memory) {
-    return applicantAddress;
   }
 
   function getExpirationDate() public view returns(uint256) {
@@ -216,16 +202,8 @@ contract Patent is IntellectualProperty {
     title = title_input;
   }
 
-  function setAddressForService(string memory address_input) public restricted {
-    addressForService = address_input;
-  }
-
   function setInventorAddress(string memory address_input) public restricted {
     inventorAddress = address_input;
-  }
-
-  function setApplicantAddress(string memory address_input) public restricted {
-    applicantAddress = address_input;
   }
 
   function setExpirationDate(uint256 date_input) public restricted {
@@ -239,8 +217,8 @@ contract Design is IntellectualProperty {
   string private designHash;
 
    /* --- Constructor that links to parent contract --- */
-  constructor(string memory status_input, uint256 filing_date, uint256 publish_date, uint256 status_date, address owner_input, string memory comment_input, string memory design_hash, uint256 expiration_date) IntellectualProperty(status_input, filing_date, publish_date, status_date, owner_input) public {
-    expirationDate = expiration_date;
+  constructor(string memory status_input, uint256 filing_date, uint256 publish_date, uint256 status_date, address owner_input, string memory comment_input, string memory design_hash) IntellectualProperty(status_input, filing_date, publish_date, status_date, owner_input) public {
+    expirationDate = block.timestamp + 5 * 365 days;
     comment = comment_input;
     designHash = design_hash;
   }
