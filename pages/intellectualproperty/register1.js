@@ -73,7 +73,7 @@ class Register1 extends Component {
         document.getElementById("register_1").style.display = "none";
 
         if (typeOfIP == 'trademark') {
-          document.getElementById("register_2").style.display = "grid";
+          document.getElementById("register_trademark").style.display = "grid";
         } else if (typeOfIP == 'patent') {
           document.getElementById("register_patent").style.display = "grid";
         } else if (typeOfIP == 'design') {
@@ -138,7 +138,7 @@ class Register1 extends Component {
   }
 
   back_2 = (event) => {
-    document.getElementById("register_2").style.display = "none";
+    document.getElementById("register_trademark").style.display = "none";
     document.getElementById("register_patent").style.display = "none";
     document.getElementById("register_1").style.display = "grid";
     document.getElementById("typeOfIP").style.border = "none";
@@ -269,18 +269,18 @@ class Register1 extends Component {
           </form>
         </div>
 
-        <div id="register_2" className={style.main_grid_container_2}>
-          <nav className={style.grid_item_2}>
+        <div id="register_trademark" className={style.main_grid_container_trademark}>
+          <nav className={style.grid_item_trademark}>
             <Link route="/"><a href="#">Home</a></Link> > <Link route="/intellectualproperty/register"><a href="#">Register</a></Link>
           </nav>
-          <form className={[style.grid_item_2, style.section_form_2].join(" ")}>
+          <form className={[style.grid_item_trademark, style.section_form_trademark].join(" ")}>
             <h2>Intellectual Property Registration Form 2/2 (Trademark)</h2>
-            <p className={style.test}>Publication date: </p>
-            <input className={style.testEntry} type="text" placeholder="DD-MM-YEAR" id="publicationDate" value={this.state.publicationDateString} onChange={this.onChange_publicationDate}/>
-            <p className={style.label2}>Mark description: </p>
-            <input className={style.surname} type="text" placeholder="Enter the mark description..." id="markDesc" value={this.state.markDesc} onChange={this.onChange_markDesc}/>
-            <button className={style.back} type="button" onClick={this.back_2}>Back</button>
-            <button className={style.next} type="button" onClick={this.register}>Register trademark</button>
+            <p className={style.pubDate_label_trademark}>Publication date: </p>
+            <input className={style.pubDate_trademark} type="text" placeholder="DD-MM-YEAR" id="publicationDate" value={this.state.publicationDateString} onChange={this.onChange_publicationDate}/>
+            <p className={style.markDesc_label_trademark}>Mark description: </p>
+            <input className={style.markDesc_trademark} type="text" placeholder="Enter the mark description..." id="markDesc" value={this.state.markDesc} onChange={this.onChange_markDesc}/>
+            <button className={style.back_trademark} type="button" onClick={this.back_2}>Back</button>
+            <button className={style.register_trademark} type="button" onClick={this.register}>Register trademark</button>
           </form>
         </div>
 
@@ -290,8 +290,8 @@ class Register1 extends Component {
           </nav>
           <form className={[style.grid_item_patent, style.section_form_patent].join(" ")}>
             <h2>Intellectual Property Registration Form 2/2 (Patent)</h2>
-            <p className={style.publicationDate_label_patent}>Publication date:</p>
-            <input className={style.publicationDate_patent} type="text" placeholder="DD-MM-YEAR" id="publicationDate_patent" value={this.state.publicationDateString} onChange={this.onChange_publicationDate} />
+            <p className={style.pubDate_label_patent}>Publication date:</p>
+            <input className={style.pubDate_patent} type="text" placeholder="DD-MM-YEAR" id="publicationDate_patent" value={this.state.publicationDateString} onChange={this.onChange_publicationDate} />
             <p className={style.title_label_patent}>Title: </p>
             <input className={style.title_patent} type="text" placeholder="Enter the patent title..." id="patentTitle" value={this.state.patentTitle} onChange={this.onChange_patentTitle} />
             <p className={style.addressLine1_label_patent}>Address line 1:</p>
@@ -306,9 +306,9 @@ class Register1 extends Component {
             <input className={style.addressLinePostcode_patent} type="text" placeholder="Enter the postcode..." id="addressLinePostcode_patent" value={this.state.addressLinePostcode_patent} onChange={this.onChange_addressLinePostcode_patent}/>
             <p className={style.addressLineCountry_label_patent}>Country:</p>
             <input className={style.addressLineCountry_patent} type="text" placeholder="Enter the country..." id="addressLineCountry_patent" value={this.state.addressLineCountry_patent} onChange={this.onChange_addressLineCountry_patent}/>
+              <button className={style.back_patent} type="button" onClick={this.back_2}>Back</button>
+              <button className={style.register_patent} type="button" onClick={this.register_patent}>Register patent</button>
           </form>
-          <button className={style.back} type="button" onClick={this.back_2}>Back</button>
-          <button className={style.next} type="button" onClick={this.register_patent}>Register trademark</button>
         </div>
 
         <div id="register_design" className={style.main_grid_container_design}>
