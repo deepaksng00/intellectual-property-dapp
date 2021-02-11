@@ -14,7 +14,13 @@ class Register1 extends Component {
     publicationDate: '',
     markDesc: '',
     md5: '',
-    publicationDateString: ''
+    publicationDateString: '',
+    patentTitle: '',
+    addressLine1_patent: '',
+    addressLine2_patent: '',
+    addressLineCity_patent: '',
+    addressLineCounty_patent: '',
+    addressLineCountry_patent: ''
   }
 
   async componentDidMount() {
@@ -78,7 +84,14 @@ class Register1 extends Component {
   }
 
   onChange_publicationDate = (event) => {
-    const publicationDateString = document.getElementById("publicationDate").value;
+    const pubDateString_trademark = document.getElementById("publicationDate");
+    const pubDateString_patent = document.getElementById("publicationDate_patent");
+    let publicationDateString;
+    if (pubDateString_trademark.display != "none") {
+      publicationDateString = pubDateString_trademark.value;
+    } else if (pubDateString_patent.display != "none") {
+      publicationDateString = pubDateString_patent.value;
+    }
     var res = publicationDateString.split("-");
     var d = new Date(res[2], res[1]-1, res[0]);
     const publicationDate = d.getTime() / 1000;
@@ -89,6 +102,41 @@ class Register1 extends Component {
   onChange_markDesc = (event) => {
     const markDesc = document.getElementById("markDesc").value;
     this.setState({ markDesc });
+  }
+
+  onChange_patentTitle = (event) => {
+    const patentTitle = document.getElementById("patentTitle").value;
+    this.setState({ patentTitle });
+  }
+
+  onChange_addressLine1_patent = (event) => {
+    const addressLine1_patent = document.getElementById("addressLine1_patent").value;
+    this.setState({ addressLine1_patent });
+  }
+
+  onChange_addressLine2_patent = (event) => {
+    const addressLine2_patent = document.getElementById("addressLine2_patent").value;
+    this.setState({ addressLine2_patent });
+  }
+
+  onChange_addressLineCity_patent = (event) => {
+    const addressLineCity_patent = document.getElementById("addressLineCity_patent").value;
+    this.setState({ addressLineCity_patent });
+  }
+
+  onChange_addressLineCounty_patent = (event) => {
+    const addressLineCounty_patent = document.getElementById("addressLineCounty_patent").value;
+    this.setState({ addressLineCounty_patent });
+  }
+
+  onChange_addressLinePostcode_patent = (event) => {
+    const addressLinePostcode_patent = document.getElementById("addressLinePostcode_patent").value;
+    this.setState({ addressLinePostcode_patent });
+  }
+
+  onChange_addressLineCountry_patent = (event) => {
+    const addressLineCountry_patent = document.getElementById("addressLineCountry_patent").value;
+    this.setState({ addressLineCountry_patent });
   }
 
   back_2 = (event) => {
@@ -180,7 +228,7 @@ class Register1 extends Component {
             <Link route="/"><a href="#">Home</a></Link> > <Link route="/intellectualproperty/register"><a href="#">Register</a></Link>
           </nav>
           <form className={[style.grid_item_2, style.section_form_2].join(" ")}>
-            <h2>Intellectual Property Registration Form 2/2</h2>
+            <h2>Intellectual Property Registration Form 2/2 (Trademark)</h2>
             <p className={style.test}>Publication date: </p>
             <input className={style.testEntry} type="text" placeholder="DD-MM-YEAR" id="publicationDate" value={this.state.publicationDateString} onChange={this.onChange_publicationDate}/>
             <p className={style.label2}>Mark description: </p>
@@ -191,7 +239,28 @@ class Register1 extends Component {
         </div>
 
         <div id="register_patent" className={style.main_grid_container_patent}>
-
+          <nav className={style.grid_item_patent}>
+            <Link route="/"><a href="#">Home</a></Link> > <Link route="/intellectualproperty/register"><a href="#">Register</a></Link>
+          </nav>
+          <form className={[style.grid_item_patent, style.section_form_patent].join(" ")}>
+            <h2>Intellectual Property Registration Form 2/2 (Patent)</h2>
+            <p className={style.publicationDate_label_patent}>Publication date:</p>
+            <input className={style.publicationDate_patent} type="text" placeholder="DD-MM-YEAR" id="publicationDate_patent" value={this.state.publicationDateString} onChange={this.onChange_publicationDate} />
+            <p className={style.title_label_patent}>Title: </p>
+            <input className={style.title_patent} type="text" placeholder="Enter the patent title..." id="patentTitle" value={this.state.patentTitle} onChange={this.onChange_patentTitle} />
+            <p className={style.addressLine1_label_patent}>Address line 1:</p>
+            <input className={style.addressLine1_patent} type="text" placeholder="Enter address line 1..." id="addressLine1_patent" value={this.state.addressLine1_patent} onChange={this.onChange_addressLine1_patent}/>
+            <p className={style.addressLine2_label_patent}>Address line 2:</p>
+            <input className={style.addressLine2_patent} type="text" placeholder="Enter address line 2..." id="addressLine2_patent" value={this.state.addressLine2_patent} onChange={this.onChange_addressLine2_patent}/>
+            <p className={style.addressLineCity_label_patent}>City:</p>
+            <input className={style.addressLineCity_patent} type="text" placeholder="Enter the city..." id="addressLineCity_patent" value={this.state.addressLineCity_patent} onChange={this.onChange_addressLineCity_patent}/>
+            <p className={style.addressLineCounty_label_patent}>County:</p>
+            <input className={style.addressLineCounty_patent} type="text" placeholder="Enter the county..." id="addressLineCounty_patent" value={this.state.addressLineCounty_patent} onChange={this.onChange_addressLineCounty_patent}/>
+            <p className={style.addressLinePostcode_label_patent}>Postcode:</p>
+            <input className={style.addressLinePostcode_patent} type="text" placeholder="Enter the postcode..." id="addressLinePostcode_patent" value={this.state.addressLinePostcode_patent} onChange={this.onChange_addressLinePostcode_patent}/>
+            <p className={style.addressLineCountry_label_patent}>Country:</p>
+            <input className={style.addressLineCountry_patent} type="text" placeholder="Enter the country..." id="addressLineCountry_patent" value={this.state.addressLineCountry_patent} onChange={this.onChange_addressLineCountry_patent}/>
+          </form>
         </div>
 
         <div id="register_design" className={style.main_grid_container_design}>
