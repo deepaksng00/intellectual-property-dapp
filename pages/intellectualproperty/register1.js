@@ -86,10 +86,8 @@ class Register1 extends Component {
   onChange_publicationDate = (event) => {
     const pubDateString_trademark = document.getElementById("publicationDate");
     const pubDateString_patent = document.getElementById("publicationDate_patent");
-    let publicationDateString;
-    if (pubDateString_trademark.display != "none") {
-      publicationDateString = pubDateString_trademark.value;
-    } else if (pubDateString_patent.display != "none") {
+    var publicationDateString = pubDateString_trademark.value;
+    if (document.getElementById("register_patent").style.display == "grid") {
       publicationDateString = pubDateString_patent.value;
     }
     var res = publicationDateString.split("-");
@@ -141,6 +139,7 @@ class Register1 extends Component {
 
   back_2 = (event) => {
     document.getElementById("register_2").style.display = "none";
+    document.getElementById("register_patent").style.display = "none";
     document.getElementById("register_1").style.display = "grid";
     document.getElementById("typeOfIP").style.border = "none";
     document.getElementById("file_upload").style.border = "none";
@@ -189,6 +188,53 @@ class Register1 extends Component {
     console.log("Renewal date: " + renewal_date);
     console.log("Mark description: " + mark_desc);
     console.log("Mark hash: " + mark_hash);
+  }
+
+  register_patent = async (event) => {
+    const addresses = await web3.eth.getAccounts();
+    // trademark
+    const compiled_patent = require("../../ethereum/build/Patent.json");
+
+    alert("Creating IP...");
+
+    const inventorAddress_Full = this.state.addressLine1_patent + ", " + this.state.addressLine2_patent + ", " + this.state.addressLineCity_patent + ", " + this.state.addressLineCounty_patent + ", " + this.state.addressLinePostcode_patent + ", " + this.state.addressLineCountry_patent;
+
+    await factory.methods.createPatent(this.state.publicationDate, this.state.patentTitle, inventorAddress_Full).send({
+      from: addresses[0],
+      gasLimit: "5000000"
+    });
+
+    const patents = await factory.methods.getPatents().call();
+    const numOfPatents = await factory.methods.getNumOfPatents().call();
+    const address = patents[numOfPatents-1];
+    const patent = await new web3.eth.Contract(compiled_patent.abi, address);
+
+    const filingDate_UNIX = await patent.methods.getFilingDate().call();
+    const patent_date_obj = new Date(filingDate_UNIX * 1000);
+    const filingDate = patent_date_obj.getFullYear().toString() + "-" + (patent_date_obj.getMonth()+1).toString() + "-" + patent_date_obj.getDate().toString();
+    const owner = await patent.methods.getOwner().call();
+    const status = await patent.methods.getStatus().call();
+    const publicationDate_UNIX = await patent.methods.getPublicationDate().call();
+    const publicationDate_obj = new Date(publicationDate_UNIX * 1000);
+    const publicationDate = publicationDate_obj.getFullYear().toString() + "-" + (publicationDate_obj.getMonth()+1).toString() + "-" + publicationDate_obj.getDate().toString();
+    const status_date_UNIX = await patent.methods.getStatusDate().call();
+    const status_date_object = new Date(status_date_UNIX * 1000);
+    const status_date = status_date_object.getFullYear().toString() + "-" + (status_date_object.getMonth()+1).toString() + "-" + status_date_object.getDate().toString();
+    const renewal_date_UNIX = await patent.methods.getExpirationDate().call();
+    const renewal_date_obj = new Date(renewal_date_UNIX * 1000);
+    const renewal_date = renewal_date_obj.getFullYear().toString() + "-" + (renewal_date_obj.getMonth()+1).toString() + "-" + renewal_date_obj.getDate().toString();
+    const inventorAddress = await patent.methods.getInventorAddress().call();
+    const title = await patent.methods.getTitle().call();
+
+    console.log("Address: " + address);
+    console.log("Owner: " + owner);
+    console.log("Status: " + status);
+    console.log("Status last changed: " + status_date)
+    console.log("Filing date: " + filingDate);
+    console.log("Publication date: " + publicationDate);
+    console.log("Renewal date: " + renewal_date);
+    console.log("Inventor address: " + inventorAddress);
+    console.log("Title: " + title);
   }
 
   render() {
@@ -261,6 +307,8 @@ class Register1 extends Component {
             <p className={style.addressLineCountry_label_patent}>Country:</p>
             <input className={style.addressLineCountry_patent} type="text" placeholder="Enter the country..." id="addressLineCountry_patent" value={this.state.addressLineCountry_patent} onChange={this.onChange_addressLineCountry_patent}/>
           </form>
+          <button className={style.back} type="button" onClick={this.back_2}>Back</button>
+          <button className={style.next} type="button" onClick={this.register_patent}>Register trademark</button>
         </div>
 
         <div id="register_design" className={style.main_grid_container_design}>
