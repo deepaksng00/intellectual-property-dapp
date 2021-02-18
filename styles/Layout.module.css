@@ -1,35 +1,203 @@
-.main_container {
-  margin: 0;
+.header {
+  background-color: #333333;
+  color: white;
+  padding: 1.5% 4% 1.5% 4%;
+  display: grid;
+  grid-template-areas: "title . . . home register search faq";
+  align-items: center;
 }
 
-.header {
-  background-color: #4d0066;
-  padding-left: 5%;
-  display: relative;
-  top: 0;
-  padding-top: 1%;
-  padding-bottom: 1%;
+.header > h1 {
+  font-size: 1.7rem;
+}
+
+.header > h4 {
+  font-size: 1.2rem;
 }
 
 .title {
-  font-size: 2em;
-  color: white;
-  margin: 0;
+  grid-area: title;
 }
 
 .title:hover {
+  cursor: pointer;
+}
+
+.headerButton {
+  justify-self: center;
+}
+
+.headerButton:hover {
   opacity: 0.8;
+  cursor: pointer;
+}
+
+.home {
+  grid-area: home;
+}
+
+.register {
+  grid-area: register;
+}
+
+.search {
+  grid-area: search;
+}
+
+.about_us {
+  grid-area: about_us;
+}
+
+.faq {
+  grid-area: faq;
+}
+
+.menuContainer {
+  display: none;
 }
 
 .footer {
-  background-color: #4d0066;
+  display: grid;
+  background-color: #333333;
   color: white;
-  padding-left: 5%;
-  padding-right: 5%;
-  padding-top: 2%;
-  padding-bottom: 2%;
+  padding: 1.5% 4% 1.5% 4%;
+  grid-template-rows: 1fr 2fr 1fr;
+  grid-template-columns: auto 0.5fr 1fr 1fr;
+  grid-template-areas:
+    "footerTitle . . ."
+    "ethereumImage . privacyPolicy aboutUs"
+    "ethereumImage . termsAndConditions contactUs";
 }
 
 .footer > h2 {
-  margin: 0;
+  grid-area: footerTitle;
+  min-width: 0;
+}
+
+.ethereumImage {
+  grid-area: ethereumImage;
+  justify-self: center;
+}
+
+.ethereumImage > img {
+  width: 6rem;
+}
+
+.privacyPolicy {
+  grid-area: privacyPolicy;
+}
+
+.termsAndConditions {
+  grid-area: termsAndConditions;
+}
+
+.aboutUs {
+  grid-area: aboutUs;
+}
+
+.contactUs {
+  grid-area: contactUs;
+}
+
+.footerButton {
+  font-size: 1rem;
+}
+
+.footerButton:hover {
+  opacity: 0.8;
+  cursor: pointer;
+}
+
+@media only screen and (max-width: 768px) {
+  .header {
+    background-color: #333333;
+    color: white;
+    display: grid;
+    grid-template-areas:
+    "title title title . menu";
+    align-items: center;
+  }
+
+  .title {
+    justify-self: start;
+    padding: 0;
+    margin: 0;
+  }
+
+  .header > h1 {
+    font-size: 1.3rem;
+  }
+
+  .menuContainer {
+    grid-area: menu;
+    display: inline-block;
+    cursor: pointer;
+    justify-self: center;
+  }
+
+  .bar1, .bar2, .bar3 {
+    width: 2.4rem;
+    height: 5px;
+    background-color: white;
+    margin: 7px 0;
+    transition: 0.4s;
+  }
+
+  .change .bar1 {
+    -webkit-transform: rotate(-45deg) translate(-9px, 6px);
+    transform: rotate(-45deg) translate(-9px, 6px);
+  }
+
+  .change .bar2 {opacity: 0;}
+
+  .change .bar3 {
+    -webkit-transform: rotate(45deg) translate(-8px, -8px);
+    transform: rotate(45deg) translate(-8px, -8px);
+  }
+
+  .home {
+    display: none;
+  }
+
+  .register {
+    display: none;
+  }
+
+  .search {
+    display: none;
+  }
+
+  .about_us {
+    display: none;
+  }
+
+  .faq {
+    display: none;
+  }
+
+  .footer {
+    display: grid;
+    background-color: #333333;
+    color: white;
+    grid-template-rows: 1fr auto 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      "footerTitle footerTitle"
+      "ethereumImage ethereumImage"
+      "privacyPolicy contactUs"
+      "aboutUs termsAndConditions";
+    grid-gap: 30px;
+  }
+
+  .footer > h2 {
+    justify-self: center;
+  }
+
+  .ethereumImage {
+    justify-self: center;
+  }
+
+  .footerButton {
+    justify-self: center;
+  }
 }

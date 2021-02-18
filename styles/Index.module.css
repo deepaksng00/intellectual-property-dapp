@@ -1,82 +1,68 @@
-.main_grid_container {
+.grid {
   display: grid;
   grid-template-areas:
-    "nav"
-    "welcome"
-    "search"
-    "register"
-    "register-button"
+    "image"
+    "section2";
+  grid-template-rows: 500px 1fr;
+  grid-template-columns: auto;
 }
 
-.grid_item {
-  margin-left: 5%;
-  margin-right: 5%;
+.image {
+  grid-area: image;
+  background-image: url('/blockchain.png');
+  background-position: 0 18%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas:
+    "header header"
+    "paragraphs .";
+  grid-template-rows: auto 1fr;
+  padding: 4.5% 4% 1.5% 4%;
+  grid-gap: 20px;
 }
 
-.main_grid_container > nav {
-  margin-top: 1%;
-  grid-area: nav;
-}
-
-.section_welcome {
-  grid-area: welcome;
-  border-bottom: 2px solid #4d0066;
-}
-
-.section_search {
-  grid-area: search;
-  border-bottom: 2px solid #4d0066;
-  padding-bottom: 2%;
-}
-
-.section_search > form {
-  margin-bottom: 2%;
-  display: flex;
-}
-
-.section_search > form > input {
-  transition: padding 0.5s;
-  padding: 1%;
-  border-radius: 5px;
-  border: 1px solid #4d0066;
-  font-size: 1rem;
-  width: 40%;
-}
-
-.section_search > form > button {
-  transition: padding 0.5s;
-  padding: 1%;
-  border-radius: 5px;
-  border: 1px solid #4d0066;
-  background-color: #4d0066;
+.image > h4 {
+  grid-area: header;
+  font-size: 2rem;
   color: white;
-  font-size: 1rem;
-  margin-left: 1%;
+  /* text-shadow: 2px 2px 4px black; */
 }
 
-.section_search > form > button:hover {
-  padding: 1.5%;
+.paragraphs {
+  grid-area: paragraphs;
 }
 
-.section_register {
-  grid-area: register;
-}
-
-.button_start_register {
-  grid-area: register-button;
-  background-color: #4d0066;
-  width: 20%;
-  justify-self: center;
-  padding: 1.2%;
-  border: none;
-  border-radius: 30px;
-  font-size: 1.2rem;
+.p1 {
+  background-color: none;
   color: white;
-  margin-top: 2%;
-  margin-bottom: 2%;
-  transition: width 0.5s;
+  /* text-shadow: 2px 2px 4px black; */
 }
 
-.button_start_register:hover {
-  width: 22%;
+.p2 {
+  background-color: none;
+  color: white;
+}
+
+.section2 {
+  grid-area: section2;
+}
+
+@media only screen and (max-width: 768px) {
+  .image {
+    grid-area: image;
+    background-image: url('/blockchain.png');
+    background-position: 0% 140px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      "header header"
+      "paragraph paragraph";
+    grid-template-rows: auto 1fr;
+    padding: 4.5% 4% 1.5% 4%;
+    grid-gap: 20px;
+  }
 }

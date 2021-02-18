@@ -1,25 +1,10 @@
-html, body {
+* {
   font-family: Arial, sans-serif;
-  margin: 0px;
-  padding: 0px;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
 }
 
-.main-container {
-  display: grid;
-}
-
-h2 {
-  color: #4d0066;
-}
-
-ol {
-  line-height: 2rem;
-}
-
-p {
-  line-height: 1.6;
-}
-
-footer > h2 {
-  color: white;
+body {
+  background-color: #333333;
 }

@@ -1,0 +1,427 @@
+.main_grid_container_1 {
+  display: grid;
+  grid-template-areas:
+    "nav"
+    "form";
+}
+
+.grid_item_1 {
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
+.main_grid_container_1 > nav {
+  grid-area: nav;
+  margin-top: 1%;
+  justify-content: center;
+}
+
+.section_form_1 {
+  grid-area: form;
+  margin-top: 2%;
+  display: grid;
+  grid-template-areas:
+    "title_header_1 title_header_1"
+    "accountLabel account"
+    "dateLabel date"
+    "typeOfIPLabel typeOfIP"
+    "fileLabel file"
+    "submit submit";
+}
+
+.section_form_1 > h2 {
+  grid-area: title_header_1;
+}
+
+.section_form_1 > input {
+  padding: 1%;
+  border-radius: 5px;
+  border: 1px solid #4d0066;
+  font-size: 1rem;
+  margin-top: 3%;
+}
+
+.section_form_1 > button {
+  grid-area: submit;
+  background-color: #4d0066;
+  width: 50%;
+  padding: 2%;
+  border: none;
+  border-radius: 30px;
+  font-size: 1.2rem;
+  color: white;
+  margin-top: 2%;
+  margin-bottom: 2%;
+  transition: width 0.5s;
+  justify-self: center;
+  width: 8rem;
+}
+
+.section_form_1 > button:hover {
+  width: 10rem;
+}
+
+.accountLabel {
+  grid-area: accountLabel;
+  margin-top: 3%;
+}
+
+.account {
+  grid-area: account;
+  font-size: 1rem;
+  padding: 2%;
+  border: 1px solid #4d0066;
+  border-radius: 5px;
+}
+
+.dateLabel {
+  grid-area: dateLabel;
+  margin-top: 3%;
+}
+
+.date {
+  grid-area: date;
+}
+
+.typeOfIPLabel {
+  grid-area: typeOfIPLabel;
+  margin-top: 3%;
+}
+
+.typeOfIP {
+  grid-area: typeOfIP;
+  margin-top: 3%;
+  padding: 1%;
+}
+
+.fileLabel {
+  grid-area: fileLabel;
+}
+
+.file {
+  grid-area: file;
+}
+
+.main_grid_container_trademark {
+  display: none;
+  grid-template-areas:
+    "nav"
+    "form";
+}
+
+.grid_item_trademark {
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
+.main_grid_container_trademark > nav {
+  grid-area: nav;
+  margin-top: 1%;
+  justify-content: center;
+}
+
+.section_form_trademark {
+  grid-area: form;
+  margin-top: 2%;
+  display: grid;
+  grid-template-areas:
+    "header_trademark_1 header_trademark_1"
+    "pubDate_label_trademark pubDate_trademark"
+    "markDesc_label_trademark markDesc_trademark"
+    "back_trademark register_trademark";
+}
+
+.section_form_trademark > h2 {
+  grid-area: header_trademark_1;
+}
+
+.section_form_trademark > input {
+  padding: 1%;
+  border-radius: 5px;
+  border: 1px solid #4d0066;
+  font-size: 1rem;
+  margin-top: 3%;
+}
+
+.section_form_trademark > button {
+  background-color: #4d0066;
+  width: 50%;
+  padding: 2%;
+  border: none;
+  border-radius: 30px;
+  font-size: 1.2rem;
+  color: white;
+  margin-top: 2%;
+  margin-bottom: 2%;
+  transition: width 0.5s;
+  width: 8rem;
+  justify-self: center;
+}
+
+.section_form_trademark > button:hover {
+  width: 10rem;
+}
+
+.pubDate_label_trademark {
+  grid-area: pubDate_label_trademark;
+  margin-top: 3%;
+}
+
+.pubDate_trademark {
+  grid-area: pubDate_trademark;
+  font-size: 1rem;
+  padding: 2%;
+  border: 1px solid #4d0066;
+  border-radius: 5px;
+}
+
+.markDesc_label_trademark {
+  grid-area: markDesc_label_trademark;
+  margin-top: 3%;
+}
+
+.markDesc_trademark {
+  grid-area: markDesc_trademark;
+}
+
+.back_trademark {
+  grid-area: back_trademark;
+}
+
+.register_trademark {
+  grid-area: register_trademark;
+}
+
+.main_grid_container_patent {
+  display: none;
+  grid-template-areas:
+    "nav"
+    "form";
+}
+
+.grid_item_patent {
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
+.main_grid_container_patent > nav {
+  grid-area: nav;
+  margin-top: 1%;
+  justify-content: center;
+}
+
+.section_form_patent {
+  grid-area: form;
+  margin-top: 2%;
+  display: grid;
+  grid-template-areas:
+    "header_patent_1 header_patent_1"
+    "pubDate_label_patent pubDate_patent"
+    "title_label_patent title_patent"
+    "addressLine1_label_patent addressLine1_patent"
+    "addressLine2_label_patent addressLine2_patent"
+    "addressLineCity_label_patent addressLineCity_patent"
+    "addressLineCounty_label_patent addressLineCounty_patent"
+    "addressLinePostcode_label_patent addressLinePostcode_patent"
+    "addressLineCountry_label_patent addressLineCountry_patent"
+    "back_patent register_patent";
+}
+
+.section_form_patent > h2 {
+  grid-area: header_patent_1;
+}
+
+.section_form_patent > input {
+  padding: 1%;
+  border-radius: 5px;
+  border: 1px solid #4d0066;
+  font-size: 1rem;
+  margin-top: 3%;
+}
+
+.section_form_patent > button {
+  background-color: #4d0066;
+  width: 50%;
+  padding: 2%;
+  border: none;
+  border-radius: 30px;
+  font-size: 1.2rem;
+  color: white;
+  margin-top: 2%;
+  margin-bottom: 2%;
+  transition: width 0.5s;
+  width: 8rem;
+  justify-self: center;
+}
+
+.section_form_patent > button:hover {
+  width: 10rem;
+}
+
+.pubDate_label_patent {
+  grid-area: pubDate_label_patent;
+  margin-top: 3%;
+}
+
+.pubDate_patent {
+  grid-area: pubDate_patent;
+  font-size: 1rem;
+  padding: 2%;
+  border: 1px solid #4d0066;
+  border-radius: 5px;
+}
+
+.title_label_patent {
+  grid-area: title_label_patent;
+  margin-top: 3%;
+}
+
+.title_patent {
+  grid-area: title_patent;
+}
+
+.addressLine1_label_patent {
+  grid-area: addressLine1_label_patent;
+}
+
+.addressLine1_patent {
+  grid-area: addressLine1_patent;
+}
+
+.addressLine2_label_patent {
+  grid-area: addressLine2_label_patent;
+}
+
+.addressLine2_patent {
+  grid-area: addressLine2_patent;
+}
+
+.addressLineCity_label_patent {
+  grid-area: addressLineCity_label_patent;
+}
+
+.addressLineCity_patent {
+  grid-area: addressLineCity_patent;
+}
+
+.addressLineCounty_label_patent {
+  grid-area: addressLineCounty_label_patent;
+}
+
+.addressLineCounty_patent {
+  grid-area: addressLineCounty_patent;
+}
+
+.addressLinePostcode_label_patent {
+  grid-area: addressLinePostcode_label_patent;
+}
+
+.addressLinePostcode_patent {
+  grid-area: addressLinePostcode_patent;
+}
+
+.addressLineCountry_label_patent {
+  grid-area: addressLineCountry_label_patent;
+}
+
+.addressLineCountry_patent {
+  grid-area: addressLineCountry_patent;
+}
+
+.back_patent {
+  grid-area: back_patent;
+}
+
+.register_patent {
+  grid-area: register_patent;
+}
+
+.main_grid_container_design {
+  display: none;
+  grid-template-areas:
+    "nav"
+    "form";
+}
+
+.grid_item_design {
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
+.main_grid_container_design > nav {
+  grid-area: nav;
+  margin-top: 1%;
+  justify-content: center;
+}
+
+.section_form_design {
+  grid-area: form;
+  margin-top: 2%;
+  display: grid;
+  grid-template-areas:
+    "header_design_1 header_design_1"
+    "pubDate_label_design pubDate_design"
+    "comment_label_design comment_design"
+    "back_design register_design";
+}
+
+.section_form_design > h2 {
+  grid-area: header_design_1;
+}
+
+.section_form_design > input {
+  padding: 1%;
+  border-radius: 5px;
+  border: 1px solid #4d0066;
+  font-size: 1rem;
+  margin-top: 3%;
+}
+
+.section_form_design > button {
+  background-color: #4d0066;
+  width: 50%;
+  padding: 2%;
+  border: none;
+  border-radius: 30px;
+  font-size: 1.2rem;
+  color: white;
+  margin-top: 2%;
+  margin-bottom: 2%;
+  transition: width 0.5s;
+  width: 8rem;
+  justify-self: center;
+}
+
+.section_form_design > button:hover {
+  width: 10rem;
+}
+
+.pubDate_label_design {
+  grid-area: pubDate_label_design;
+  margin-top: 3%;
+}
+
+.pubDate_design {
+  grid-area: pubDate_design;
+  font-size: 1rem;
+  padding: 2%;
+  border: 1px solid #4d0066;
+  border-radius: 5px;
+}
+
+.comment_label_design {
+  grid-area: comment_label_design;
+  margin-top: 3%;
+}
+
+.comment_design {
+  grid-area: comment_design;
+}
+
+.back_design {
+  grid-area: back_design;
+}
+
+.register_design {
+  grid-area: register_design;
+}

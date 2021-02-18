@@ -3,6 +3,5 @@
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
   "/": "pages/index.js",
-  "/intellectualproperty/register1": "pages/intellectualproperty/register1.js",
-  "/next/dist/pages/_error": "pages/next/dist/pages/_error.js"
+  "/intellectualproperty/register": "pages/intellectualproperty/register.js"
 }
