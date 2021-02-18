@@ -1,0 +1,89 @@
+.form {
+  padding: 1.5% 4% 1.5% 4%;
+  display: grid;
+  color: white;
+  grid-gap: 30px;
+  grid-template-areas:
+    "title title"
+    "addressLabel address"
+    "dateLabel date"
+    "typeOfIPLabel typeOfIP"
+    "markDescLabel markDesc"
+    "markHashLabel markHash"
+    ". . "
+    "back next";
+  grid-template-rows: auto auto auto auto auto auto 50px auto;
+}
+
+.form > h2 {
+  grid-area: title;
+}
+
+.form > input {
+  border-radius: 20px;
+  border: none;
+  padding: 1rem;
+  font-size: 1rem;
+}
+
+.addressLabel {
+  grid-area: addressLabel;
+}
+
+.address {
+  grid-area: address;
+}
+
+.dateLabel {
+  grid-area: dateLabel;
+}
+
+.date {
+  grid-area: date;
+}
+
+.typeOfIPLabel {
+  grid-area: typeOfIPLabel;
+}
+
+.typeOfIP {
+  grid-area: typeOfIP;
+}
+
+.markDescLabel {
+  grid-area: markDescLabel;
+}
+
+.markDesc {
+  grid-area: markDesc;
+}
+
+.markHashLabel {
+  grid-area: markHashLabel;
+}
+
+.markHash {
+  grid-area: markHash;
+}
+
+.form > button {
+  width: 7rem;
+  border-radius: 20px;
+  padding: 1rem;
+  border: none;
+  transition: width 0.2s;
+  justify-self: center;
+}
+
+.next {
+  grid-area: next;
+}
+
+.back {
+  grid-area: back;
+}
+
+.form > button:hover {
+  width: 8rem;
+  cursor: pointer;
+}

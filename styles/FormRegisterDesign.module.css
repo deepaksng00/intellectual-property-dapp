@@ -1,0 +1,45 @@
+.form {
+  padding: 1.5% 4% 1.5% 4%;
+  display: grid;
+  color: white;
+  grid-gap: 30px;
+  grid-template-areas:
+    "title title"
+    "dateLabel date"
+    "typeOfIPLabel typeOfIP"
+    "fileLabel file";
+  grid-template-rows: auto auto auto;
+}
+
+.form > h2 {
+  grid-area: title;
+}
+
+.dateLabel {
+  grid-area: dateLabel;
+}
+
+.date {
+  grid-area: date;
+  border-radius: 20px;
+  border: none;
+  padding: 1rem;
+  font-size: 1rem;
+}
+
+.typeOfIPLabel {
+  grid-area: typeOfIPLabel;
+}
+
+.typeOfIP {
+  grid-area: typeOfIP;
+}
+
+.fileLabel {
+  grid-area: fileLabel;
+}
+
+.file {
+  grid-area: file;
+  font-size: 1rem;
+}

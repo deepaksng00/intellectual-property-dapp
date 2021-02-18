@@ -7,7 +7,7 @@ import web3 from '../ethereum/web3';
 class FormRegisterLogin extends Component {
   continueRegistration = e => {
     e.preventDefault();
-    this.props.nextStep();
+    this.props.nextStep(1);
   }
 
   async componentDidMount() {

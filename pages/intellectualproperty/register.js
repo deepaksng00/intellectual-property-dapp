@@ -2,6 +2,11 @@ import React, { Component } from 'react';
 import Layout from '../../components/Layout';
 import style from '../../styles/Index.module.css';
 import FormRegisterLogin from '../../components/FormRegisterLogin';
+import FormRegisterGeneral from '../../components/FormRegisterGeneral';
+import FormRegisterTrademark from '../../components/FormRegisterTrademark';
+import FormRegisterTrademarkConfirm from '../../components/FormRegisterTrademarkConfirm';
+
+
 import web3 from '../../ethereum/web3';
 
 class Register extends Component {
@@ -10,8 +15,8 @@ class Register extends Component {
     address: '',
     currentDate: '',
     typeOfIP: '',
-    markDesc: '',
     fileHash: '',
+    markDesc: '',
     patentTitle: '',
     addressLine1_patent: '',
     addressLine2_patent: '',
@@ -29,18 +34,18 @@ class Register extends Component {
     this.setState({ currentDate });
   }
 
-  nextStep = () => {
+  nextStep = (steps) => {
     const step = this.state.step;
-    this.setState({ step: step + 1 });
+    this.setState({ step: step + steps });
   }
 
-  previousStep = () => {
+  previousStep = (steps) => {
     const step = this.state.step;
-    this.setState({ step: step - 1 });
+    this.setState({ step: step - steps });
   }
 
-  formChange = input => e => {
-    this.setState({ [input]: e.target.value });
+  formChange = (input, value) => {
+    this.setState({ [input]: value });
   }
 
   render() {
@@ -62,23 +67,50 @@ class Register extends Component {
         return (
           <FormRegisterLogin
             nextStep = { this.nextStep }
+            previousStep = { this.previousStep }
             changeForm = { this.formChange }
             values = { values }
           />
         );
       case 2:
         return (
-          <h2>General Details</h2>
+          <FormRegisterGeneral
+            nextStep = { this.nextStep }
+            previousStep = { this.previousStep }
+            changeForm = { this.formChange }
+            values = { values }
+          />
         );
       case 3:
-        return(
-          <h2>IP specific</h2>
+        return (
+          <FormRegisterTrademark
+            nextStep = { this.nextStep }
+            previousStep = { this.previousStep }
+            changeForm = { this.formChange }
+            values = { values }
+          />
+        );
+      case 4:
+        return (
+          <FormRegisterTrademarkConfirm
+            nextStep = { this.nextStep }
+            previousStep = {this.previousStep}
+            changeForm = { this.formChange }
+            values = { values }
+          />
+        );
+      case 5:
+        return (
+          <h2>Patent</h2>
+        );
+      case 6:
+        return (
+          <h2>Design</h2>
         );
     }
 
     return (
       <Layout>
-        <h3>Ensuring Metamask is connected correctly</h3>
 
       </Layout>
     );
