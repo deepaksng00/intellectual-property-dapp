@@ -17,7 +17,9 @@ export default (props) => {
           <div className={style.bar3}></div>
         </div>
       </header>
-      { props.children }
+      <section>
+        { props.children }
+      </section>
       <footer className={style.footer}>
         <h2>Powered by Ethereum</h2>
         <div className={style.ethereumImage}>
