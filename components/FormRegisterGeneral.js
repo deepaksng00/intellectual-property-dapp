@@ -37,6 +37,11 @@ class FormRegisterGeneral extends Component {
     }
   }
 
+  previousRegistration = e => {
+    e.preventDefault();
+    this.props.previousStep(1);
+  }
+
   async componentDidMount() {
     const { changeForm } = this.props;
     this.setState({ changeForm })
@@ -92,7 +97,8 @@ class FormRegisterGeneral extends Component {
           </div>
           <p className={style.fileLabel}>File: </p>
           <input id="file_upload" className={style.file} onChange={this.file_upload} type="file"/>
-          <button type='button' onClick={ this.continueRegistration }>Login</button>
+          <button className={style.back} type='button' onClick={ this.previousRegistration }>Back</button>
+          <button className={style.next} type='button' onClick={ this.continueRegistration }>Next</button>
         </form>
       </Layout>
     );

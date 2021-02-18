@@ -7,8 +7,10 @@
     "title title"
     "dateLabel date"
     "typeOfIPLabel typeOfIP"
-    "fileLabel file";
-  grid-template-rows: auto auto auto;
+    "fileLabel file"
+    ". ."
+    "back next";
+  grid-template-rows: auto auto auto auto 50px auto;
 }
 
 .form > h2 {
@@ -42,4 +44,21 @@
 .file {
   grid-area: file;
   font-size: 1rem;
+}
+
+.form > button {
+  width: 7rem;
+  border-radius: 20px;
+  padding: 1rem;
+  border: none;
+  transition: width 0.2s;
+  justify-self: center;
+}
+
+.back {
+  grid-area: back;
+}
+
+.next {
+  grid-area: next;
 }
