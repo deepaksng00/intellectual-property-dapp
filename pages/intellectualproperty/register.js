@@ -5,7 +5,7 @@ import FormRegisterLogin from '../../components/FormRegisterLogin';
 import FormRegisterGeneral from '../../components/FormRegisterGeneral';
 import FormRegisterTrademark from '../../components/FormRegisterTrademark';
 import FormRegisterTrademarkConfirm from '../../components/FormRegisterTrademarkConfirm';
-
+import FormRegisterReceipt from '../../components/FormRegisterReceipt';
 
 import web3 from '../../ethereum/web3';
 
@@ -23,7 +23,8 @@ class Register extends Component {
     addressLineCity_patent: '',
     addressLineCounty_patent: '',
     addressLineCountry_patent: '',
-    addressLinePostcode_patent: ''
+    addressLinePostcode_patent: '',
+    ip_addr: ''
   }
 
   async componentDidMount() {
@@ -53,13 +54,14 @@ class Register extends Component {
     const {
       address, currentDate, typeOfIP, markDesc, fileHash, patentTitle,
       addressLine1_patent, addressLine2_patent, addressLineCity_patent,
-      addressLineCounty_patent, addressLineCountry_patent, addressLinePostcode_patent
-    } = this.state;
+      addressLineCounty_patent, addressLineCountry_patent, addressLinePostcode_patent,
+      ip_addr } = this.state;
 
     const values = {
       address, currentDate, typeOfIP, markDesc, fileHash, patentTitle,
       addressLine1_patent, addressLine2_patent, addressLineCity_patent,
-      addressLineCounty_patent, addressLineCountry_patent, addressLinePostcode_patent
+      addressLineCounty_patent, addressLineCountry_patent, addressLinePostcode_patent,
+      ip_addr
     }
 
     switch(step) {
@@ -101,9 +103,18 @@ class Register extends Component {
         );
       case 5:
         return (
-          <h2>Patent</h2>
+          <FormRegisterReceipt
+            nextStep = { this.nextStep }
+            previousStep = { this.previousStep }
+            changeForm = { this.formChange }
+            values = { values }
+          />
         );
       case 6:
+        return (
+          <h2>Patent</h2>
+        );
+      case 7:
         return (
           <h2>Design</h2>
         );

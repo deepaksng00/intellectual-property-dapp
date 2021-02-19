@@ -1,0 +1,46 @@
+.main_section {
+  color: white;
+  display: grid;
+  grid-template-rows: auto auto auto auto 40px auto;
+  grid-template-areas:
+    "title"
+    "p1"
+    "p2"
+    "p3"
+    "."
+    "home";
+  justify-items: center;
+  align-content: center;
+  height: 100%;
+}
+
+.main_section > h2 {
+  grid-area: title;
+}
+
+.p1 {
+  grid-area: p1;
+}
+
+.p2 {
+  grid-area: p2;
+}
+
+.p3 {
+  grid-area: p3;
+}
+
+.main_section > button {
+  width: 7rem;
+  border-radius: 20px;
+  padding: 1rem;
+  border: none;
+  transition: width 0.2s;
+  justify-self: center;
+  grid-area: home;
+}
+
+.main_section > button:hover {
+  width: 8rem;
+  cursor: pointer;
+}

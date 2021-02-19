@@ -10,7 +10,7 @@ class FormRegisterTrademarkConfirm extends Component {
     const { values } = this.props;
     event.preventDefault();
     const compiled_trademark = require("../ethereum/build/Trademark.json");
-    alert("Creating IP...");
+    alert("Creating IP");
 
     await factory.methods.createTrademark(values.markDesc, values.fileHash).send({
       from: values.address[0],
@@ -49,9 +49,10 @@ class FormRegisterTrademarkConfirm extends Component {
     console.log("Mark description: " + mark_desc);
     console.log("Mark hash: " + mark_hash);
 
-    alert("Contract has been deployed.")
+    this.props.changeForm('ip_addr', address);
+    this.props.changeForm('address', owner);
 
-    Router.pushRoute('/');
+    this.props.nextStep(1);
   }
 
   backRegistration = e => {
