@@ -28,10 +28,10 @@ class FormRegisterGeneral extends Component {
           this.props.nextStep(1);
         } else if (radioButtons[1].checked == true) {
           this.props.changeForm('typeOfIP', 'Patent');
-          this.props.nextStep(2);
+          this.props.nextStep(4);
         } else if (radioButtons[2].checked == true) {
           this.props.changeForm('typeOfIP', 'Design');
-          this.props.nextStep(3);
+          this.props.nextStep(7);
         }
       }
     }

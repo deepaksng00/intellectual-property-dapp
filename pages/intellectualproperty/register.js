@@ -5,6 +5,7 @@ import FormRegisterLogin from '../../components/FormRegisterLogin';
 import FormRegisterGeneral from '../../components/FormRegisterGeneral';
 import FormRegisterTrademark from '../../components/FormRegisterTrademark';
 import FormRegisterTrademarkConfirm from '../../components/FormRegisterTrademarkConfirm';
+import FormRegisterPatent from '../../components/FormRegisterPatent';
 import FormRegisterReceipt from '../../components/FormRegisterReceipt';
 
 import web3 from '../../ethereum/web3';
@@ -18,12 +19,12 @@ class Register extends Component {
     fileHash: '',
     markDesc: '',
     patentTitle: '',
-    addressLine1_patent: '',
-    addressLine2_patent: '',
-    addressLineCity_patent: '',
-    addressLineCounty_patent: '',
-    addressLineCountry_patent: '',
-    addressLinePostcode_patent: '',
+    address1_patent: '',
+    address2_patent: '',
+    addressCity_patent: '',
+    addressCounty_patent: '',
+    addressCountry_patent: '',
+    addressPostcode_patent: '',
     ip_addr: ''
   }
 
@@ -112,7 +113,12 @@ class Register extends Component {
         );
       case 6:
         return (
-          <h2>Patent</h2>
+          <FormRegisterPatent
+            nextStep = { this.nextStep }
+            previousStep = { this.previousStep }
+            changeForm = { this.formChange }
+            values = { values }
+          />
         );
       case 7:
         return (
