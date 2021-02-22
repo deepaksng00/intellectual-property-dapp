@@ -12,7 +12,7 @@ class FormRegisterTrademark extends Component {
 
   backRegistration = e => {
     e.preventDefault();
-    this.props.previousStep(1);
+    this.props.previousStep(4);
   }
 
   async componentDidMount() {

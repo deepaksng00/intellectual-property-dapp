@@ -5,41 +5,49 @@
   grid-gap: 30px;
   grid-template-areas:
     "title title"
-    "dateLabel date"
-    "typeOfIPLabel typeOfIP"
-    "fileLabel file";
-  grid-template-rows: auto auto auto;
+    "commentLabel comment"
+    ". . "
+    "back next";
+  grid-template-rows: auto auto 50px auto;
 }
 
 .form > h2 {
   grid-area: title;
 }
 
-.dateLabel {
-  grid-area: dateLabel;
-}
-
-.date {
-  grid-area: date;
+.form > input {
   border-radius: 20px;
   border: none;
   padding: 1rem;
   font-size: 1rem;
 }
 
-.typeOfIPLabel {
-  grid-area: typeOfIPLabel;
+.commentLabel {
+  grid-area: commentLabel;
 }
 
-.typeOfIP {
-  grid-area: typeOfIP;
+.comment {
+  grid-area: comment;
 }
 
-.fileLabel {
-  grid-area: fileLabel;
+.form > button {
+  width: 7rem;
+  border-radius: 20px;
+  padding: 1rem;
+  border: none;
+  transition: width 0.2s;
+  justify-self: center;
 }
 
-.file {
-  grid-area: file;
-  font-size: 1rem;
+.form > button:hover {
+  width: 8rem;
+  cursor: pointer;
+}
+
+.next {
+  grid-area: next;
+}
+
+.back {
+  grid-area: back;
 }

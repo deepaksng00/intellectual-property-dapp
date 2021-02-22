@@ -18,7 +18,7 @@ class FormRegisterReceipt extends Component {
     return (
       <Layout>
         <div className={style.main_section}>
-          <h2>Your intellectual property has been registered!</h2>
+          <h2>Your { this.props.values.typeOfIP.toLowerCase() } has been registered!</h2>
           <p className={style.p1}>The <b>owner</b> of the intellectual property is: <b>{ this.props.values.address }</b></p>
           <p className={style.p2}>The <b>address</b> of your intellectual property is: <b>{ this.props.values.ip_addr }</b></p>
           <p className={style.p3}>The <b>hash</b> associated with your intellectual property file is: <b>{ this.props.values.fileHash }</b></p>

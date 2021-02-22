@@ -7,6 +7,8 @@ import FormRegisterTrademark from '../../components/FormRegisterTrademark';
 import FormRegisterTrademarkConfirm from '../../components/FormRegisterTrademarkConfirm';
 import FormRegisterPatent from '../../components/FormRegisterPatent';
 import FormRegisterPatentConfirm from '../../components/FormRegisterPatentConfirm';
+import FormRegisterDesign from '../../components/FormRegisterDesign';
+import FormRegisterDesignConfirm from '../../components/FormRegisterDesignConfirm';
 import FormRegisterReceipt from '../../components/FormRegisterReceipt';
 
 import web3 from '../../ethereum/web3';
@@ -26,6 +28,7 @@ class Register extends Component {
     addressCounty_patent: '',
     addressCountry_patent: '',
     addressPostcode_patent: '',
+    comment: '',
     ip_addr: ''
   }
 
@@ -57,13 +60,13 @@ class Register extends Component {
       address, currentDate, typeOfIP, markDesc, fileHash, patentTitle,
       address1_patent, address2_patent, addressCity_patent,
       addressCounty_patent, addressCountry_patent, addressPostcode_patent,
-      ip_addr } = this.state;
+      comment, ip_addr } = this.state;
 
     const values = {
       address, currentDate, typeOfIP, markDesc, fileHash, patentTitle,
       address1_patent, address2_patent, addressCity_patent,
       addressCounty_patent, addressCountry_patent, addressPostcode_patent,
-      ip_addr
+      comment, ip_addr
     }
 
     switch(step) {
@@ -141,7 +144,30 @@ class Register extends Component {
         );
       case 9:
         return (
-          <h2>Design</h2>
+          <FormRegisterDesign
+            nextStep = { this.nextStep }
+            previousStep = { this.previousStep }
+            changeForm = { this.formChange }
+            values = { values }
+          />
+        );
+      case 10:
+        return (
+          <FormRegisterDesignConfirm
+            nextStep = { this.nextStep }
+            previousStep = { this.previousStep }
+            changeForm = { this.formChange }
+            values = { values }
+          />
+        );
+      case 11:
+        return (
+          <FormRegisterReceipt
+            nextStep = { this.nextStep }
+            previousStep = { this.previousStep }
+            changeForm = { this.formChange }
+            values = { values }
+          />
         );
     }
 
