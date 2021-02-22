@@ -5,9 +5,15 @@
   grid-gap: 30px;
   grid-template-areas:
     "title title"
-    "dateLabel date"
-    "typeOfIPLabel typeOfIP"
-    "fileLabel file";
+    "patentTitleLabel patentTitle"
+    "address1Label address1"
+    "address2Label address2"
+    "addressCityLabel city"
+    "addressCountyLabel county"
+    "addressPostcodeLabel postcode"
+    "addressCountryLabel country"
+    ". ."
+    "back next";
   grid-template-rows: auto auto auto;
 }
 
@@ -15,31 +21,96 @@
   grid-area: title;
 }
 
-.dateLabel {
-  grid-area: dateLabel;
-}
-
-.date {
-  grid-area: date;
+.form > input {
   border-radius: 20px;
   border: none;
   padding: 1rem;
   font-size: 1rem;
 }
 
-.typeOfIPLabel {
-  grid-area: typeOfIPLabel;
+.form > button {
+  width: 7rem;
+  border-radius: 20px;
+  padding: 1rem;
+  border: none;
+  transition: width 0.2s;
+  justify-self: center;
 }
 
-.typeOfIP {
-  grid-area: typeOfIP;
+.form > button:hover {
+  width: 8rem;
+  cursor: pointer;
 }
 
-.fileLabel {
-  grid-area: fileLabel;
+.patentTitleLabel {
+  grid-area: patentTitleLabel;
 }
 
-.file {
-  grid-area: file;
+.patentTitle {
+  grid-area: patentTitle;
+  border-radius: 20px;
+  border: none;
+  padding: 1rem;
   font-size: 1rem;
+}
+
+.address1Label {
+  grid-area: address1Label;
+}
+
+.address1 {
+  grid-area: address1;
+}
+
+.address2Label {
+  grid-area: address2Label;
+}
+
+.address2 {
+  grid-area: address2;
+  font-size: 1rem;
+}
+
+.addressCityLabel {
+  grid-area: addressCityLabel;
+  font-size: 1rem;
+}
+
+.city {
+  grid-area: city;
+}
+
+.addressCountyLabel {
+  grid-area: addressCountyLabel;
+  font-size: 1rem;
+}
+
+.county {
+  grid-area: county;
+}
+
+.addressPostcodeLabel {
+  grid-area: addressPostcodeLabel;
+  font-size: 1rem;
+}
+
+.postcode {
+  grid-area: postcode;
+}
+
+.addressCountryLabel {
+  grid-area: addressCountryLabel;
+  font-size: 1rem;
+}
+
+.country {
+  grid-area: country;
+}
+
+.back {
+  grid-area: back;
+}
+
+.next {
+  grid-area: next;
 }

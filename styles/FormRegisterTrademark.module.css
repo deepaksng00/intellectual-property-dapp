@@ -39,15 +39,15 @@
   justify-self: center;
 }
 
+.form > button:hover {
+  width: 8rem;
+  cursor: pointer;
+}
+
 .next {
   grid-area: next;
 }
 
 .back {
   grid-area: back;
-}
-
-.form > button:hover {
-  width: 8rem;
-  cursor: pointer;
 }

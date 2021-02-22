@@ -6,6 +6,7 @@ import FormRegisterGeneral from '../../components/FormRegisterGeneral';
 import FormRegisterTrademark from '../../components/FormRegisterTrademark';
 import FormRegisterTrademarkConfirm from '../../components/FormRegisterTrademarkConfirm';
 import FormRegisterPatent from '../../components/FormRegisterPatent';
+import FormRegisterPatentConfirm from '../../components/FormRegisterPatentConfirm';
 import FormRegisterReceipt from '../../components/FormRegisterReceipt';
 
 import web3 from '../../ethereum/web3';
@@ -54,14 +55,14 @@ class Register extends Component {
     const { step } = this.state;
     const {
       address, currentDate, typeOfIP, markDesc, fileHash, patentTitle,
-      addressLine1_patent, addressLine2_patent, addressLineCity_patent,
-      addressLineCounty_patent, addressLineCountry_patent, addressLinePostcode_patent,
+      address1_patent, address2_patent, addressCity_patent,
+      addressCounty_patent, addressCountry_patent, addressPostcode_patent,
       ip_addr } = this.state;
 
     const values = {
       address, currentDate, typeOfIP, markDesc, fileHash, patentTitle,
-      addressLine1_patent, addressLine2_patent, addressLineCity_patent,
-      addressLineCounty_patent, addressLineCountry_patent, addressLinePostcode_patent,
+      address1_patent, address2_patent, addressCity_patent,
+      addressCounty_patent, addressCountry_patent, addressPostcode_patent,
       ip_addr
     }
 
@@ -121,6 +122,24 @@ class Register extends Component {
           />
         );
       case 7:
+        return (
+          <FormRegisterPatentConfirm
+            nextStep = { this.nextStep }
+            previousStep = { this.previousStep }
+            changeForm = { this.formChange }
+            values = { values }
+          />
+      );
+      case 8:
+        return (
+          <FormRegisterReceipt
+            nextStep = { this.nextStep }
+            previousStep = { this.previousStep }
+            changeForm = { this.formChange }
+            values = { values }
+          />
+        );
+      case 9:
         return (
           <h2>Design</h2>
         );
