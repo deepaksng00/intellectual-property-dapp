@@ -13,12 +13,11 @@ contract RegisteredIPFactory {
 
   /* --- Stores all deployed designs --- */
   mapping(address => address[]) private deployedDesigns;
-  
-  /* --- All users --- */
-  address[] private users;
-
   uint256 private numOfDesigns;
 
+  /* --- All users --- */
+  address[] private users;
+  
   /* --- Struct containing details of a hash --- */
   struct Hash {
     address owner;
@@ -32,16 +31,19 @@ contract RegisteredIPFactory {
   function createTrademark(string memory mark_desc, string memory hash_input) public {
     // checks if hash has been previously registered
     if (!deployedHashes[hash_input].isExist) {
-      deployedTrademarks[msg.sender].push(address(new Trademark("disabled", block.timestamp, block.timestamp, msg.sender, mark_desc)));
+      address newTrademark = address(new Trademark("disabled", block.timestamp, block.timestamp, msg.sender, mark_desc, hash_input, block.timestamp + 10 * 365 days));
+      deployedTrademarks[msg.sender].push(newTrademark);
       
       Hash memory newHash = Hash({
-        owner: msg.sender,
+        owner: newTrademark,
         isExist: true
       });
 
       deployedHashes[hash_input] = newHash;
       numOfTrademarks+=1;
       users.push(msg.sender);
+    } else {
+        revert("ERR: 10");
     }
   }
 
@@ -49,7 +51,7 @@ contract RegisteredIPFactory {
   function createPatent(string memory title, string memory inventor_address, string memory hash_input) public {
     // checks if hash has been previously registered
     if (!deployedHashes[hash_input].isExist) {
-      address newPatent = address(new Patent("disabled", block.timestamp, block.timestamp, msg.sender, title, inventor_address));
+      address newPatent = address(new Patent("disabled", block.timestamp, block.timestamp, msg.sender, title, inventor_address, hash_input, block.timestamp + 20 * 365 days));
       deployedPatents[msg.sender].push(newPatent);
 
       Hash memory newHash = Hash({
@@ -67,7 +69,7 @@ contract RegisteredIPFactory {
   function createDesign(string memory comment, string memory hash_input) public {
     // checks if hash has been previously registered
     if (!deployedHashes[hash_input].isExist) {
-      address newDesign = address(new Design("disabled", block.timestamp, block.timestamp, msg.sender, comment));
+      address newDesign = address(new Design("disabled", block.timestamp, block.timestamp, msg.sender, comment, hash_input, block.timestamp + 5 * 365 days));
       deployedDesigns[msg.sender].push(newDesign);
       
       Hash memory newHash = Hash({
@@ -127,21 +129,25 @@ abstract contract IntellectualProperty {
   uint256 private filingDate;
   uint256 private publicationDate;
   uint256 private statusDate;
+  uint256 private expirationDate;
   address private owner;
+  string private fileHash;
   mapping (address => bool) private co_owners;
 
   /* --- Modifier to restrict access only to the owners --- */
   modifier restricted() {
-    require(msg.sender == owner || co_owners[msg.sender], "Access denied. Only the owner or co_owners can access this function.");
+    require(msg.sender == owner || co_owners[msg.sender], "ERR: 5");
     _;
   }
 
   /* --- Constructor with multiple attributes --- */
-  constructor(string memory status_input, uint256 filing_date, uint256 status_date, address owner_input) {
-    status = status_input;
-    filingDate = filing_date;
-    statusDate = status_date;
-    owner = owner_input;
+  constructor(string memory stat, uint256 fDate, uint256 sDate, address own, string memory hash, uint256 eDate) {
+    status = stat;
+    filingDate = fDate;
+    statusDate = sDate;
+    owner = own;
+    fileHash = hash;
+    expirationDate = eDate;
   }
 
   /* --- SETTERS AND GETTERS --- */
@@ -164,6 +170,14 @@ abstract contract IntellectualProperty {
 
   function getOwner() public view returns(address) {
     return owner;
+  }
+  
+  function getHash() public view returns(string memory) {
+    return fileHash;
+  }
+  
+  function getExpirationDate() public view returns(uint256) {
+      return expirationDate;
   }
 
   function check_co_owners(address co_owner) public view returns(bool) {
@@ -197,28 +211,22 @@ abstract contract IntellectualProperty {
   function remove_co_owner(address co_owner) public restricted {
     delete co_owners[co_owner];
   }
+  
+  function setExpirationDate(uint256 expiry_date) public restricted {
+    expirationDate = expiry_date;
+  }
 }
 
 contract Trademark is IntellectualProperty {
   /* --- Constructor that links to parent contract --- */
-  uint256 private renewalDate;
   string private markDesc;
 
-  constructor(string memory status_input, uint256 filing_date, uint256 status_date, address owner_input, string memory mark_desc) IntellectualProperty(status_input, filing_date, status_date, owner_input) {
-    renewalDate = block.timestamp + 10 * 365 days;
-    markDesc = mark_desc;
-  }
-
-  function getRenewalDate() public view returns(uint256) {
-    return renewalDate;
+  constructor(string memory status, uint256 fDate, uint256 sDate, address owner, string memory markD, string memory hash, uint256 eDate) IntellectualProperty(status, fDate, sDate, owner, hash, eDate) {
+    markDesc = markD;
   }
 
   function getMarkDesc() public view returns(string memory) {
     return markDesc;
-  }
-
-  function setRenewalDate(uint256 renewalDate_input) public restricted {
-    renewalDate = renewalDate_input;
   }
 
   function setMarkDesc(string memory markDesc_input) public restricted {
@@ -229,13 +237,11 @@ contract Trademark is IntellectualProperty {
 contract Patent is IntellectualProperty {
   string private title;
   string private inventorAddress;
-  uint256 private expirationDate;
 
   /* --- Constructor that links to parent contract --- */
-  constructor(string memory status_input, uint256 filing_date, uint256 status_date, address owner_input, string memory title_input, string memory inventor_address) IntellectualProperty(status_input, filing_date, status_date, owner_input) {
-    title = title_input;
-    inventorAddress = inventor_address;
-    expirationDate = block.timestamp + 20 * 365 days;
+  constructor(string memory status, uint256 fDate, uint256 sDate, address owner, string memory title_i, string memory addressInv, string memory hash, uint256 eDate) IntellectualProperty(status, fDate, sDate, owner, hash, eDate) {
+    title = title_i;
+    inventorAddress = addressInv;
   }
 
   function getTitle() public view returns(string memory) {
@@ -246,10 +252,6 @@ contract Patent is IntellectualProperty {
     return inventorAddress;
   }
 
-  function getExpirationDate() public view returns(uint256) {
-    return expirationDate;
-  }
-
   function setTitle(string memory title_input) public restricted {
     title = title_input;
   }
@@ -257,35 +259,21 @@ contract Patent is IntellectualProperty {
   function setInventorAddress(string memory address_input) public restricted {
     inventorAddress = address_input;
   }
-
-  function setExpirationDate(uint256 date_input) public restricted {
-    expirationDate = date_input;
-  }
 }
 
 contract Design is IntellectualProperty {
-  uint256 private expirationDate;
   string private comment;
 
    /* --- Constructor that links to parent contract --- */
-  constructor(string memory status_input, uint256 filing_date, uint256 status_date, address owner_input, string memory comment_input) IntellectualProperty(status_input, filing_date, status_date, owner_input) {
-    expirationDate = block.timestamp + 5 * 365 days;
-    comment = comment_input;
-  }
-
-  function getExpirationDate() public view returns(uint256) {
-    return expirationDate;
+  constructor(string memory status, uint256 fDate, uint256 sDate, address owner, string memory com, string memory hash, uint256 eDate) IntellectualProperty(status, fDate, sDate, owner, hash, eDate) {
+    comment = com;
   }
 
   function getComment() public view returns(string memory) {
     return comment;
   }
 
-  function setExpirationDate(uint256 date_input) public restricted {
-    expirationDate = date_input;
-  }
-
-  function setComment(string memory comment_input) public restricted {
-    comment = comment_input;
+  function setComment(string memory com) public restricted {
+    comment = com;
   }
 }
