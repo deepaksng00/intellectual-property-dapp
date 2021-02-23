@@ -4,58 +4,110 @@ pragma solidity ^0.7.4;
 /* --- Factory contract (manager for deploying new instances of 'IP') --- */
 contract RegisteredIPFactory {
   /* --- Stores all deployed trademarks --- */
-  address[] private deployedTrademarks;
+  mapping(address => address[]) private deployedTrademarks;
+  uint256 private numOfTrademarks;
 
   /* --- Stores all deployed patents --- */
-  address[] private deployedPatents;
+  mapping(address => address[]) private deployedPatents;
+  uint256 private numOfPatents;
 
   /* --- Stores all deployed designs --- */
-  address[] private deployedDesigns;
+  mapping(address => address[]) private deployedDesigns;
+  
+  /* --- All users --- */
+  address[] private users;
+
+  uint256 private numOfDesigns;
+
+  /* --- Struct containing details of a hash --- */
+  struct Hash {
+    address owner;
+    bool isExist;
+  }
+
+  /* --- Stores all deployed hashes --- */
+  mapping(string => Hash) private deployedHashes;
 
   /* --- Deploys new trademark on the blockchain --- */
   function createTrademark(string memory mark_desc, string memory hash_input) public {
-    deployedTrademarks.push(address(new Trademark("disabled", block.timestamp, block.timestamp, msg.sender, mark_desc, hash_input)));
+    // checks if hash has been previously registered
+    if (!deployedHashes[hash_input].isExist) {
+      deployedTrademarks[msg.sender].push(address(new Trademark("disabled", block.timestamp, block.timestamp, msg.sender, mark_desc, hash_input)));
+      
+      Hash memory newHash = Hash({
+        owner: msg.sender,
+        isExist: true
+      });
+
+      deployedHashes[hash_input] = newHash;
+      numOfTrademarks+=1;
+      users.push(msg.sender);
+    }
   }
 
   /* --- Deploys new patent on the blockchain --- */
   function createPatent(string memory title, string memory inventor_address) public {
-    deployedPatents.push(address(new Patent("disabled", block.timestamp, block.timestamp, msg.sender, title, inventor_address)));
+    deployedPatents[msg.sender].push(address(new Patent("disabled", block.timestamp, block.timestamp, msg.sender, title, inventor_address)));
+    numOfPatents+=1;
+    users.push(msg.sender);
   }
 
   /* --- Deploys new design on the blockchain --- */
   function createDesign(string memory comment, string memory hash_input) public {
-    deployedDesigns.push(address(new Design("disabled", block.timestamp, block.timestamp, msg.sender, comment, hash_input)));
+    // checks if hash has been previously registered
+    if (!deployedHashes[hash_input].isExist) {
+      deployedDesigns[msg.sender].push(address(new Design("disabled", block.timestamp, block.timestamp, msg.sender, comment, hash_input)));
+      
+      Hash memory newHash = Hash({
+        owner: msg.sender,
+        isExist: true
+      });
+
+      deployedHashes[hash_input] = newHash;
+      numOfDesigns+=1;
+      users.push(msg.sender);
+    }
   }
 
-  /* --- Returns all trademarks --- */
-  function getTrademarks() public view returns (address[] memory) {
-    return deployedTrademarks;
+  /* --- Returns a trademark --- */
+  function getTrademarks(address owner) public view returns (address[] memory) {
+    return deployedTrademarks[owner];
   }
 
   /* --- Returns all patents --- */
-  function getPatents() public view returns (address[] memory) {
-    return deployedPatents;
+  function getPatents(address owner) public view returns (address[] memory) {
+    return deployedPatents[owner];
   }
 
   /* --- Returns all designs --- */
-  function getDesigns() public view returns (address[] memory) {
-    return deployedDesigns;
+  function getDesigns(address owner) public view returns (address[] memory) {
+    return deployedDesigns[owner];
   }
 
   /* --- Return length of trademarks --- */
   function getNumOfTrademarks() public view returns (uint) {
-    return deployedTrademarks.length;
+    return numOfTrademarks;
   }
 
   /* --- Return length of patents --- */
   function getNumOfPatents() public view returns (uint) {
-    return deployedPatents.length;
+    return numOfPatents;
   }
 
   /* --- Return length of designs --- */
   function getNumOfDesigns() public view returns (uint) {
-    return deployedDesigns.length;
+    return numOfDesigns;
   }
+
+  /* --- Check if hash is already registered --- */
+  function checkHash(string memory fileHash) public view returns (address) {
+    if (deployedHashes[fileHash].isExist) {
+      return deployedHashes[fileHash].owner;
+    } else {
+      return address(0);
+    }
+  }
+
 }
 
 /* --- Intellectual Property parent contract --- */
@@ -65,6 +117,7 @@ abstract contract IntellectualProperty {
   uint256 private publicationDate;
   uint256 private statusDate;
   address private owner;
+  string private fileHash;
   mapping (address => bool) private co_owners;
 
   /* --- Modifier to restrict access only to the owners --- */
