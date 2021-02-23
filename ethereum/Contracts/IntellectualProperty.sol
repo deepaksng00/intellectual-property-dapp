@@ -1,4 +1,4 @@
-pragma solidity ^0.7.6;
+pragma solidity ^0.7.4;
 // SPDX-License-Identifier: MIT
 
 /* --- Factory contract (manager for deploying new instances of 'IP') --- */
@@ -142,7 +142,7 @@ contract Trademark is IntellectualProperty {
   string private markDesc;
   string private markImageHash;
 
-  constructor(string memory status_input, uint256 filing_date, uint256 status_date, address owner_input, string memory mark_desc, string memory mark_image_hash) IntellectualProperty(status_input, filing_date, status_date, owner_input) public {
+  constructor(string memory status_input, uint256 filing_date, uint256 status_date, address owner_input, string memory mark_desc, string memory mark_image_hash) IntellectualProperty(status_input, filing_date, status_date, owner_input) {
     renewalDate = block.timestamp + 10 * 365 days;
     markDesc = mark_desc;
     markImageHash = mark_image_hash;
@@ -179,7 +179,7 @@ contract Patent is IntellectualProperty {
   uint256 private expirationDate;
 
   /* --- Constructor that links to parent contract --- */
-  constructor(string memory status_input, uint256 filing_date, uint256 status_date, address owner_input, string memory title_input, string memory inventor_address) IntellectualProperty(status_input, filing_date, status_date, owner_input) public {
+  constructor(string memory status_input, uint256 filing_date, uint256 status_date, address owner_input, string memory title_input, string memory inventor_address) IntellectualProperty(status_input, filing_date, status_date, owner_input) {
     title = title_input;
     inventorAddress = inventor_address;
     expirationDate = block.timestamp + 20 * 365 days;
@@ -216,7 +216,7 @@ contract Design is IntellectualProperty {
   string private designHash;
 
    /* --- Constructor that links to parent contract --- */
-  constructor(string memory status_input, uint256 filing_date, uint256 status_date, address owner_input, string memory comment_input, string memory design_hash) IntellectualProperty(status_input, filing_date, status_date, owner_input) public {
+  constructor(string memory status_input, uint256 filing_date, uint256 status_date, address owner_input, string memory comment_input, string memory design_hash) IntellectualProperty(status_input, filing_date, status_date, owner_input) {
     expirationDate = block.timestamp + 5 * 365 days;
     comment = comment_input;
     designHash = design_hash;
