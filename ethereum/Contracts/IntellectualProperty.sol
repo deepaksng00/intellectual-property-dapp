@@ -32,7 +32,7 @@ contract RegisteredIPFactory {
   function createTrademark(string memory mark_desc, string memory hash_input) public {
     // checks if hash has been previously registered
     if (!deployedHashes[hash_input].isExist) {
-      deployedTrademarks[msg.sender].push(address(new Trademark("disabled", block.timestamp, block.timestamp, msg.sender, mark_desc, hash_input)));
+      deployedTrademarks[msg.sender].push(address(new Trademark("disabled", block.timestamp, block.timestamp, msg.sender, mark_desc)));
       
       Hash memory newHash = Hash({
         owner: msg.sender,
@@ -46,20 +46,32 @@ contract RegisteredIPFactory {
   }
 
   /* --- Deploys new patent on the blockchain --- */
-  function createPatent(string memory title, string memory inventor_address) public {
-    deployedPatents[msg.sender].push(address(new Patent("disabled", block.timestamp, block.timestamp, msg.sender, title, inventor_address)));
-    numOfPatents+=1;
-    users.push(msg.sender);
+  function createPatent(string memory title, string memory inventor_address, string memory hash_input) public {
+    // checks if hash has been previously registered
+    if (!deployedHashes[hash_input].isExist) {
+      address newPatent = address(new Patent("disabled", block.timestamp, block.timestamp, msg.sender, title, inventor_address));
+      deployedPatents[msg.sender].push(newPatent);
+
+      Hash memory newHash = Hash({
+        owner: newPatent,
+        isExist: true
+      });
+
+      deployedHashes[hash_input] = newHash;
+      numOfPatents+=1;
+      users.push(msg.sender);
+    }
   }
 
   /* --- Deploys new design on the blockchain --- */
   function createDesign(string memory comment, string memory hash_input) public {
     // checks if hash has been previously registered
     if (!deployedHashes[hash_input].isExist) {
-      deployedDesigns[msg.sender].push(address(new Design("disabled", block.timestamp, block.timestamp, msg.sender, comment, hash_input)));
+      address newDesign = address(new Design("disabled", block.timestamp, block.timestamp, msg.sender, comment));
+      deployedDesigns[msg.sender].push(newDesign);
       
       Hash memory newHash = Hash({
-        owner: msg.sender,
+        owner: newDesign,
         isExist: true
       });
 
@@ -107,7 +119,6 @@ contract RegisteredIPFactory {
       return address(0);
     }
   }
-
 }
 
 /* --- Intellectual Property parent contract --- */
@@ -117,7 +128,6 @@ abstract contract IntellectualProperty {
   uint256 private publicationDate;
   uint256 private statusDate;
   address private owner;
-  string private fileHash;
   mapping (address => bool) private co_owners;
 
   /* --- Modifier to restrict access only to the owners --- */
@@ -193,12 +203,10 @@ contract Trademark is IntellectualProperty {
   /* --- Constructor that links to parent contract --- */
   uint256 private renewalDate;
   string private markDesc;
-  string private markImageHash;
 
-  constructor(string memory status_input, uint256 filing_date, uint256 status_date, address owner_input, string memory mark_desc, string memory mark_image_hash) IntellectualProperty(status_input, filing_date, status_date, owner_input) {
+  constructor(string memory status_input, uint256 filing_date, uint256 status_date, address owner_input, string memory mark_desc) IntellectualProperty(status_input, filing_date, status_date, owner_input) {
     renewalDate = block.timestamp + 10 * 365 days;
     markDesc = mark_desc;
-    markImageHash = mark_image_hash;
   }
 
   function getRenewalDate() public view returns(uint256) {
@@ -209,20 +217,12 @@ contract Trademark is IntellectualProperty {
     return markDesc;
   }
 
-  function getImageHash() public view returns(string memory) {
-    return markImageHash;
-  }
-
   function setRenewalDate(uint256 renewalDate_input) public restricted {
     renewalDate = renewalDate_input;
   }
 
   function setMarkDesc(string memory markDesc_input) public restricted {
     markDesc = markDesc_input;
-  }
-
-  function setMarkHash(string memory hash_input) public restricted {
-    markImageHash = hash_input;
   }
 }
 
@@ -266,13 +266,11 @@ contract Patent is IntellectualProperty {
 contract Design is IntellectualProperty {
   uint256 private expirationDate;
   string private comment;
-  string private designHash;
 
    /* --- Constructor that links to parent contract --- */
-  constructor(string memory status_input, uint256 filing_date, uint256 status_date, address owner_input, string memory comment_input, string memory design_hash) IntellectualProperty(status_input, filing_date, status_date, owner_input) {
+  constructor(string memory status_input, uint256 filing_date, uint256 status_date, address owner_input, string memory comment_input) IntellectualProperty(status_input, filing_date, status_date, owner_input) {
     expirationDate = block.timestamp + 5 * 365 days;
     comment = comment_input;
-    designHash = design_hash;
   }
 
   function getExpirationDate() public view returns(uint256) {
@@ -283,19 +281,11 @@ contract Design is IntellectualProperty {
     return comment;
   }
 
-  function getDesignHash() public view returns(string memory) {
-    return designHash;
-  }
-
   function setExpirationDate(uint256 date_input) public restricted {
     expirationDate = date_input;
   }
 
   function setComment(string memory comment_input) public restricted {
     comment = comment_input;
-  }
-
-  function setDesignHash(string memory hash_input) public restricted {
-    designHash = hash_input;
   }
 }
