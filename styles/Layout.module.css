@@ -14,7 +14,7 @@
   color: white;
   padding: 1.5% 4% 1.5% 4%;
   display: grid;
-  grid-template-areas: "title . . . home register search faq";
+  grid-template-areas: "title . . . home register yourip search faq";
   align-items: center;
 }
 
@@ -49,6 +49,10 @@
 
 .register {
   grid-area: register;
+}
+
+.yourip {
+  grid-area: yourip;
 }
 
 .search {
