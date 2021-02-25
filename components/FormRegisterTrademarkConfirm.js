@@ -12,47 +12,51 @@ class FormRegisterTrademarkConfirm extends Component {
     const compiled_trademark = require("../ethereum/build/Trademark.json");
     alert("Creating IP");
 
-    await factory.methods.createTrademark(values.markDesc, values.fileHash).send({
-      from: values.address[0],
-      gasLimit: "5000000"
-    });
+    try {
+      await factory.methods.createTrademark(values.markDesc, values.fileHash)
+        .send({ from: values.address[0], gasLimit: "5000000"})
+        .catch(() => {throw 'HashAlreadyUsed';})
 
-    const trademarks = await factory.methods.getTrademarks().call();
-    const numOfTrademarks = await factory.methods.getNumOfTrademarks().call();
-    const address = trademarks[numOfTrademarks-1];
-    const trademark = await new web3.eth.Contract(compiled_trademark.abi, address);
+      const trademarks = await factory.methods.getTrademarks(values.address[0]).call();
+      const numOfTrademarks = trademarks.length;
+      const address = trademarks[numOfTrademarks-1];
+      const trademark = await new web3.eth.Contract(compiled_trademark.abi, address);
 
-    const filingDate_UNIX = await trademark.methods.getFilingDate().call();
-    const trademark_date_obj = new Date(filingDate_UNIX * 1000);
-    const filingDate = trademark_date_obj.getFullYear().toString() + "-" + (trademark_date_obj.getMonth()+1).toString() + "-" + trademark_date_obj.getDate().toString();
-    const owner = await trademark.methods.getOwner().call();
-    const status = await trademark.methods.getStatus().call();
-    // const publicationDate_UNIX = await trademark.methods.getPublicationDate().call();
-    // const publicationDate_obj = new Date(publicationDate_UNIX * 1000);
-    // const publicationDate = publicationDate_obj.getFullYear().toString() + "-" + (publicationDate_obj.getMonth()+1).toString() + "-" + publicationDate_obj.getDate().toString();
-    const status_date_UNIX = await trademark.methods.getStatusDate().call();
-    const status_date_object = new Date(status_date_UNIX * 1000);
-    const status_date = status_date_object.getFullYear().toString() + "-" + (status_date_object.getMonth()+1).toString() + "-" + status_date_object.getDate().toString();
-    const renewal_date_UNIX = await trademark.methods.getRenewalDate().call();
-    const renewal_date_obj = new Date(renewal_date_UNIX * 1000);
-    const renewal_date = renewal_date_obj.getFullYear().toString() + "-" + (renewal_date_obj.getMonth()+1).toString() + "-" + renewal_date_obj.getDate().toString();
-    const mark_desc = await trademark.methods.getMarkDesc().call();
-    const mark_hash = await trademark.methods.getImageHash().call();
+      const filingDate_UNIX = await trademark.methods.getFilingDate().call();
+      const trademark_date_obj = new Date(filingDate_UNIX * 1000);
+      const filingDate = trademark_date_obj.getFullYear().toString() + "-" + (trademark_date_obj.getMonth()+1).toString() + "-" + trademark_date_obj.getDate().toString();
+      const owner = await trademark.methods.getOwner().call();
+      const status = await trademark.methods.getStatus().call();
+      // const publicationDate_UNIX = await trademark.methods.getPublicationDate().call();
+      // const publicationDate_obj = new Date(publicationDate_UNIX * 1000);
+      // const publicationDate = publicationDate_obj.getFullYear().toString() + "-" + (publicationDate_obj.getMonth()+1).toString() + "-" + publicationDate_obj.getDate().toString();
+      const status_date_UNIX = await trademark.methods.getStatusDate().call();
+      const status_date_object = new Date(status_date_UNIX * 1000);
+      const status_date = status_date_object.getFullYear().toString() + "-" + (status_date_object.getMonth()+1).toString() + "-" + status_date_object.getDate().toString();
+      const renewal_date_UNIX = await trademark.methods.getExpirationDate().call();
+      const renewal_date_obj = new Date(renewal_date_UNIX * 1000);
+      const renewal_date = renewal_date_obj.getFullYear().toString() + "-" + (renewal_date_obj.getMonth()+1).toString() + "-" + renewal_date_obj.getDate().toString();
+      const mark_desc = await trademark.methods.getMarkDesc().call();
+      const mark_hash = await trademark.methods.getHash().call();
 
-    console.log("Address: " + address);
-    console.log("Owner: " + owner);
-    console.log("Status: " + status);
-    console.log("Status last changed: " + status_date)
-    console.log("Filing date: " + filingDate);
-    // console.log("Publication date: " + publicationDate);
-    console.log("Renewal date: " + renewal_date);
-    console.log("Mark description: " + mark_desc);
-    console.log("Mark hash: " + mark_hash);
+      console.log("Address: " + address);
+      console.log("Owner: " + owner);
+      console.log("Status: " + status);
+      console.log("Status last changed: " + status_date)
+      console.log("Filing date: " + filingDate);
+      // console.log("Publication date: " + publicationDate);
+      console.log("Renewal date: " + renewal_date);
+      console.log("Mark description: " + mark_desc);
+      console.log("Mark hash: " + mark_hash);
 
-    this.props.changeForm('ip_addr', address);
-    this.props.changeForm('address', owner);
+      this.props.changeForm('ip_addr', address);
+      this.props.changeForm('address', owner);
 
-    this.props.nextStep(1);
+      this.props.nextStep(1);
+    } catch (error) {
+      alert("ERROR: The hash has already been registered!");
+      this.props.previousStep(2);
+    }
   }
 
   backRegistration = e => {
@@ -61,11 +65,11 @@ class FormRegisterTrademarkConfirm extends Component {
   }
 
   async componentDidMount() {
-    // const address = await web3.eth.getAccounts();
-    // if (address == "") {
-    //   alert("Metamask is not setup correctly, please load Metamask and try again!");
-    //   Router.pushRoute('/');
-    // }
+    const address = await web3.eth.getAccounts();
+    if (address == "") {
+      alert("Metamask is not setup correctly, please load Metamask and try again!");
+      Router.pushRoute('/');
+    }
   }
 
   render() {

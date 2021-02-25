@@ -21,7 +21,7 @@ contract RegisteredIPFactory {
   /* --- Struct containing details of a hash --- */
   struct Hash {
     address owner;
-    bool isExist;
+    uint256 isExist;
   }
 
   /* --- Stores all deployed hashes --- */
@@ -30,56 +30,56 @@ contract RegisteredIPFactory {
   /* --- Deploys new trademark on the blockchain --- */
   function createTrademark(string memory mark_desc, string memory hash_input) public {
     // checks if hash has been previously registered
-    if (!deployedHashes[hash_input].isExist) {
+    if (deployedHashes[hash_input].isExist == 0) {
       address newTrademark = address(new Trademark("disabled", block.timestamp, block.timestamp, msg.sender, mark_desc, hash_input, block.timestamp + 10 * 365 days));
       deployedTrademarks[msg.sender].push(newTrademark);
-      
-      Hash memory newHash = Hash({
-        owner: newTrademark,
-        isExist: true
-      });
-
-      deployedHashes[hash_input] = newHash;
+      addHash(newTrademark, hash_input);
       numOfTrademarks+=1;
       users.push(msg.sender);
     } else {
-        revert("ERR: 10");
+        require(false, "ERR: 10");
     }
+  }
+  
+  /* --- Creates hash entry --- */
+  function addHash(address addressOfIP, string memory hash) private {
+    Hash memory newHash = Hash({
+        owner: addressOfIP,
+        isExist: 1
+    });
+
+    deployedHashes[hash] = newHash;
   }
 
   /* --- Deploys new patent on the blockchain --- */
   function createPatent(string memory title, string memory inventor_address, string memory hash_input) public {
     // checks if hash has been previously registered
-    if (!deployedHashes[hash_input].isExist) {
+    if (deployedHashes[hash_input].isExist == 0) {
       address newPatent = address(new Patent("disabled", block.timestamp, block.timestamp, msg.sender, title, inventor_address, hash_input, block.timestamp + 20 * 365 days));
       deployedPatents[msg.sender].push(newPatent);
 
-      Hash memory newHash = Hash({
-        owner: newPatent,
-        isExist: true
-      });
+      addHash(newPatent, hash_input);
 
-      deployedHashes[hash_input] = newHash;
       numOfPatents+=1;
       users.push(msg.sender);
+    } else {
+      require(false, "ERR: 10");
     }
   }
 
   /* --- Deploys new design on the blockchain --- */
   function createDesign(string memory comment, string memory hash_input) public {
     // checks if hash has been previously registered
-    if (!deployedHashes[hash_input].isExist) {
+    if (deployedHashes[hash_input].isExist == 0) {
       address newDesign = address(new Design("disabled", block.timestamp, block.timestamp, msg.sender, comment, hash_input, block.timestamp + 5 * 365 days));
       deployedDesigns[msg.sender].push(newDesign);
       
-      Hash memory newHash = Hash({
-        owner: newDesign,
-        isExist: true
-      });
+      addHash(newDesign, hash_input);
 
-      deployedHashes[hash_input] = newHash;
       numOfDesigns+=1;
       users.push(msg.sender);
+    } else {
+      require(false, "ERR: 10");
     }
   }
 
@@ -99,23 +99,23 @@ contract RegisteredIPFactory {
   }
 
   /* --- Return length of trademarks --- */
-  function getNumOfTrademarks() public view returns (uint) {
+  function getNumOfTrademarks() public view returns (uint256) {
     return numOfTrademarks;
   }
 
   /* --- Return length of patents --- */
-  function getNumOfPatents() public view returns (uint) {
+  function getNumOfPatents() public view returns (uint256) {
     return numOfPatents;
   }
 
   /* --- Return length of designs --- */
-  function getNumOfDesigns() public view returns (uint) {
+  function getNumOfDesigns() public view returns (uint256) {
     return numOfDesigns;
   }
 
   /* --- Check if hash is already registered --- */
   function checkHash(string memory fileHash) public view returns (address) {
-    if (deployedHashes[fileHash].isExist) {
+    if (deployedHashes[fileHash].isExist == 1) {
       return deployedHashes[fileHash].owner;
     } else {
       return address(0);
@@ -177,7 +177,7 @@ abstract contract IntellectualProperty {
   }
   
   function getExpirationDate() public view returns(uint256) {
-      return expirationDate;
+    return expirationDate;
   }
 
   function check_co_owners(address co_owner) public view returns(bool) {

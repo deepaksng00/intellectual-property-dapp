@@ -31,6 +31,10 @@ const contract_json_output = {
 				"Patent" : ["abi", "evm.bytecode"],
 				"Design" : ["abi", "evm.bytecode"]
 			}
+		},
+		optimizer: {
+			enabled: true,
+			runs: 200
 		}
 	}
 }
