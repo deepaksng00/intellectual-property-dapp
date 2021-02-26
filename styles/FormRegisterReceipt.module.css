@@ -3,12 +3,12 @@
   display: grid;
   grid-template-rows: auto auto auto auto 40px auto;
   grid-template-areas:
-    "title"
-    "p1"
-    "p2"
-    "p3"
-    "."
-    "home";
+    "title title"
+    "p1 p1"
+    "p2 p2"
+    "p3 p3"
+    ". ."
+    "yourIP home";
   justify-items: center;
   align-content: center;
   height: 100%;
@@ -37,7 +37,14 @@
   border: none;
   transition: width 0.2s;
   justify-self: center;
-  grid-area: home;
+}
+
+.yourIP {
+  grid-area: yourIP;
+}
+
+.homePage {
+  grid-area: homePage;
 }
 
 .main_section > button:hover {

@@ -24,6 +24,11 @@ export default class YourIP extends Component {
             this.setState({ trademarks });
             this.setState({ patents });
             this.setState({ designs });
+
+            if (this.state.trademarks.length == 0 && this.state.patents.length == 0 && this.state.designs.length == 0) {
+                alert("You don't have any intellectual property registered.");  
+                Router.pushRoute("/");
+            }
         }
     }
     

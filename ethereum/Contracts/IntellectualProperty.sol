@@ -184,20 +184,20 @@ abstract contract IntellectualProperty {
     return co_owners[co_owner];
   }
 
-  function setStatus(string memory inputStatus) public restricted {
-    status = inputStatus;
-  }
-
   function setFilingDate(uint256 date) public restricted {
     filingDate = date;
   }
 
-  function setPublicationDate(uint256 date) public restricted {
-    publicationDate = date;
+  function publishIP() public restricted {
+    publicationDate = block.timestamp;
+    statusDate = block.timestamp;
+    status = "active";
   }
 
-  function setStatusDate(uint256 date) public restricted {
-    statusDate = date;
+  function disableIP() public restricted {
+    status = "disabled";
+    statusDate = block.timestamp;
+    publicationDate = 0;
   }
 
   function setOwner(address owner_input) public restricted {

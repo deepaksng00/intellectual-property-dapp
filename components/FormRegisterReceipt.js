@@ -11,7 +11,15 @@ class FormRegisterReceipt extends Component {
   }
 
   home = (event) => {
-    Router.pushRoute('/') ;
+    Router.pushRoute('/');
+  }
+
+  goToIP = (event) => {
+    switch (this.props.values.typeOfIP) {
+      case "Trademark": Router.pushRoute(`/intellectualproperty/trademarks/${this.props.values.ip_addr}`); break;
+      case "Patent": Router.pushRoute(`/intellectualproperty/patents/${this.props.values.ip_addr}`); break;
+      case "Design": Router.pushRoute(`/intellectualproperty/designs/${this.props.values.ip_addr}`); break; 
+    }
   }
 
   render() {
@@ -22,6 +30,7 @@ class FormRegisterReceipt extends Component {
           <p className={style.p1}>The <b>owner</b> of the intellectual property is: <b>{ this.props.values.address }</b></p>
           <p className={style.p2}>The <b>address</b> of your intellectual property is: <b>{ this.props.values.ip_addr }</b></p>
           <p className={style.p3}>The <b>hash</b> associated with your intellectual property file is: <b>{ this.props.values.fileHash }</b></p>
+          <button className={style.yourIP} type='button' onClick={ this.goToIP }>Go to Your IP</button>
           <button className={style.homePage} type='button' onClick={ this.home }>Home Page</button>
         </div>
       </Layout>
