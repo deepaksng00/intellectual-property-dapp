@@ -3,6 +3,7 @@ import Layout from '../components/Layout';
 import web3 from '../ethereum/web3';
 import factory from '../ethereum/factory';
 import IntellectualPropertyItem from '../components/IntellectualPropertyItem';
+import { Link, Router } from '../routes';
 
 export default class YourIP extends Component {
     state = {
