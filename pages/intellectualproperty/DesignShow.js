@@ -1,20 +1,21 @@
-import React, { Component } from 'react'
-import Layout from '../../components/Layout'
+import React, { Component } from 'react';
+import Layout from '../../components/Layout';
+import web3 from '../../ethereum/web3';
 
 export default class DesignShow extends Component {
     static async getInitialProps(props) {
         const address = props.query.address;
-        const compiled_trademark = require("../../ethereum/build/Trademark.json");
-        const trademark = await new web3.eth.Contract(compiled_trademark.abi, address);
+        const compiled_design = require("../../ethereum/build/Design.json");
+        const design = await new web3.eth.Contract(compiled_design.abi, address);
 
-        const status = await trademark.methods.getStatus().call();
-        const filingDate = await trademark.methods.getFilingDate().call();
-        const publicationDate = await trademark.methods.getPublicationDate().call();
-        const statusDate = await trademark.methods.getStatusDate().call();
-        const expirationDate = await trademark.methods.getExpirationDate().call();
-        const owners = await trademark.methods.getOwner().call();
-        const fileHash = await trademark.methods.getHash().call();
-        const markDesc = await trademark.methods.getMarkDesc().call();
+        const status = await design.methods.getStatus().call();
+        const filingDate = await design.methods.getFilingDate().call();
+        const publicationDate = await design.methods.getPublicationDate().call();
+        const statusDate = await design.methods.getStatusDate().call();
+        const expirationDate = await design.methods.getExpirationDate().call();
+        const owners = await design.methods.getOwner().call();
+        const fileHash = await design.methods.getHash().call();
+        const comment = await design.methods.getComment().call();
 
         return {
             address: address,
@@ -25,7 +26,7 @@ export default class DesignShow extends Component {
             expirationDate: expirationDate,
             owners: owners,
             fileHash: fileHash,
-            markDesc: markDesc
+            comment: comment
         };
     }
     
@@ -40,7 +41,7 @@ export default class DesignShow extends Component {
                 {this.props.expirationDate} <br />
                 {this.props.owners} <br />
                 {this.props.fileHash} <br />
-                {this.props.markDesc} <br />
+                {this.props.comment} <br />
             </Layout>
         )
     }
