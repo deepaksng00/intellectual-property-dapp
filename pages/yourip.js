@@ -13,12 +13,17 @@ export default class YourIP extends Component {
 
     async componentDidMount() {
         const address = await web3.eth.getAccounts();
-        const trademarks = await factory.methods.getTrademarks(address[0]).call();
-        const patents = await factory.methods.getPatents(address[0]).call();
-        const designs = await factory.methods.getDesigns(address[0]).call();
-        this.setState({ trademarks });
-        this.setState({ patents });
-        this.setState({ designs });
+        if (address == "") {
+            alert("Metamask is not setup correctly, please load Metamask and try again!");
+            Router.pushRoute('/');
+        } else {
+            const trademarks = await factory.methods.getTrademarks(address[0]).call();
+            const patents = await factory.methods.getPatents(address[0]).call();
+            const designs = await factory.methods.getDesigns(address[0]).call();
+            this.setState({ trademarks });
+            this.setState({ patents });
+            this.setState({ designs });
+        }
     }
     
     renderIP() {
