@@ -1,4 +1,4 @@
-pragma solidity ^0.8.1;
+pragma solidity ^0.7.4;
 // SPDX-License-Identifier: MIT
 
 /* --- Factory contract (manager for deploying new instances of 'IP') --- */
