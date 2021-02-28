@@ -103,10 +103,8 @@ export default class TrademarkShow extends Component {
                     <input className={style.status} type='text' value={this.props.status} readOnly />
                     <p className={style.statusDateLabel}>Last status change:</p>
                     <input className={style.statusDate} type='text' value={formattedStatusDate} readOnly />
-                    <p className={style.filingDateLabel}>Filing date:</p>
+                    <p className={style.filingDateLabel}>Publication Date:</p>
                     <input className={style.filingDate} type='text' value={formattedFilingDate} readOnly />
-                    <p className={style.publicationDateLabel}>Publication date:</p>
-                    <input className={style.publicationDate} type='text' value={formattedPublicationDate} readOnly />
                     <p className={style.expirationDateLabel}>Expiration date:</p>
                     <input className={style.expirationDate} type='text' value={formattedExpirationDate} readOnly />
                     <p className={style.ownerLabel}>Owner address:</p>
@@ -115,8 +113,7 @@ export default class TrademarkShow extends Component {
                     <input className={style.fileHash} type='text' value={this.props.fileHash} readOnly />
                     <p className={style.markDescLabel}>Mark description:</p>
                     <input className={style.markDesc} type='text' value={this.props.markDesc} readOnly />
-                    <button className={style.publishButton} type='button' onClick={ this.publishContract }>Publish Contract</button>
-                    <button className={style.disableButton} type='button' onClick={ this.disableContract }>Disable Contract</button>
+                    <button className={style.disableButton} type='button' onClick={ this.disableContract }>Disable IP</button>
                 </form>
             </Layout>
         )

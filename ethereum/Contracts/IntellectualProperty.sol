@@ -1,4 +1,4 @@
-pragma solidity ^0.7.4;
+pragma solidity ^0.8.1;
 // SPDX-License-Identifier: MIT
 
 /* --- Factory contract (manager for deploying new instances of 'IP') --- */
@@ -31,13 +31,13 @@ contract RegisteredIPFactory {
   function createTrademark(string memory mark_desc, string memory hash_input) public {
     // checks if hash has been previously registered
     if (deployedHashes[hash_input].isExist == 0) {
-      address newTrademark = address(new Trademark("disabled", block.timestamp, block.timestamp, msg.sender, mark_desc, hash_input, block.timestamp + 10 * 365 days));
+      address newTrademark = address(new Trademark(address(this), "active", block.timestamp, block.timestamp, msg.sender, mark_desc, hash_input, block.timestamp + 10 * 365 days));
       deployedTrademarks[msg.sender].push(newTrademark);
       addHash(newTrademark, hash_input);
       numOfTrademarks+=1;
       users.push(msg.sender);
     } else {
-        require(false, "ERR: 10");
+        require(false, "ERR: 01");
     }
   }
   
@@ -55,7 +55,7 @@ contract RegisteredIPFactory {
   function createPatent(string memory title, string memory inventor_address, string memory hash_input) public {
     // checks if hash has been previously registered
     if (deployedHashes[hash_input].isExist == 0) {
-      address newPatent = address(new Patent("disabled", block.timestamp, block.timestamp, msg.sender, title, inventor_address, hash_input, block.timestamp + 20 * 365 days));
+      address newPatent = address(new Patent(address(this), "active", block.timestamp, block.timestamp, msg.sender, title, inventor_address, hash_input, block.timestamp + 20 * 365 days));
       deployedPatents[msg.sender].push(newPatent);
 
       addHash(newPatent, hash_input);
@@ -63,7 +63,7 @@ contract RegisteredIPFactory {
       numOfPatents+=1;
       users.push(msg.sender);
     } else {
-      require(false, "ERR: 10");
+      require(false, "ERR: 01");
     }
   }
 
@@ -71,7 +71,7 @@ contract RegisteredIPFactory {
   function createDesign(string memory comment, string memory hash_input) public {
     // checks if hash has been previously registered
     if (deployedHashes[hash_input].isExist == 0) {
-      address newDesign = address(new Design("disabled", block.timestamp, block.timestamp, msg.sender, comment, hash_input, block.timestamp + 5 * 365 days));
+      address newDesign = address(new Design(address(this), "disabled", block.timestamp, block.timestamp, msg.sender, comment, hash_input, block.timestamp + 5 * 365 days));
       deployedDesigns[msg.sender].push(newDesign);
       
       addHash(newDesign, hash_input);
@@ -79,7 +79,7 @@ contract RegisteredIPFactory {
       numOfDesigns+=1;
       users.push(msg.sender);
     } else {
-      require(false, "ERR: 10");
+      require(false, "ERR: 01");
     }
   }
 
@@ -121,12 +121,20 @@ contract RegisteredIPFactory {
       return address(0);
     }
   }
+
+  /* --- Removes hash from the system --- */
+  function disableTrademark(string memory fileHash, address contractAddress) public {
+    Trademark t = Trademark(contractAddress);
+    require(msg.sender == t.getOwner(), 'ERR: 02');
+    delete deployedHashes[fileHash];
+    t.disableIP();
+  }
 }
 
 /* --- Intellectual Property parent contract --- */
 abstract contract IntellectualProperty {
+  address private factoryAddress;
   string private status;
-  uint256 private filingDate;
   uint256 private publicationDate;
   uint256 private statusDate;
   uint256 private expirationDate;
@@ -136,14 +144,15 @@ abstract contract IntellectualProperty {
 
   /* --- Modifier to restrict access only to the owners --- */
   modifier restricted() {
-    require(msg.sender == owner || co_owners[msg.sender], "ERR: 5");
+    require(msg.sender == owner, "ERR: 02");
     _;
   }
 
   /* --- Constructor with multiple attributes --- */
-  constructor(string memory stat, uint256 fDate, uint256 sDate, address own, string memory hash, uint256 eDate) {
+  constructor(address factoryAddr, string memory stat, uint256 pDate, uint256 sDate, address own, string memory hash, uint256 eDate) {
+    factoryAddress = factoryAddr;
     status = stat;
-    filingDate = fDate;
+    publicationDate = pDate;
     statusDate = sDate;
     owner = own;
     fileHash = hash;
@@ -152,12 +161,12 @@ abstract contract IntellectualProperty {
 
   /* --- SETTERS AND GETTERS --- */
 
-  function getStatus() public view returns(string memory) {
-    return status;
+  function getFactoryAddress() public view returns(address) {
+    return factoryAddress;
   }
 
-  function getFilingDate() public view returns(uint256) {
-    return filingDate;
+  function getStatus() public view returns(string memory) {
+    return status;
   }
 
   function getPublicationDate() public view returns(uint256) {
@@ -180,38 +189,16 @@ abstract contract IntellectualProperty {
     return expirationDate;
   }
 
-  function check_co_owners(address co_owner) public view returns(bool) {
-    return co_owners[co_owner];
-  }
-
-  function setFilingDate(uint256 date) public restricted {
-    filingDate = date;
-  }
-
-  function publishIP() public restricted {
-    publicationDate = block.timestamp;
-    statusDate = block.timestamp;
-    status = "active";
-  }
-
-  function disableIP() public restricted {
+  function disableIP() public {
+    require(msg.sender == owner || co_owners[msg.sender] || msg.sender == factoryAddress, "ERR: 02");
     status = "disabled";
     statusDate = block.timestamp;
-    publicationDate = 0;
   }
 
   function setOwner(address owner_input) public restricted {
     owner = owner_input;
   }
 
-  function add_co_owner(address co_owner) public restricted {
-    co_owners[co_owner] = true;
-  }
-
-  function remove_co_owner(address co_owner) public restricted {
-    delete co_owners[co_owner];
-  }
-  
   function setExpirationDate(uint256 expiry_date) public restricted {
     expirationDate = expiry_date;
   }
@@ -221,7 +208,7 @@ contract Trademark is IntellectualProperty {
   /* --- Constructor that links to parent contract --- */
   string private markDesc;
 
-  constructor(string memory status, uint256 fDate, uint256 sDate, address owner, string memory markD, string memory hash, uint256 eDate) IntellectualProperty(status, fDate, sDate, owner, hash, eDate) {
+  constructor(address factoryAddress, string memory status, uint256 fDate, uint256 sDate, address owner, string memory markD, string memory hash, uint256 eDate) IntellectualProperty(factoryAddress, status, fDate, sDate, owner, hash, eDate) {
     markDesc = markD;
   }
 
@@ -239,7 +226,7 @@ contract Patent is IntellectualProperty {
   string private inventorAddress;
 
   /* --- Constructor that links to parent contract --- */
-  constructor(string memory status, uint256 fDate, uint256 sDate, address owner, string memory title_i, string memory addressInv, string memory hash, uint256 eDate) IntellectualProperty(status, fDate, sDate, owner, hash, eDate) {
+  constructor(address factoryAddress, string memory status, uint256 fDate, uint256 sDate, address owner, string memory title_i, string memory addressInv, string memory hash, uint256 eDate) IntellectualProperty(factoryAddress, status, fDate, sDate, owner, hash, eDate) {
     title = title_i;
     inventorAddress = addressInv;
   }
@@ -265,7 +252,7 @@ contract Design is IntellectualProperty {
   string private comment;
 
    /* --- Constructor that links to parent contract --- */
-  constructor(string memory status, uint256 fDate, uint256 sDate, address owner, string memory com, string memory hash, uint256 eDate) IntellectualProperty(status, fDate, sDate, owner, hash, eDate) {
+  constructor(address factoryAddress, string memory status, uint256 fDate, uint256 sDate, address owner, string memory com, string memory hash, uint256 eDate) IntellectualProperty(factoryAddress, status, fDate, sDate, owner, hash, eDate) {
     comment = com;
   }
 
