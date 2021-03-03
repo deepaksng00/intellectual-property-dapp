@@ -6,16 +6,14 @@
     grid-template-columns: auto 2fr 1fr 1fr;
     grid-template-areas:
       "title title . ."
-      "addressLabel address publishButton disableButton"
+      "addressLabel address disableButton disableButton"
       "statusLabel status . ."
       "statusDateLabel statusDate . ."
-      "filingDateLabel filingDate . ."
       "publicationDateLabel publicationDate . ."
       "expirationDateLabel expirationDate . ."
       "ownerLabel owner . ."
       "fileHashLabel fileHash . ."
       "markDescLabel markDesc . .";
-    grid-template-rows: auto auto 50px auto;
 }
 
 .form > h2 {
@@ -67,14 +65,6 @@
     grid-area: statusDate;
 }
 
-.filingDateLabel {
-    grid-area: filingDateLabel;
-}
-
-.filingDate {
-    grid-area: filingDate;
-}
-
 .publicationDateLabel {
     grid-area: publicationDateLabel;
 }
@@ -113,10 +103,6 @@
 
 .markDesc {
     grid-area: markDesc;
-}
-
-.publishButton {
-    grid-area: publishButton;
 }
 
 .disableButton {

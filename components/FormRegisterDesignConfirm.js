@@ -22,38 +22,10 @@ class FormRegisterDesignConfirm extends Component {
       const designs = await factory.methods.getDesigns(values.address[0]).call();
       const numOfDesigns = designs.length;
       const address = designs[numOfDesigns-1];
-      const design = await new web3.eth.Contract(compiled_design.abi, address);
-   
-      const filingDate_UNIX = await design.methods.getFilingDate().call();
-      const design_date_obj = new Date(filingDate_UNIX * 1000);
-      const filingDate = design_date_obj.getFullYear().toString() + "-" + (design_date_obj.getMonth()+1).toString() + "-" + design_date_obj.getDate().toString();
-      const owner = await design.methods.getOwner().call();
-      const status = await design.methods.getStatus().call();
-      // const publicationDate_UNIX = await design.methods.getPublicationDate().call();
-      // const publicationDate_obj = new Date(publicationDate_UNIX * 1000);
-      // const publicationDate = publicationDate_obj.getFullYear().toString() + "-" + (publicationDate_obj.getMonth()+1).toString() + "-" + publicationDate_obj.getDate().toString();
-      const status_date_UNIX = await design.methods.getStatusDate().call();
-      const status_date_object = new Date(status_date_UNIX * 1000);
-      const status_date = status_date_object.getFullYear().toString() + "-" + (status_date_object.getMonth()+1).toString() + "-" + status_date_object.getDate().toString();
-      const renewal_date_UNIX = await design.methods.getExpirationDate().call();
-      const renewal_date_obj = new Date(renewal_date_UNIX * 1000);
-      const renewal_date = renewal_date_obj.getFullYear().toString() + "-" + (renewal_date_obj.getMonth()+1).toString() + "-" + renewal_date_obj.getDate().toString();
-      const comment = await design.methods.getComment().call();
-      const hash = await design.methods.getHash().call();
-  
-      console.log("Address: " + address);
-      console.log("Owner: " + owner);
-      console.log("Status: " + status);
-      console.log("Status last changed: " + status_date)
-      console.log("Filing date: " + filingDate);
-      // console.log("Publication date: " + publicationDate);
-      console.log("Renewal date: " + renewal_date);
-      console.log("Comment: " + comment);
-      console.log("Hash: " + hash);
-  
+
       this.props.changeForm('ip_addr', address);
-      this.props.changeForm('address', owner);
-  
+      this.props.changeForm('address', values.address[0]);
+
       this.props.nextStep(1);
     } catch (err) {
       alert("ERROR: The hash has already been registered!");

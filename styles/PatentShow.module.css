@@ -1,0 +1,121 @@
+.form {
+    padding: 1.5% 4% 1.5% 4%;
+    display: grid;
+    color: white;
+    grid-gap: 30px;
+    grid-template-columns: auto 2fr 1fr 1fr;
+    grid-template-areas:
+      "header header . ."
+      "addressLabel address disableButton disableButton"
+      "statusLabel status . ."
+      "statusDateLabel statusDate . ."
+      "publicationDateLabel publicationDate . ."
+      "expirationDateLabel expirationDate . ."
+      "ownerLabel owner . ."
+      "titleLabel title . ."
+      "inventorAddressLabel inventorAddress . ."
+      "fileHashLabel fileHash . .";
+}
+
+
+
+.form > h2 {
+    grid-area: header;
+}
+
+.form > input {
+    border-radius: 20px;
+    border: none;
+    padding: 1rem;
+    font-size: 1rem;
+}
+
+.form > button {
+    width: 7rem;
+    border-radius: 20px;
+    padding: 1rem;
+    border: none;
+    transition: width 0.2s;
+    justify-self: center;
+  }
+  
+.form > button:hover {
+    width: 8rem;
+    cursor: pointer;
+}
+
+.addressLabel {
+    grid-area: addressLabel;
+}
+
+.address {
+    grid-area: address;
+}
+
+.statusLabel {
+    grid-area: statusLabel;
+}
+
+.status {
+    grid-area: status;
+}
+
+.statusDateLabel {
+    grid-area: statusDateLabel;
+}
+
+.statusDate {
+    grid-area: statusDate;
+}
+
+.publicationDateLabel {
+    grid-area: publicationDateLabel;
+}
+
+.publicationDate {
+    grid-area: publicationDate;
+}
+
+.expirationDateLabel {
+    grid-area: expirationDateLabel;
+}
+
+.expirationDate {
+    grid-area: expirationDate;
+}
+
+.ownerLabel {
+    grid-area: ownerLabel;
+}
+
+.owner {
+    grid-area: owner;
+}
+
+.fileHashLabel {
+    grid-area: fileHashLabel;
+}
+
+.fileHash {
+    grid-area: fileHash;
+}
+
+.titleLabel {
+    grid-area: titleLabel;
+}
+
+.title {
+    grid-area: title;
+}
+
+.inventorAddressLabel {
+    grid-area: inventorAddressLabel;
+}
+
+.inventorAddress {
+    grid-area: inventorAddress;
+}
+
+.disableButton {
+    grid-area: disableButton;
+}

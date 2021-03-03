@@ -20,41 +20,13 @@ class FormRegisterPatentConfirm extends Component {
         gasLimit: "5000000"
        })
        .catch(() => { throw 'HashAlreadyUsed' });
-   
+
       const patents = await factory.methods.getPatents(values.address[0]).call();
-      const patent = await new web3.eth.Contract(compiled_patent.abi, address);
+      const numOfPatents = patents.length;
+      const address = trademarks[numOfTrademarks-1];
    
-      const filingDate_UNIX = await patent.methods.getFilingDate().call();
-      const patent_date_obj = new Date(filingDate_UNIX * 1000);
-      const filingDate = patent_date_obj.getFullYear().toString() + "-" + (patent_date_obj.getMonth()+1).toString() + "-" + patent_date_obj.getDate().toString();
-      const owner = await patent.methods.getOwner().call();
-      const status = await patent.methods.getStatus().call();
-      // const publicationDate_UNIX = await patent.methods.getPublicationDate().call();
-      // const publicationDate_obj = new Date(publicationDate_UNIX * 1000);
-      // const publicationDate = publicationDate_obj.getFullYear().toString() + "-" + (publicationDate_obj.getMonth()+1).toString() + "-" + publicationDate_obj.getDate().toString();
-      const status_date_UNIX = await patent.methods.getStatusDate().call();
-      const status_date_object = new Date(status_date_UNIX * 1000);
-      const status_date = status_date_object.getFullYear().toString() + "-" + (status_date_object.getMonth()+1).toString() + "-" + status_date_object.getDate().toString();
-      const renewal_date_UNIX = await patent.methods.getExpirationDate().call();
-      const renewal_date_obj = new Date(renewal_date_UNIX * 1000);
-      const renewal_date = renewal_date_obj.getFullYear().toString() + "-" + (renewal_date_obj.getMonth()+1).toString() + "-" + renewal_date_obj.getDate().toString();
-      const inventorAddress = await patent.methods.getInventorAddress().call();
-      const title = await patent.methods.getTitle().call();
-      const patent_hash = await patent.methods.getHash().call();
-  
-      console.log("Address: " + address);
-      console.log("Owner: " + owner);
-      console.log("Status: " + status);
-      console.log("Status last changed: " + status_date)
-      console.log("Filing date: " + filingDate);
-      // console.log("Publication date: " + publicationDate);
-      console.log("Renewal date: " + renewal_date);
-      console.log("Inventor address: " + inventorAddress);
-      console.log("Title: " + title);
-      console.log("Hash: " + patent_hash);
-  
       this.props.changeForm('ip_addr', address);
-      this.props.changeForm('address', owner);
+      this.props.changeForm('address', values.address[0]);
   
       this.props.nextStep(1);   
     } catch (err) {
@@ -69,11 +41,11 @@ class FormRegisterPatentConfirm extends Component {
   }
 
   async componentDidMount() {
-    // const address = await web3.eth.getAccounts();
-    // if (address == "") {
-    //   alert("Metamask is not setup correctly, please load Metamask and try again!");
-    //   Router.pushRoute('/');
-    // }
+    const address = await web3.eth.getAccounts();
+    if (address == "") {
+      alert("Metamask is not setup correctly, please load Metamask and try again!");
+      Router.pushRoute('/');
+    }
   }
 
   render() {
