@@ -71,7 +71,7 @@ contract RegisteredIPFactory {
   function createDesign(string memory comment, string memory hash_input) public {
     // checks if hash has been previously registered
     if (deployedHashes[hash_input].isExist == 0) {
-      address newDesign = address(new Design(address(this), "disabled", block.timestamp, block.timestamp, msg.sender, comment, hash_input, block.timestamp + 5 * 365 days));
+      address newDesign = address(new Design(address(this), "active", block.timestamp, block.timestamp, msg.sender, comment, hash_input, block.timestamp + 5 * 365 days));
       deployedDesigns[msg.sender].push(newDesign);
       
       addHash(newDesign, hash_input);

@@ -9,7 +9,8 @@ export default class YourIP extends Component {
     state = {
         trademarks: [],
         patents: [],
-        designs: []
+        designs: [],
+        empty: false
     }
 
     async componentDidMount() {
@@ -26,17 +27,21 @@ export default class YourIP extends Component {
             this.setState({ designs });
 
             if (this.state.trademarks.length == 0 && this.state.patents.length == 0 && this.state.designs.length == 0) {
-                alert("You don't have any intellectual property registered.");  
-                Router.pushRoute("/");
+                this.setState({ empty: true });
             }
         }
     }
     
     renderIP() {
+        if (this.state.empty) {
+            return <IntellectualPropertyItem empty = "True" />
+        }
+
         var trademarkItems = this.state.trademarks.map(address => {
             return <IntellectualPropertyItem
                 typeOfIP = "Trademark" 
                 address = { address } 
+                empty = "True"
             />   
         });
 
@@ -44,6 +49,7 @@ export default class YourIP extends Component {
             return <IntellectualPropertyItem
                 typeOfIP = "Patent"
                 address = { address }
+                empty = "True"
             />
         });
 
