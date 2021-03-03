@@ -145,6 +145,11 @@ contract RegisteredIPFactory {
     delete deployedHashes[fileHash];
     d.disableIP();
   }
+
+  /* --- Return all users --- */
+  function getUsers() public view returns (address[] memory) {
+    return users;
+  }
 }
 
 /* --- Intellectual Property parent contract --- */
