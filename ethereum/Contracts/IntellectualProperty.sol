@@ -129,6 +129,22 @@ contract RegisteredIPFactory {
     delete deployedHashes[fileHash];
     t.disableIP();
   }
+  
+    /* --- Removes hash from the system --- */
+  function disablePatent(string memory fileHash, address contractAddress) public {
+    Patent p = Patent(contractAddress);
+    require(msg.sender == p.getOwner(), 'ERR: 02');
+    delete deployedHashes[fileHash];
+    p.disableIP();
+  }
+  
+    /* --- Removes hash from the system --- */
+  function disableDesign(string memory fileHash, address contractAddress) public {
+    Design d = Design(contractAddress);
+    require(msg.sender == d.getOwner(), 'ERR: 02');
+    delete deployedHashes[fileHash];
+    d.disableIP();
+  }
 }
 
 /* --- Intellectual Property parent contract --- */

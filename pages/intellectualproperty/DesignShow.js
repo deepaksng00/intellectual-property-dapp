@@ -30,6 +30,26 @@ export default class PatentShow extends Component {
             comment: comment
         };
     }
+
+    disableContract = async () => {
+        const compiled_design = require("../../ethereum/build/Design.json");
+
+        const design = await new web3.eth.Contract(compiled_design.abi, this.props.address);
+        const accounts = await web3.eth.getAccounts();
+
+        try {
+            await factory.methods.disableDesign(this.props.fileHash, this.props.address)
+                .send({ from: accounts[0], gasLimit: "5000000"})
+                .catch((err) => { throw err; });
+
+            Router.pushRoute(`/intellectualproperty/designs/${this.props.address}`);
+
+            alert("The contract has been disabled.");
+        } catch (err) {
+            alert("There has been an issue with the transaction, please try again!");
+            console.log(err);
+        }       
+    }
     
     render() {
         const statusDateObj = new Date(this.props.statusDate * 1000);
@@ -66,7 +86,7 @@ export default class PatentShow extends Component {
                     <input className={style.fileHash} type='text' value={this.props.fileHash} readOnly />
                     <p className={style.commentLabel}>Comment:</p>
                     <input className={style.comment} type='text' value={this.props.comment} readOnly />
-                    <button className={style.disableButton} type='button' onClick={ this.disableContract }>Disable Patent</button>
+                    <button className={style.disableButton} type='button' onClick={ this.disableContract }>Disable Design</button>
                 </form>
             </Layout>
         )
