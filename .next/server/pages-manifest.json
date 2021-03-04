@@ -2,7 +2,6 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/intellectualproperty/register": "pages/intellectualproperty/register.js",
-  "/intellectualproperty/TrademarkShow": "pages/intellectualproperty/TrademarkShow.js",
-  "/intellectualproperty/DesignShow": "pages/intellectualproperty/DesignShow.js"
+  "/searchip": "pages/searchip.js",
+  "/yourip": "pages/yourip.js"
 }

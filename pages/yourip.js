@@ -10,7 +10,7 @@ export default class YourIP extends Component {
         trademarks: [],
         patents: [],
         designs: [],
-        empty: false
+        isEmpty: false
     }
 
     async componentDidMount() {
@@ -26,47 +26,49 @@ export default class YourIP extends Component {
             this.setState({ patents });
             this.setState({ designs });
 
-            if (this.state.trademarks.length == 0 && this.state.patents.length == 0 && this.state.designs.length == 0) {
-                this.setState({ empty: true });
+            if (trademarks.length == 0 && patents.length == 0 && designs.length == 0) {
+                this.setState({ isEmpty: true });
             }
         }
     }
     
-    renderIP() {
-        if (this.state.empty) {
+    renderIP(isEmpty) {
+        console.log(isEmpty)
+        if (isEmpty == true) {
             return <IntellectualPropertyItem empty = "True" />
+        } else {
+            var trademarkItems = this.state.trademarks.map(address => {
+                return <IntellectualPropertyItem
+                    typeOfIP = "Trademark" 
+                    address = { address } 
+                    empty = "False"
+                />   
+            });
+    
+            var patentItems = this.state.patents.map(address => {
+                return <IntellectualPropertyItem
+                    typeOfIP = "Patent"
+                    address = { address }
+                    empty = "False"
+                />
+            });
+    
+            var designItems = this.state.designs.map(address => {
+                return <IntellectualPropertyItem
+                    typeOfIP = "Design"
+                    address = { address }
+                    empty = "False"
+                />
+            });
+    
+            return new Map([ trademarkItems, patentItems, designItems ]);
         }
-
-        var trademarkItems = this.state.trademarks.map(address => {
-            return <IntellectualPropertyItem
-                typeOfIP = "Trademark" 
-                address = { address } 
-                empty = "True"
-            />   
-        });
-
-        var patentItems = this.state.patents.map(address => {
-            return <IntellectualPropertyItem
-                typeOfIP = "Patent"
-                address = { address }
-                empty = "True"
-            />
-        });
-
-        var designItems = this.state.designs.map(address => {
-            return <IntellectualPropertyItem
-                typeOfIP = "Design"
-                address = { address }
-            />
-        });
-
-        return new Map([ trademarkItems, patentItems, designItems ]);
     }
 
     render() {
         return (
             <Layout>
-                { this.renderIP() }
+                { this.renderIP(this.state.isEmpty) }
             </Layout>
         )
     }

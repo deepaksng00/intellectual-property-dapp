@@ -10,7 +10,7 @@ export default (props) => {
         <Link route="/"><h4 className={[style.home, style.headerButton].join(" ")}>Home</h4></Link>
         <Link route="/intellectualproperty/register"><h4 className={[style.register, style.headerButton].join(" ")}>Register Your IP</h4></Link>
         <Link route="/yourip"><h4 className={[style.yourip, style.headerButton].join(" ")}>Your IP</h4></Link>
-        <Link route="/"><h4 className={[style.search, style.headerButton].join(" ")}>Search for IP</h4></Link>
+        <Link route="/searchip"><h4 className={[style.search, style.headerButton].join(" ")}>Search for IP</h4></Link>
         <Link route="/"><h4 className={[style.faq, style.headerButton].join(" ")}>FAQ</h4></Link>
         <div id="menuContainer" className={style.menuContainer}>
           <div className={style.bar1}></div>

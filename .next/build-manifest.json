@@ -24,20 +24,15 @@
       "static/chunks/webpack.js",
       "static/chunks/pages/_error.js"
     ],
-    "/intellectualproperty/DesignShow": [
+    "/searchip": [
       "static/chunks/main.js",
       "static/chunks/webpack.js",
-      "static/chunks/pages/intellectualproperty/DesignShow.js"
+      "static/chunks/pages/searchip.js"
     ],
-    "/intellectualproperty/TrademarkShow": [
+    "/yourip": [
       "static/chunks/main.js",
       "static/chunks/webpack.js",
-      "static/chunks/pages/intellectualproperty/TrademarkShow.js"
-    ],
-    "/intellectualproperty/register": [
-      "static/chunks/main.js",
-      "static/chunks/webpack.js",
-      "static/chunks/pages/intellectualproperty/register.js"
+      "static/chunks/pages/yourip.js"
     ]
   },
   "ampFirstPages": []
