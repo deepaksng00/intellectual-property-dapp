@@ -2,6 +2,6 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/searchip": "pages/searchip.js",
-  "/yourip": "pages/yourip.js"
+  "/": "pages/index.js",
+  "/intellectualproperty/PatentShow": "pages/intellectualproperty/PatentShow.js"
 }

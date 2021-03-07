@@ -7,14 +7,6 @@ import { Link, Router } from '../routes';
 import style from '../styles/SearchIP.module.css';
 
 export default class YourIP extends Component {
-    state = {
-        matchingTrademarks: [],
-        matchingPatents: [],
-        matchingDesigns: [],
-        ipAddress: '',
-        found: ''
-    }
-
     static async getInitialProps(props) {
         const users = await factory.methods.getUsers().call();
 
@@ -43,78 +35,49 @@ export default class YourIP extends Component {
         }
     }
 
-    searchIP = (ipAddress) => {
-        var matchingPatents = [];
-        var matchingDesigns = [];
-        var matchingTrademarks = [];
+    onFormSubmit = (event) => {
+        event.preventDefault();
+        const searchAddress = document.getElementById('ipAddress').value;
+        let found = '';
+        let typeOfIP = '';
 
-        for(var i = 0; i < this.props.trademarks.length; i++) {
-            if((this.props.trademarks[i].toString()).includes(ipAddress.toString())) {
-                matchingTrademarks.push(this.props.trademarks[i]);
+        const trademarks = this.props.trademarks;
+        const patents = this.props.patents;
+        const designs = this.props.designs;
+
+        for(var i = 0; i < trademarks.length; i++) {
+            if(trademarks[i] == searchAddress) {
+                found = trademarks[i];
+                typeOfIP = 'trademarks';
             }
         }
-        for(var i = 0; i < this.props.patents.length; i++) {
-            if((this.props.patents[i].toString()).includes(ipAddress.toString())) {
-                matchingPatents.push(this.props.patents[i]);
+        for(var i = 0; i < patents.length; i++) {
+            if(patents[i] == searchAddress) {
+                found = patents[i];
+                typeOfIP = 'patents';
             }
         }
-        for(var i = 0; i < this.props.designs.length; i++) {
-            if((this.props.designs[i].toString()).includes(ipAddress.toString())) {
-                matchingDesigns.push(this.props.designs[i]);
+        for(var i = 0; i < designs.length; i++) {
+            if(designs[i] == searchAddress) {
+                found = designs[i];
+                typeOfIP = 'designs';
             }
         }
 
-        matchingPatents = matchingPatents.slice(0, 9);
-        matchingDesigns = matchingDesigns.slice(0, 9);
-        matchingTrademarks = matchingTrademarks.slice(0, 9);
-
-        this.setState({ matchingPatents });
-        this.setState({ matchingTrademarks });
-        this.setState({ matchingDesigns });
-    }
-
-    ipAddress_change = () => {
-        const ipAddress = document.getElementById('ipAddress').value;
-        this.setState({ ipAddress });
-        this.searchIP(ipAddress);
-    }
-
-    renderIP(isEmpty) {
-        var trademarkItems = this.state.matchingTrademarks.map(address => {
-            return <IntellectualPropertyItem
-                typeOfIP = "Trademark" 
-                address = { address } 
-                empty = "False"
-            />   
-        });
-
-        var patentItems = this.state.matchingPatents.map(address => {
-            return <IntellectualPropertyItem
-                typeOfIP = "Patent"
-                address = { address }
-                empty = "False"
-            />
-        });
-
-        var designItems = this.state.matchingDesigns.map(address => {
-            return <IntellectualPropertyItem
-                typeOfIP = "Design"
-                address = { address }
-                empty = "False"
-            />
-        });
-
-        return new Map([ trademarkItems, patentItems, designItems ]);
+        if(found == '') {
+            alert("No results found");
+        } else {
+            Router.pushRoute(`/intellectualproperty/${typeOfIP}/${found}`);
+        }
     }
 
     render() {
         return (
             <Layout>
-                <form className={style.form}>
+                <form className={style.form} onSubmit={this.onFormSubmit}>
                     <h2>Search for IP</h2>
-                    <input id="ipAddress" className={style.ipAddressBar} type='text' value={this.state.ipAddress} onChange={this.ipAddress_change} />
-                    <button className={style.next} type='button' onClick={ this.continueRegistration }>Next</button>
-                    <h3>{ this.renderIP(false) } { console.log(this.state.matchingTrademarks) } {console.log(this.props.trademarks)}</h3>
+                    <input id="ipAddress" className={style.ipAddressBar} type='text'/>
+                    <input className={style.button} type="submit" />
                 </form>
             </Layout>
         )

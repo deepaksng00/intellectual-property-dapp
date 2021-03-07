@@ -34,7 +34,7 @@
     border: none;
     transition: width 0.2s;
     justify-self: center;
-  }
+}
   
 .form > button:hover {
     width: 8rem;

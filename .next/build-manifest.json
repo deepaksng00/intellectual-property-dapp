@@ -14,6 +14,11 @@
     "static/development/_ssgManifest.js"
   ],
   "pages": {
+    "/": [
+      "static/chunks/main.js",
+      "static/chunks/webpack.js",
+      "static/chunks/pages/index.js"
+    ],
     "/_app": [
       "static/chunks/main.js",
       "static/chunks/webpack.js",
@@ -24,15 +29,10 @@
       "static/chunks/webpack.js",
       "static/chunks/pages/_error.js"
     ],
-    "/searchip": [
+    "/intellectualproperty/PatentShow": [
       "static/chunks/main.js",
       "static/chunks/webpack.js",
-      "static/chunks/pages/searchip.js"
-    ],
-    "/yourip": [
-      "static/chunks/main.js",
-      "static/chunks/webpack.js",
-      "static/chunks/pages/yourip.js"
+      "static/chunks/pages/intellectualproperty/PatentShow.js"
     ]
   },
   "ampFirstPages": []

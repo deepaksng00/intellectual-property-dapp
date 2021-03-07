@@ -1,0 +1,35 @@
+.form {
+    padding: 1.5% 4% 1.5% 4%;
+    display: grid;
+    color: white;
+    grid-gap: 30px;
+    grid-template-columns: auto 2fr 1fr 1fr;
+    grid-template-areas:
+        "title title"
+        "ipAddressBar button";
+}
+
+.form > h2 {
+    grid-area: title;
+}
+
+.button {
+    width: 7rem;
+    transition: width 0.2s;
+    justify-self: left;
+}
+.form > input {
+    border-radius: 20px;
+    border: none;
+    padding: 1rem;
+    font-size: 1rem;
+}
+
+.ipAddressBar {
+    grid-area: ipAddressBar;
+    width: 35rem;
+}
+
+.button {
+    grid-area: button;
+}

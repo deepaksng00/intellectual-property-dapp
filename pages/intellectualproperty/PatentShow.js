@@ -57,17 +57,17 @@ export default class PatentShow extends Component {
     render() {
         const statusDateObj = new Date(this.props.statusDate * 1000);
         const formattedStatusDate = 
-            statusDateObj.getDate().toString() + "-" + (statusDateObj.getMonth()+1).toString() + "-" + statusDateObj.getFullYear().toString();
+            ('0' + statusDateObj.getDate()).slice(-2) + "-" + ('0' + (statusDateObj.getMonth() + 1)).slice(-2) + "-" + statusDateObj.getFullYear();
 
         let formattedPublicationDate;
 
         const publicationDateObj = new Date(this.props.publicationDate * 1000);
         formattedPublicationDate = 
-        publicationDateObj.getDate().toString() + "-" + (publicationDateObj.getMonth()+1).toString() + "-" + publicationDateObj.getFullYear().toString();
+            ('0' + publicationDateObj.getDate()).slice(-2) + "-" + ('0' + (publicationDateObj.getMonth() + 1)).slice(-2) + "-" + publicationDateObj.getFullYear();
 
         const expirationDateObj = new Date(this.props.expirationDate * 1000);
         const formattedExpirationDate = 
-            expirationDateObj.getDate().toString() + "-" + (expirationDateObj.getMonth()+1).toString() + "-" + expirationDateObj.getFullYear().toString();
+            ('0' + expirationDateObj.getDate()).slice(-2) + "-" + ('0' + (expirationDateObj.getMonth() + 1)).slice(-2) + "-" + expirationDateObj.getFullYear();
 
         return (
             <Layout>
