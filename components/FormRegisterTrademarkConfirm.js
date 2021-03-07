@@ -4,15 +4,22 @@ import style from '../styles/FormRegisterTrademarkConfirm.module.css';
 import { Link, Router } from '../routes';
 import web3 from '../ethereum/web3';
 import factory from '../ethereum/factory';
+import RingLoader from "react-spinners/RingLoader";
 
 class FormRegisterTrademarkConfirm extends Component {
-   continueRegistration = async (event) => {
-    const { values } = this.props;
+  state = {
+    loading: false
+  }
+
+  continueRegistration = async (event) => {
     event.preventDefault();
+
+    const { values } = this.props;
     const compiled_trademark = require("../ethereum/build/Trademark.json");
-    alert("Creating IP");
 
     try {
+      this.setState({loading: true});
+
       await factory.methods.createTrademark(values.markDesc, values.fileHash)
         .send({ from: values.address[0], gasLimit: "5000000"})
         .catch(() => {throw 'HashAlreadyUsed';})
@@ -24,8 +31,11 @@ class FormRegisterTrademarkConfirm extends Component {
       this.props.changeForm('ip_addr', address);
       this.props.changeForm('address', values.address[0]);
 
+      this.setState({loading: false})
+
       this.props.nextStep(1);
     } catch (error) {
+      this.setState({loading: false})
       alert("ERROR: The hash has already been registered!");
       this.props.previousStep(2);
     }
@@ -37,11 +47,13 @@ class FormRegisterTrademarkConfirm extends Component {
   }
 
   async componentDidMount() {
+    this.setState({ loading: true });
     const address = await web3.eth.getAccounts();
     if (address == "") {
       alert("Metamask is not setup correctly, please load Metamask and try again!");
       Router.pushRoute('/');
     }
+    this.setState({ loading: false });
   }
 
   render() {
@@ -49,23 +61,33 @@ class FormRegisterTrademarkConfirm extends Component {
     const { nextStep } = this.props;
 
     return (
-      <Layout>
-        <form className={style.form}>
-          <h2>Confirm your details</h2>
-          <p className={style.addressLabel}>Address:</p>
-          <input className={style.address} type='text' value={values.address} readOnly />
-          <p className={style.dateLabel}>Date:</p>
-          <input className={style.date} type='text' value={values.currentDate} readOnly />
-          <p className={style.typeOfIPLabel}>Type of IP:</p>
-          <input className={style.typeOfIP} type='text' value={values.typeOfIP} readOnly />
-          <p className={style.markDescLabel}>Mark description:</p>
-          <input className={style.markDesc} type='text' value={values.markDesc} readOnly />
-          <p className={style.markHashLabel}>Mark hash:</p>
-          <input className={style.markHash} type='text' value={values.fileHash} readOnly />
-          <button className={style.back} type='button' onClick={ this.backRegistration }>Back</button>
-          <button className={style.next} type='button' onClick={ this.continueRegistration }>Register Trademark</button>
-      </form>
-      </Layout>
+      <div>
+        {
+          this.state.loading ?
+
+          <div class="loadingContainer"><RingLoader color={"#ffffff"} loading={this.state.loading} size={60} /></div>
+
+          :
+
+          <Layout>
+            <form className={style.form}>
+              <h2>Confirm your details</h2>
+              <p className={style.addressLabel}>Address:</p>
+              <input className={style.address} type='text' value={values.address} readOnly />
+              <p className={style.dateLabel}>Date:</p>
+              <input className={style.date} type='text' value={values.currentDate} readOnly />
+              <p className={style.typeOfIPLabel}>Type of IP:</p>
+              <input className={style.typeOfIP} type='text' value={values.typeOfIP} readOnly />
+              <p className={style.markDescLabel}>Mark description:</p>
+              <input className={style.markDesc} type='text' value={values.markDesc} readOnly />
+              <p className={style.markHashLabel}>Mark hash:</p>
+              <input className={style.markHash} type='text' value={values.fileHash} readOnly />
+              <button className={style.back} type='button' onClick={ this.backRegistration }>Back</button>
+              <button className={style.next} type='button' onClick={ this.continueRegistration }>Register Trademark</button>
+            </form>
+          </Layout>
+        }
+      </div>
     );
   }
 }

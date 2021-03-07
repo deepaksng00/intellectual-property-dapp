@@ -4,8 +4,13 @@ import web3 from '../../ethereum/web3';
 import style from '../../styles/TrademarkShow.module.css';
 import { Link, Router } from '../../routes';
 import factory from '../../ethereum/factory';
+import RingLoader from "react-spinners/RingLoader";
 
 export default class TrademarkShow extends Component {
+    state = {
+        loading: false
+    }
+
     static async getInitialProps(props) {
         const address = props.query.address;
         const compiled_trademark = require("../../ethereum/build/Trademark.json");
@@ -32,6 +37,7 @@ export default class TrademarkShow extends Component {
     }
 
     disableContract = async () => {
+        this.setState({ loading: true });
         const compiled_trademark = require("../../ethereum/build/Trademark.json");
 
         const trademark = await new web3.eth.Contract(compiled_trademark.abi, this.props.address);
@@ -44,8 +50,11 @@ export default class TrademarkShow extends Component {
 
             Router.pushRoute(`/intellectualproperty/trademarks/${this.props.address}`);
 
+            this.setState({ loading: false });
+
             alert("The contract has been disabled.");
         } catch (err) {
+            this.setState({ loading: false });
             alert("There has been an issue with the transaction, please try again!");
             console.log(err);
         }       
@@ -67,28 +76,38 @@ export default class TrademarkShow extends Component {
             ('0' + expirationDateObj.getDate()).slice(-2) + "-" + ('0' + (expirationDateObj.getMonth() + 1)).slice(-2) + "-" + expirationDateObj.getFullYear();
 
         return (
-            <Layout>
-                <form className={style.form}>
-                    <h2>Trademark {this.props.address} </h2>
-                    <p className={style.addressLabel}>Address:</p>
-                    <input className={style.address} type='text' value={this.props.address} readOnly />
-                    <p className={style.statusLabel}>Status:</p>
-                    <input className={style.status} type='text' value={this.props.status} readOnly />
-                    <p className={style.statusDateLabel}>Last status change:</p>
-                    <input className={style.statusDate} type='text' value={formattedStatusDate} readOnly />
-                    <p className={style.publicationDateLabel}>Publication Date:</p>
-                    <input className={style.publicationDate} type='text' value={formattedPublicationDate} readOnly />
-                    <p className={style.expirationDateLabel}>Expiration date:</p>
-                    <input className={style.expirationDate} type='text' value={formattedExpirationDate} readOnly />
-                    <p className={style.ownerLabel}>Owner address:</p>
-                    <input className={style.owner} type='text' value={this.props.owners} readOnly />
-                    <p className={style.fileHashLabel}>File hash:</p>
-                    <input className={style.fileHash} type='text' value={this.props.fileHash} readOnly />
-                    <p className={style.markDescLabel}>Mark description:</p>
-                    <input className={style.markDesc} type='text' value={this.props.markDesc} readOnly />
-                    <button className={style.disableButton} type='button' onClick={ this.disableContract }>Disable Trademark</button>
-                </form>
-            </Layout>
+            <div>
+                {
+                    this.state.loading ?
+
+                    <div class="loadingContainer"><RingLoader color={"#ffffff"} loading={this.state.loading} size={60} /></div>
+
+                    :
+
+                    <Layout>
+                        <form className={style.form}>
+                            <h2>Trademark {this.props.address} </h2>
+                            <p className={style.addressLabel}>Address:</p>
+                            <input className={style.address} type='text' value={this.props.address} readOnly />
+                            <p className={style.statusLabel}>Status:</p>
+                            <input className={style.status} type='text' value={this.props.status} readOnly />
+                            <p className={style.statusDateLabel}>Last status change:</p>
+                            <input className={style.statusDate} type='text' value={formattedStatusDate} readOnly />
+                            <p className={style.publicationDateLabel}>Publication Date:</p>
+                            <input className={style.publicationDate} type='text' value={formattedPublicationDate} readOnly />
+                            <p className={style.expirationDateLabel}>Expiration date:</p>
+                            <input className={style.expirationDate} type='text' value={formattedExpirationDate} readOnly />
+                            <p className={style.ownerLabel}>Owner address:</p>
+                            <input className={style.owner} type='text' value={this.props.owners} readOnly />
+                            <p className={style.fileHashLabel}>File hash:</p>
+                            <input className={style.fileHash} type='text' value={this.props.fileHash} readOnly />
+                            <p className={style.markDescLabel}>Mark description:</p>
+                            <input className={style.markDesc} type='text' value={this.props.markDesc} readOnly />
+                            <button className={style.disableButton} type='button' onClick={ this.disableContract }>Disable Trademark</button>
+                        </form>
+                    </Layout>
+                }
+            </div>
         )
     }
 }

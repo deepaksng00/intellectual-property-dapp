@@ -4,18 +4,23 @@ import web3 from '../ethereum/web3';
 import factory from '../ethereum/factory';
 import IntellectualPropertyItem from '../components/IntellectualPropertyItem';
 import { Link, Router } from '../routes';
+import RingLoader from "react-spinners/RingLoader";
+
 
 export default class YourIP extends Component {
     state = {
         trademarks: [],
         patents: [],
         designs: [],
-        isEmpty: false
+        isEmpty: false,
+        loading: false
     }
 
     async componentDidMount() {
+        this.setState({ loading: true });
         const address = await web3.eth.getAccounts();
         if (address == "") {
+            this.setState({ loading: false });
             alert("Metamask is not setup correctly, please load Metamask and try again!");
             Router.pushRoute('/');
         } else {
@@ -29,11 +34,11 @@ export default class YourIP extends Component {
             if (trademarks.length == 0 && patents.length == 0 && designs.length == 0) {
                 this.setState({ isEmpty: true });
             }
+            this.setState({ loading: false });
         }
     }
     
     renderIP(isEmpty) {
-        console.log(isEmpty)
         if (isEmpty == true) {
             return <IntellectualPropertyItem empty = "True" />
         } else {
@@ -67,9 +72,19 @@ export default class YourIP extends Component {
 
     render() {
         return (
-            <Layout>
-                { this.renderIP(this.state.isEmpty) }
-            </Layout>
+            <div>
+                {
+                    this.state.loading ?
+                    
+                    <div class="loadingContainer"><RingLoader color={"#ffffff"} loading={this.state.loading} size={60} /></div>
+
+                    :
+
+                    <Layout>
+                        { this.renderIP(this.state.isEmpty) }
+                    </Layout>  
+                }
+            </div>
         )
     }
 }

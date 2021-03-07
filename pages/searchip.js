@@ -5,8 +5,14 @@ import factory from '../ethereum/factory';
 import IntellectualPropertyItem from '../components/IntellectualPropertyItem';
 import { Link, Router } from '../routes';
 import style from '../styles/SearchIP.module.css';
+import RingLoader from "react-spinners/RingLoader";
 
-export default class YourIP extends Component {
+
+export default class SearchIP extends Component {
+    state = {
+        loading: false
+    }
+
     static async getInitialProps(props) {
         const users = await factory.methods.getUsers().call();
 
@@ -37,6 +43,8 @@ export default class YourIP extends Component {
 
     onFormSubmit = (event) => {
         event.preventDefault();
+        this.setState({ loading: true });
+
         const searchAddress = document.getElementById('ipAddress').value;
         let found = '';
         let typeOfIP = '';
@@ -66,20 +74,32 @@ export default class YourIP extends Component {
 
         if(found == '') {
             alert("No results found");
+            this.setState({ loading: false });
         } else {
+            this.setState({ loading: false });
             Router.pushRoute(`/intellectualproperty/${typeOfIP}/${found}`);
         }
     }
 
     render() {
         return (
-            <Layout>
-                <form className={style.form} onSubmit={this.onFormSubmit}>
-                    <h2>Search for IP</h2>
-                    <input id="ipAddress" className={style.ipAddressBar} type='text'/>
-                    <input className={style.button} type="submit" />
-                </form>
-            </Layout>
+            <div>
+                {
+                    this.state.loading ?
+
+                    <div class="loadingContainer"><RingLoader color={"#ffffff"} loading={this.state.loading} size={60} /></div>
+
+                    :
+
+                    <Layout>
+                        <form className={style.form} onSubmit={this.onFormSubmit}>
+                            <h2>Search for IP</h2>
+                            <input id="ipAddress" className={style.ipAddressBar} type='text'/>
+                            <input className={style.button} type="submit" />
+                        </form>
+                    </Layout>
+                }
+            </div>
         )
     }
 }

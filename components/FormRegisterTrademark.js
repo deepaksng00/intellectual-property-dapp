@@ -3,8 +3,13 @@ import Layout from './Layout';
 import style from '../styles/FormRegisterTrademark.module.css';
 import { Link, Router } from '../routes';
 import web3 from '../ethereum/web3';
+import RingLoader from "react-spinners/RingLoader";
 
 class FormRegisterTrademark extends Component {
+  state = {
+    loading: false
+  }
+
   continueRegistration = e => {
     e.preventDefault();
     this.props.nextStep(1);
@@ -16,11 +21,14 @@ class FormRegisterTrademark extends Component {
   }
 
   async componentDidMount() {
+    this.setState({ loading: true });
     const address = await web3.eth.getAccounts();
     if (address == "") {
+      this.setState({ loading: true });
       alert("Metamask is not setup correctly, please load Metamask and try again!");
       Router.pushRoute('/');
     }
+    this.setState({ loading: false });
   }
 
   markDesc_change = (event) => {
@@ -33,15 +41,25 @@ class FormRegisterTrademark extends Component {
     const { nextStep } = this.props;
 
     return (
-      <Layout>
-        <form className={style.form}>
-          <h2>Intellectual Property Registration Form 2/2 (Trademark)</h2>
-          <p className={style.markDescLabel}>Mark description:</p>
-          <input id="markDesc" className={style.markDesc} type='text' value={this.props.markDesc} onChange={this.markDesc_change} />
-          <button className={style.back} type='button' onClick={ this.backRegistration }>Back</button>
-          <button className={style.next} type='button' onClick={ this.continueRegistration }>Next</button>
-      </form>
-      </Layout>
+      <div>
+      {
+        this.state.loading ?
+
+        <div class="loadingContainer"><RingLoader color={"#ffffff"} loading={this.state.loading} size={60} /></div>
+
+        :
+
+        <Layout>
+          <form className={style.form}>
+            <h2>Intellectual Property Registration Form 2/2 (Trademark)</h2>
+            <p className={style.markDescLabel}>Mark description:</p>
+            <input id="markDesc" className={style.markDesc} type='text' value={this.props.markDesc} onChange={this.markDesc_change} />
+            <button className={style.back} type='button' onClick={ this.backRegistration }>Back</button>
+            <button className={style.next} type='button' onClick={ this.continueRegistration }>Next</button>
+          </form>
+        </Layout>
+      }
+      </div>
     );
   }
 }

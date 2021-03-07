@@ -4,13 +4,19 @@ import style from '../styles/FormRegisterPatentConfirm.module.css';
 import { Link, Router } from '../routes';
 import web3 from '../ethereum/web3';
 import factory from '../ethereum/factory';
+import RingLoader from "react-spinners/RingLoader";
 
 class FormRegisterPatentConfirm extends Component {
+  state = {
+    loading: false
+  }
+
   continueRegistration = async (event) => {
     const { values } = this.props;
     event.preventDefault();
     const compiled_patent = require("../ethereum/build/Patent.json");
-    alert("Creating IP");
+
+    this.setState({ loading: true });
 
     const inventorAddress_full = values.address1_patent + ", " + values.address2_patent + ", " + values.addressCity_patent + ", " + values.addressCounty_patent + ", " + values.addressPostcode_patent + ", " + values.addressCountry_patent;
 
@@ -27,9 +33,12 @@ class FormRegisterPatentConfirm extends Component {
    
       this.props.changeForm('ip_addr', address);
       this.props.changeForm('address', values.address[0]);
+
+      this.setState({ loading: false });
   
       this.props.nextStep(1);   
     } catch (err) {
+      this.setState({ loading: false });
       alert("ERROR: The hash has already been registered!");
       this.props.previousStep(5);
     }
@@ -53,33 +62,44 @@ class FormRegisterPatentConfirm extends Component {
     const { nextStep } = this.props;
 
     return (
-      <Layout>
-        <form className={style.form}>
-          <h2>Confirm your details</h2>
-          <p className={style.addressLabel}>Address:</p>
-          <input className={style.address} type='text' value={values.address} readOnly />
-          <p className={style.dateLabel}>Date:</p>
-          <input className={style.date} type='text' value={values.currentDate} readOnly />
-          <p className={style.typeOfIPLabel}>Type of IP:</p>
-          <input className={style.typeOfIP} type='text' value={values.typeOfIP} readOnly />
-          <p className={style.patentTitleLabel}>Title:</p>
-          <input className={style.patentTitle} type='text' value={values.patentTitle} readOnly />
-          <p className={style.address1Label}>Address line 1:</p>
-          <input id="address1" className={style.address1} type='text' value={values.address1_patent} readOnly />
-          <p className={style.address2Label}>Address line 2:</p>
-          <input id="address2" className={style.address2} type='text' value={values.address2_patent} readOnly />
-          <p className={style.addressCityLabel}>City:</p>
-          <input id="city" className={style.city} type='text' value={values.addressCity_patent} readOnly />
-          <p className={style.addressCountyLabel}>County:</p>
-          <input id="county" className={style.county} type='text' value={values.addressCounty_patent} readOnly />
-          <p className={style.addressPostcodeLabel}>Postcode:</p>
-          <input id="postcode" className={style.postcode} type='text' value={values.addressPostcode_patent} readOnly />
-          <p className={style.addressCountryLabel}>Country:</p>
-          <input id="country" className={style.country} type='text' value={values.addressCountry_patent} readOnly />
-          <button className={style.back} type='button' onClick={ this.backRegistration }>Back</button>
-          <button className={style.next} type='button' onClick={ this.continueRegistration }>Register Patent</button>
-      </form>
-      </Layout>
+      <div>
+        {
+          this.state.loading ?
+
+          <div class="loadingContainer"><RingLoader color={"#ffffff"} loading={this.state.loading} size={60} /></div>
+
+          :
+
+          <Layout>
+            <form className={style.form}>
+              <h2>Confirm your details</h2>
+              <p className={style.addressLabel}>Address:</p>
+              <input className={style.address} type='text' value={values.address} readOnly />
+              <p className={style.dateLabel}>Date:</p>
+              <input className={style.date} type='text' value={values.currentDate} readOnly />
+              <p className={style.typeOfIPLabel}>Type of IP:</p>
+              <input className={style.typeOfIP} type='text' value={values.typeOfIP} readOnly />
+              <p className={style.patentTitleLabel}>Title:</p>
+              <input className={style.patentTitle} type='text' value={values.patentTitle} readOnly />
+              <p className={style.address1Label}>Address line 1:</p>
+              <input id="address1" className={style.address1} type='text' value={values.address1_patent} readOnly />
+              <p className={style.address2Label}>Address line 2:</p>
+              <input id="address2" className={style.address2} type='text' value={values.address2_patent} readOnly />
+              <p className={style.addressCityLabel}>City:</p>
+              <input id="city" className={style.city} type='text' value={values.addressCity_patent} readOnly />
+              <p className={style.addressCountyLabel}>County:</p>
+              <input id="county" className={style.county} type='text' value={values.addressCounty_patent} readOnly />
+              <p className={style.addressPostcodeLabel}>Postcode:</p>
+              <input id="postcode" className={style.postcode} type='text' value={values.addressPostcode_patent} readOnly />
+              <p className={style.addressCountryLabel}>Country:</p>
+              <input id="country" className={style.country} type='text' value={values.addressCountry_patent} readOnly />
+              <button className={style.back} type='button' onClick={ this.backRegistration }>Back</button>
+              <button className={style.next} type='button' onClick={ this.continueRegistration }>Register Patent</button>
+            </form>
+          </Layout>
+        }
+      </div>
+
     );
   }
 }

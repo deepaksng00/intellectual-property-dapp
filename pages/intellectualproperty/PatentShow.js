@@ -4,8 +4,14 @@ import web3 from '../../ethereum/web3';
 import style from '../../styles/PatentShow.module.css';
 import { Link, Router } from '../../routes';
 import factory from '../../ethereum/factory';
+import RingLoader from "react-spinners/RingLoader";
+
 
 export default class PatentShow extends Component {
+    state = {
+        loading: false
+    }
+
     static async getInitialProps(props) {
         const address = props.query.address;
         const compiled_patent = require("../../ethereum/build/Patent.json");
@@ -35,6 +41,7 @@ export default class PatentShow extends Component {
     }
 
     disableContract = async () => {
+        this.setState({ loading: true });
         const compiled_patent = require("../../ethereum/build/Patent.json");
 
         const patent = await new web3.eth.Contract(compiled_patent.abi, this.props.address);
@@ -46,9 +53,12 @@ export default class PatentShow extends Component {
                 .catch((err) => { throw err; });
 
             Router.pushRoute(`/intellectualproperty/patents/${this.props.address}`);
+            this.setState({ loading: false });
 
             alert("The contract has been disabled.");
         } catch (err) {
+            this.setState({ loading: false });
+
             alert("There has been an issue with the transaction, please try again!");
             console.log(err);
         }       
@@ -70,30 +80,40 @@ export default class PatentShow extends Component {
             ('0' + expirationDateObj.getDate()).slice(-2) + "-" + ('0' + (expirationDateObj.getMonth() + 1)).slice(-2) + "-" + expirationDateObj.getFullYear();
 
         return (
-            <Layout>
-                <form className={style.form}>
-                    <h2>Patent {this.props.address} </h2>
-                    <p className={style.addressLabel}>Address:</p>
-                    <input className={style.address} type='text' value={this.props.address} readOnly />
-                    <p className={style.statusLabel}>Status:</p>
-                    <input className={style.status} type='text' value={this.props.status} readOnly />
-                    <p className={style.statusDateLabel}>Last status change:</p>
-                    <input className={style.statusDate} type='text' value={formattedStatusDate} readOnly />
-                    <p className={style.publicationDateLabel}>Publication Date:</p>
-                    <input className={style.publicationDate} type='text' value={formattedPublicationDate} readOnly />
-                    <p className={style.expirationDateLabel}>Expiration date:</p>
-                    <input className={style.expirationDate} type='text' value={formattedExpirationDate} readOnly />
-                    <p className={style.ownerLabel}>Owner address:</p>
-                    <input className={style.owner} type='text' value={this.props.owners} readOnly />
-                    <p className={style.fileHashLabel}>File hash:</p>
-                    <input className={style.fileHash} type='text' value={this.props.fileHash} readOnly />
-                    <p className={style.titleLabel}>Title:</p>
-                    <input className={style.title} type='text' value={this.props.title} readOnly />
-                    <p className={style.inventorAddressLabel}>Inventor address:</p>
-                    <input className={style.inventorAddress} type='text' value={ this.props.inventorAddress } readOnly />
-                    <button className={style.disableButton} type='button' onClick={ this.disableContract }>Disable Patent</button>
-                </form>
-            </Layout>
+            <div>
+                {
+                    this.state.loading ?
+
+                    <div class="loadingContainer"><RingLoader color={"#ffffff"} loading={this.state.loading} size={60} /></div>
+
+                    :
+
+                    <Layout>
+                        <form className={style.form}>
+                            <h2>Patent {this.props.address} </h2>
+                            <p className={style.addressLabel}>Address:</p>
+                            <input className={style.address} type='text' value={this.props.address} readOnly />
+                            <p className={style.statusLabel}>Status:</p>
+                            <input className={style.status} type='text' value={this.props.status} readOnly />
+                            <p className={style.statusDateLabel}>Last status change:</p>
+                            <input className={style.statusDate} type='text' value={formattedStatusDate} readOnly />
+                            <p className={style.publicationDateLabel}>Publication Date:</p>
+                            <input className={style.publicationDate} type='text' value={formattedPublicationDate} readOnly />
+                            <p className={style.expirationDateLabel}>Expiration date:</p>
+                            <input className={style.expirationDate} type='text' value={formattedExpirationDate} readOnly />
+                            <p className={style.ownerLabel}>Owner address:</p>
+                            <input className={style.owner} type='text' value={this.props.owners} readOnly />
+                            <p className={style.fileHashLabel}>File hash:</p>
+                            <input className={style.fileHash} type='text' value={this.props.fileHash} readOnly />
+                            <p className={style.titleLabel}>Title:</p>
+                            <input className={style.title} type='text' value={this.props.title} readOnly />
+                            <p className={style.inventorAddressLabel}>Inventor address:</p>
+                            <input className={style.inventorAddress} type='text' value={ this.props.inventorAddress } readOnly />
+                            <button className={style.disableButton} type='button' onClick={ this.disableContract }>Disable Patent</button>
+                        </form>
+                    </Layout>
+                }
+            </div>
         )
     }
 }
