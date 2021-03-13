@@ -3,8 +3,8 @@
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
   "/intellectualproperty/TrademarkShow": "pages/intellectualproperty/TrademarkShow.js",
+  "/yourip": "pages/yourip.js",
+  "/intellectualproperty/PatentShow": "pages/intellectualproperty/PatentShow.js",
   "/searchip": "pages/searchip.js",
-  "/intellectualproperty/register": "pages/intellectualproperty/register.js",
-  "/intellectualproperty/DesignShow": "pages/intellectualproperty/DesignShow.js",
   "/": "pages/index.js"
 }

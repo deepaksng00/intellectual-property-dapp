@@ -1,0 +1,95 @@
+@import url('https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap');
+
+.header {
+    display: grid;
+    width: 100%;
+    grid-template-columns: 1fr 1fr 1fr;
+    padding: 40px;
+    font-family: 'Noto Sans', sans-serif;
+}
+
+.header > h1 {
+    grid-column-start: 1;
+    grid-column-end: 4;
+    grid-row-start: 1;
+    grid-row-end: 2;
+    justify-self: center;
+    font-size: 1.5em;
+    cursor: pointer;
+    text-transform: uppercase;
+}
+
+.menu_button {
+    grid-column-start: 1;
+    grid-column-end: 4;
+    grid-row-start: 1;
+    grid-row-end: 2;
+    justify-self: end;
+    background: url('../public/menu.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    filter: invert(1);
+    z-index: 200;
+    transition: 0.2s;
+}
+
+.menu_button.active {
+    position: relative;
+    background: url('../public/cancel.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    filter: invert(1);
+}
+
+.menu {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 0;
+    z-index: 100;
+    transition: 0.8s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    opacity: 0;
+}
+  
+.menu.active {
+    width: 20%;
+    background-color: black;
+    opacity: 1;
+}
+
+.menu > ul > li {
+    margin-top: 50px;
+    white-space: nowrap;
+    font-family: 'Noto Sans', sans-serif;
+    cursor: pointer;
+}
+
+.menu > ul > li:hover {
+    opacity: 0.8;
+}
+
+@media only screen and (max-width: 890px) {
+    .menu.active {
+        width: 100%;
+        background-color: black;
+        opacity: 1;
+    }
+
+    .header > h1 {
+        justify-self: start;
+    }
+}
+

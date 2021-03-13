@@ -1,0 +1,82 @@
+.footer {
+    display: grid;
+    color: white;
+    padding: 50px;
+    grid-template-rows: auto auto auto;
+    grid-template-columns: auto 0.5fr 1fr 1fr;
+    grid-template-areas:
+      "footerTitle . . ."
+      "ethereumImage . privacyPolicy aboutUs"
+      "ethereumImage . termsAndConditions contactUs";
+    grid-gap: 40px;
+    font-family: 'Noto Sans', sans-serif;
+}
+
+.footer > h2 {
+    grid-area: footerTitle;
+    min-width: 0;
+    min-height: 0;
+}
+
+.ethereumImage {
+    grid-area: ethereumImage;
+    justify-self: center;
+    min-width: 0;
+    min-height: 0;
+}
+
+.ethereumImage > img {
+    width: 6rem;
+}
+
+.privacyPolicy {
+    grid-area: privacyPolicy;
+}
+
+.termsAndConditions {
+    grid-area: termsAndConditions;
+}
+
+.aboutUs {
+    grid-area: aboutUs;
+}
+
+.contactUs {
+    grid-area: contactUs;
+}
+
+.footerButton {
+    font-size: 1rem;
+}
+
+.footerButton:hover {
+    opacity: 0.8;
+    cursor: pointer;
+}
+
+@media only screen and (max-width: 890px) {
+    .footer {
+        display: grid;
+        color: white;
+        grid-template-rows: 1fr auto 1fr 1fr;
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas:
+          "footerTitle footerTitle"
+          "ethereumImage ethereumImage"
+          "privacyPolicy contactUs"
+          "aboutUs termsAndConditions";
+        grid-gap: 30px;
+    }
+    
+    .footer > h2 {
+        justify-self: center;
+    }
+    
+    .ethereumImage {
+        justify-self: center;
+    }
+
+    .footerButton {
+        justify-self: center;
+    }
+}

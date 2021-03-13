@@ -28,7 +28,7 @@
 }
 
 .form > button {
-    width: 7rem;
+    width: 150px;
     border-radius: 20px;
     padding: 1rem;
     border: none;
@@ -37,7 +37,7 @@
 }
   
 .form > button:hover {
-    width: 8rem;
+    width: 200px;
     cursor: pointer;
 }
 

@@ -1,70 +1,57 @@
-.grid {
-  display: grid;
-  grid-template-areas:
-    "image"
-    "section2";
-  grid-template-rows: 500px 1fr;
-  grid-template-columns: auto;
-}
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap');
 
-.image {
-  grid-area: image;
-  background-image: url('/blockchain.png');
-  background-position: 0 18%;
-  background-repeat: no-repeat;
-  background-size: cover;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-areas:
-    "header header"
-    "paragraphs ."
-    ". .";
-  grid-template-rows: auto auto 1fr;
-  padding: 4.5% 4% 1.5% 4%;
-  grid-gap: 20px;
-}
-
-.image > h4 {
-  grid-area: header;
-  font-size: 2rem;
-  color: white;
-  margin: 0;
-  /* text-shadow: 2px 2px 4px black; */
+.text {
+    margin-top: 2px;
+    padding: 200px;
+    font-family: 'Noto Sans', sans-serif;
 }
 
 .paragraphs {
-  grid-area: paragraphs;
+    margin-top: 20px;
 }
 
-.p1 {
-  background-color: none;
-  color: white;
-  /* text-shadow: 2px 2px 4px black; */
+.showcase_video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -100;
+    width: 100%;
+    height: 100vh;
+    object-fit: cover;
 }
 
-.p2 {
-  background-color: none;
-  color: white;
+.header_text {
+    display: relative;
+    height: 100vh;
 }
 
-.section2 {
-  grid-area: section2;
-}
+@media only screen and (max-width: 890px) {
+    .text {
+        padding: 40px;
+    }
 
-@media only screen and (max-width: 768px) {
-  .image {
-    grid-area: image;
-    background-image: url('/blockchain.png');
-    background-position: 0% 140px;
-    background-size: cover;
-    background-repeat: no-repeat;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-areas:
-      "header header"
-      "paragraph paragraph";
-    grid-template-rows: auto 1fr;
-    padding: 4.5% 4% 1.5% 4%;
-    grid-gap: 20px;
-  }
+    .footer {
+        display: grid;
+        color: white;
+        grid-template-rows: 1fr auto 1fr 1fr;
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas:
+          "footerTitle footerTitle"
+          "ethereumImage ethereumImage"
+          "privacyPolicy contactUs"
+          "aboutUs termsAndConditions";
+        grid-gap: 30px;
+      }
+    
+      .footer > h2 {
+        justify-self: center;
+      }
+    
+      .ethereumImage {
+        justify-self: center;
+      }
+    
+      .footerButton {
+        justify-self: center;
+      }
 }

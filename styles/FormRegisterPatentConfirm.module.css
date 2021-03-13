@@ -112,7 +112,7 @@
 }
 
 .form > button {
-  width: 7rem;
+  width: 200px;
   border-radius: 20px;
   padding: 1rem;
   border: none;
@@ -129,6 +129,6 @@
 }
 
 .form > button:hover {
-  width: 8rem;
+  width: 250px;
   cursor: pointer;
 }

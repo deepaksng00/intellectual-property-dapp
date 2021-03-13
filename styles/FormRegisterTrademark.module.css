@@ -2,7 +2,6 @@
   padding: 1.5% 4% 1.5% 4%;
   display: grid;
   color: white;
-  grid-gap: 30px;
   grid-template-areas:
     "title title"
     "markDescLabel markDesc"
@@ -24,10 +23,12 @@
 
 .markDescLabel {
   grid-area: markDescLabel;
+  margin-top: 100px;
 }
 
 .markDesc {
   grid-area: markDesc;
+  margin-top: 100px;
 }
 
 .form > button {

@@ -62,26 +62,30 @@ class FormRegisterGeneral extends Component {
   }
 
   file_upload = (event) => {
-    this.setState({loading: true});
-    document.getElementById("LayoutComponent").style.display = "none";
-    document.getElementById("loader").style.display = "flex";
-    const file = document.getElementById("file_upload");
-    if (file.files[0].size > 104857600) {
-      document.getElementById("LayoutComponent").style.display = "grid";
-      document.getElementById("loader").style.display = "none";
-      alert(`${file.files[0].name} is too big! Max size is 100MB`);
-      file.value = "";
-    } else {
-      const reader = new FileReader();
-      reader.onload = () => {
-        var hash = CryptoJS.MD5(CryptoJS.enc.Latin1.parse(reader.result));
-        var md5 = hash.toString(CryptoJS.enc.Hex);
-
-        this.state.changeForm('fileHash', md5);
+    try {
+      this.setState({loading: true});
+      document.getElementById("LayoutComponent").style.display = "none";
+      document.getElementById("loader").style.display = "flex";
+      const file = document.getElementById("file_upload");
+      if (file.files[0].size > 104857600) {
         document.getElementById("LayoutComponent").style.display = "grid";
         document.getElementById("loader").style.display = "none";
+        alert(`${file.files[0].name} is too big! Max size is 100MB`);
+        file.value = "";
+      } else {
+        const reader = new FileReader();
+        reader.onload = () => {
+          var hash = CryptoJS.MD5(CryptoJS.enc.Latin1.parse(reader.result));
+          var md5 = hash.toString(CryptoJS.enc.Hex);
+  
+          this.state.changeForm('fileHash', md5);
+          document.getElementById("LayoutComponent").style.display = "grid";
+          document.getElementById("loader").style.display = "none";
+        }
+        reader.readAsBinaryString(file.files[0]);
       }
-      reader.readAsBinaryString(file.files[0]);
+    } catch (err) {
+      console.log(err);
     }
   }
 
@@ -108,11 +112,11 @@ class FormRegisterGeneral extends Component {
             <p className={style.typeOfIPLabel}>Type of IP: </p>
             <div className={style.typeOfIP} id="typeOfIP">
               <input type="radio" id="trademark" name="ip_type" value="trademark"/>
-              <label htmlFor="trademark">Trademark</label><br/>
+              <label htmlFor="trademark">  Trademark</label><br/>
               <input type="radio" id="patent" name="ip_type" value="patent"/>
-              <label htmlFor="patent">Patent</label><br/>
+              <label htmlFor="patent">  Patent</label><br/>
               <input type="radio" id="design" name="ip_type" value="design"/>
-              <label htmlFor="design">Design</label>
+              <label htmlFor="design">  Design</label>
             </div>
             <p className={style.fileLabel}>File: </p>
             <input id="file_upload" className={style.file} onChange={this.file_upload} type="file"/>

@@ -36,7 +36,11 @@ class FormRegisterDesignConfirm extends Component {
       this.props.nextStep(1);
     } catch (err) {
       this.setState({ loading: false });
-      alert("ERROR: The hash has already been registered!");
+      if(err == 'HashAlreadyUsed') {
+        alert("ERROR: The hash has already been registered!");
+      } else {
+        console.log(err);
+      }
       this.props.previousStep(8);
     }
   }
@@ -63,7 +67,9 @@ class FormRegisterDesignConfirm extends Component {
         {
           this.state.loading ?
 
-          <div class="loadingContainer"><RingLoader color={"#ffffff"} loading={this.state.loading} size={60} /></div>
+          <div class="loadingContainer">
+            <RingLoader color={"#ffffff"} loading={this.state.loading} size={60} />
+          </div>
 
           :
 

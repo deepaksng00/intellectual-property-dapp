@@ -11,6 +11,7 @@
     ". ."
     "back next";
   grid-template-rows: auto auto auto auto 50px auto;
+  font-family: 'Noto Sans', sans-serif;
 }
 
 .form > h2 {
