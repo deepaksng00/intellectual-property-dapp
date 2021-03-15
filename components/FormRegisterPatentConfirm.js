@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Layout from './Layout';
 import style from '../styles/FormRegisterPatentConfirm.module.css';
-import { Link, Router } from '../routes';
+import { Router } from '../routes';
 import web3 from '../ethereum/web3';
 import factory from '../ethereum/factory';
 import RingLoader from "react-spinners/RingLoader";
@@ -12,9 +12,8 @@ class FormRegisterPatentConfirm extends Component {
   }
 
   continueRegistration = async (event) => {
-    const { values } = this.props;
     event.preventDefault();
-    const compiled_patent = require("../ethereum/build/Patent.json");
+    const { values } = this.props;
 
     this.setState({ loading: true });
 

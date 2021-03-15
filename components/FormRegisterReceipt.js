@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import Layout from './Layout';
 import style from '../styles/FormRegisterReceipt.module.css';
-import { Link, Router } from '../routes';
-import web3 from '../ethereum/web3';
-import Head from 'next/head';
+import { Router } from '../routes';
 
 class FormRegisterReceipt extends Component {
   async componentDidMount() {

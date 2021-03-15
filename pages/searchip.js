@@ -4,8 +4,7 @@ import web3 from '../ethereum/web3';
 import factory from '../ethereum/factory';
 import style from '../styles/SearchIP.module.css';
 import RingLoader from "react-spinners/RingLoader";
-import { Link, Router } from '../routes';
-
+import { Router } from '../routes';
 
 export default class SearchIP extends Component {
     state = {

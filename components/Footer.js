@@ -1,14 +1,10 @@
 import React, { Component } from 'react';
 import style from '../styles/Footer.module.css';
-import { Link, Router } from '../routes';
+import { Link } from '../routes';
 
 class Footer extends Component  {
     state = {
         active: false
-    }
-
-    componentDidMount() {
-        
     }
 
     onMenuButtonClick = e => {

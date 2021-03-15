@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Layout from './Layout';
 import style from '../styles/FormRegisterGeneral.module.css';
-import { Link, Router } from '../routes';
+import { Router } from '../routes';
 import web3 from '../ethereum/web3';
 import Head from 'next/head';
 import RingLoader from "react-spinners/RingLoader";
@@ -62,6 +62,7 @@ class FormRegisterGeneral extends Component {
   }
 
   file_upload = (event) => {
+    event.preventDefault();
     try {
       this.setState({loading: true});
       document.getElementById("LayoutComponent").style.display = "none";
@@ -85,6 +86,7 @@ class FormRegisterGeneral extends Component {
         reader.readAsBinaryString(file.files[0]);
       }
     } catch (err) {
+      alert("There was an issue with the file!");
       console.log(err);
     }
   }

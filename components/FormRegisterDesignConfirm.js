@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Layout from './Layout';
 import style from '../styles/FormRegisterDesignConfirm.module.css';
-import { Link, Router } from '../routes';
+import { Router } from '../routes';
 import web3 from '../ethereum/web3';
 import factory from '../ethereum/factory';
 import RingLoader from "react-spinners/RingLoader";
@@ -12,9 +12,8 @@ class FormRegisterDesignConfirm extends Component {
   }
 
   continueRegistration = async (event) => {
-    const { values } = this.props;
     event.preventDefault();
-    const compiled_design = require("../ethereum/build/Design.json");
+    const { values } = this.props;
 
     try {
       this.setState({ loading: true });

@@ -4,7 +4,6 @@ import Header from './Header';
 import Footer from './Footer';
 
 export default (props) => {
-
   return (
     <div className={style.main_container}>
       <Header />

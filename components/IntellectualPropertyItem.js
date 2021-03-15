@@ -19,6 +19,5 @@ export default class IntellectualPropertyItem extends Component {
                 </div>
             )
         }
-
     }
 }

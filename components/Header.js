@@ -1,14 +1,10 @@
 import React, { Component } from 'react';
 import style from '../styles/Header.module.css';
-import { Link, Router } from '../routes';
+import { Link } from '../routes';
 
 class Header extends Component  {
     state = {
         active: false
-    }
-
-    componentDidMount() {
-        
     }
 
     onMenuButtonClick = e => {

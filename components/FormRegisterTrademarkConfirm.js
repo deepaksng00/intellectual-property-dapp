@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Layout from './Layout';
 import style from '../styles/FormRegisterTrademarkConfirm.module.css';
-import { Link, Router } from '../routes';
+import { Router } from '../routes';
 import web3 from '../ethereum/web3';
 import factory from '../ethereum/factory';
 import RingLoader from "react-spinners/RingLoader";
@@ -15,7 +15,6 @@ class FormRegisterTrademarkConfirm extends Component {
     event.preventDefault();
 
     const { values } = this.props;
-    const compiled_trademark = require("../ethereum/build/Trademark.json");
 
     try {
       this.setState({loading: true});
