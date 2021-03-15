@@ -7,10 +7,15 @@ const Web3 = require("web3");
 /* --- Collect compiled information for the factory contract --- */
 const factory_contract = require("../ethereum/build/RegisteredIPFactory.json");
 
-/* --- Using Infura node to link with Externally Owned Account (EOA) --- */
+// /* --- Using Infura node to link with Externally Owned Account (EOA) --- */
+// const provider = new HDWalletProvider(
+//     "picture proof bottom exact media possible color law aim coin circle rotate",
+//     "https://rinkeby.infura.io/v3/b73cfce8d0f14c9580a6f63f5175157d"
+// );
+/* --- Using Ganache-GUI node for testing --- */
 const provider = new HDWalletProvider(
-    "picture proof bottom exact media possible color law aim coin circle rotate",
-    "https://rinkeby.infura.io/v3/b73cfce8d0f14c9580a6f63f5175157d"
+	"patch divide cave congress rough practice series firm winner neck chronic help",
+	"HTTP://127.0.0.1:7545"
 );
 
 /* --- Create Web3 instance using provider --- */

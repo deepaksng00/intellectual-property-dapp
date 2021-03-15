@@ -24,9 +24,13 @@ export default class YourIP extends Component {
             alert("Metamask is not setup correctly, please load Metamask and try again!");
             Router.pushRoute('/');
         } else {
-            const trademarks = await factory.methods.getTrademarks(address[0]).call();
-            const patents = await factory.methods.getPatents(address[0]).call();
-            const designs = await factory.methods.getDesigns(address[0]).call();
+            let trademarks = [];
+            let patents = [];
+            let designs = [];
+            trademarks = await factory.methods.getTrademarks(address[0]).call();
+            patents = await factory.methods.getPatents(address[0]).call();
+            designs = await factory.methods.getDesigns(address[0]).call();
+            
             this.setState({ trademarks });
             this.setState({ patents });
             this.setState({ designs });

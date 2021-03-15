@@ -2,10 +2,9 @@ import React, { Component } from 'react';
 import Layout from '../components/Layout';
 import web3 from '../ethereum/web3';
 import factory from '../ethereum/factory';
-import IntellectualPropertyItem from '../components/IntellectualPropertyItem';
-import { Link, Router } from '../routes';
 import style from '../styles/SearchIP.module.css';
 import RingLoader from "react-spinners/RingLoader";
+import { Link, Router } from '../routes';
 
 
 export default class SearchIP extends Component {
@@ -21,9 +20,17 @@ export default class SearchIP extends Component {
         let designs = [];
 
         for (var i = 0; i < users.length; i++) {
-            trademarks.push(await factory.methods.getTrademarks(users[i]).call());
-            patents.push(await factory.methods.getPatents(users[i]).call());
-            designs.push(await factory.methods.getDesigns(users[i]).call());
+            const currentTrademarks = await factory.methods.getTrademarks(users[i]).call();
+            const currentPatents = await factory.methods.getPatents(users[i]).call();
+            const currentDesigns = await factory.methods.getDesigns(users[i]).call();
+
+            console.log(currentTrademarks[i]);
+            console.log(currentPatents[i]);
+            console.log(currentDesigns[i]);
+
+            trademarks.push(currentTrademarks);
+            patents.push(currentPatents);
+            designs.push(currentDesigns);
         }
 
         return {
@@ -34,11 +41,14 @@ export default class SearchIP extends Component {
     }
 
     async componentDidMount() {
+        this.setState({ loading: true });
         const address = await web3.eth.getAccounts();
         if (address == "") {
+            this.setState({ loading: false });
             alert("Metamask is not setup correctly, please load Metamask and try again!");
             Router.pushRoute('/');
         }
+        this.setState({ loading: false });
     }
 
     onFormSubmit = (event) => {
@@ -54,23 +64,25 @@ export default class SearchIP extends Component {
         const designs = this.props.designs;
 
         for(var i = 0; i < trademarks.length; i++) {
-            if(trademarks[i] == searchAddress) {
+            if(trademarks[i].toString() == searchAddress.toString()) {
                 found = trademarks[i];
                 typeOfIP = 'trademarks';
             }
         }
         for(var i = 0; i < patents.length; i++) {
-            if(patents[i] == searchAddress) {
+            if(patents[i].toString() == searchAddress.toString()) {
                 found = patents[i];
                 typeOfIP = 'patents';
             }
         }
         for(var i = 0; i < designs.length; i++) {
-            if(designs[i] == searchAddress) {
+            if(designs[i].toString() == searchAddress.toString()) {
                 found = designs[i];
                 typeOfIP = 'designs';
             }
         }
+
+        console.log(this.props.trademarks);
 
         if(found == '') {
             alert("No results found");

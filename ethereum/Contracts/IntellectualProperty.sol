@@ -17,6 +17,7 @@ contract RegisteredIPFactory {
 
   /* --- All users --- */
   address[] private users;
+  mapping(address => bool) usersMapping;
   
   /* --- Struct containing details of a hash --- */
   struct Hash {
@@ -35,7 +36,7 @@ contract RegisteredIPFactory {
       deployedTrademarks[msg.sender].push(newTrademark);
       addHash(newTrademark, hash_input);
       numOfTrademarks+=1;
-      users.push(msg.sender);
+      addUser(msg.sender);
     } else {
         require(false, "ERR: 01");
     }
@@ -50,6 +51,13 @@ contract RegisteredIPFactory {
 
     deployedHashes[hash] = newHash;
   }
+  
+  function addUser(address userAddress) private {
+      if (usersMapping[userAddress] == false) {
+          users.push(userAddress);
+          usersMapping[userAddress] = true;
+      }
+  } 
 
   /* --- Deploys new patent on the blockchain --- */
   function createPatent(string memory title, string memory inventor_address, string memory hash_input) public {
@@ -61,7 +69,7 @@ contract RegisteredIPFactory {
       addHash(newPatent, hash_input);
 
       numOfPatents+=1;
-      users.push(msg.sender);
+      addUser(msg.sender);
     } else {
       require(false, "ERR: 01");
     }
@@ -77,7 +85,7 @@ contract RegisteredIPFactory {
       addHash(newDesign, hash_input);
 
       numOfDesigns+=1;
-      users.push(msg.sender);
+      addUser(msg.sender);
     } else {
       require(false, "ERR: 01");
     }
