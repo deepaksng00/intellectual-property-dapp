@@ -4,6 +4,8 @@ import style from '../styles/FormRegisterPatentConfirm.module.css';
 import { Router } from '../routes';
 import web3 from '../ethereum/web3';
 import RingLoader from "react-spinners/RingLoader";
+const contract = require("../ethereum/intellectualproperty");
+
 
 class FormRegisterPatentConfirm extends Component {
   state = {

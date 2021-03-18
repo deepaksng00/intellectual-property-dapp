@@ -7,8 +7,6 @@
     grid-template-areas:
       "title title . ."
       "addressLabel address disableButton disableButton"
-      "statusLabel status . ."
-      "statusDateLabel statusDate . ."
       "publicationDateLabel publicationDate . ."
       "expirationDateLabel expirationDate . ."
       "ownerLabel owner . ."

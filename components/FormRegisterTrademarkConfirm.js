@@ -29,31 +29,23 @@ class FormRegisterTrademarkConfirm extends Component {
     tokenMetadata += ('"PubDate"'+':"'+currentTimestamp.toString()+'", ');
     tokenMetadata += ('"ExpirationDate"'+':"'+expirationDate.toString()+'", ');
     tokenMetadata += ('"IpfsHash"'+':"'+values.fileHash+'", ');
-    tokenMetadata += ('"TypeOfIP"'+':"'+values.typeOfIP+'", ');
+    tokenMetadata += ('"TypeOfIP"'+':"'+"Trademark"+'", ');
     tokenMetadata += ('"MarkDesc"'+':"'+values.markDesc+'"');
     tokenMetadata += " }";
 
     const address = values.address[0];
     const ipfsHash = values.fileHash;
 
-    console.log(tokenMetadata);
-
     try {
-      await contract.default.methods.awardIP(address, ipfsHash, tokenMetadata).send({ from: address, gasLimit: "5000000" })
+      await contract.default.methods.awardIP(address, ipfsHash, tokenMetadata).send({ from: address, gasLimit: "5000000" });
 
-      const numOfTokens = await contract.default.methods.totalSupply().call();
-      const tokenOfUser = await contract.default.methods.tokenOfOwnerByIndex(address, 0).call();
-      const tokenURI = await contract.default.methods.tokenURI(tokenOfUser).call();
-    
-      const JSONURI = JSON.parse(tokenURI);
-
-      console.log(JSONURI.PubDate);
-      console.log(JSONURI.ExpirationDate);
-      console.log(JSONURI.TypeOfIP);
-      console.log(JSONURI.MarkDesc);
-      console.log(JSONURI.IpfsHash);
+      this.props.nextStep(1);
     } catch (error) {
-      console.log("ERROR");
+      console.log(error)
+      if ((error.message.toString()).includes("Hash Already Registered")) {
+        alert("This invention has already been registered.");
+        this.props.previousStep(2);
+      }
     }
   }
 

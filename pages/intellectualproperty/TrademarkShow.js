@@ -3,68 +3,65 @@ import Layout from '../../components/Layout';
 import web3 from '../../ethereum/web3';
 import style from '../../styles/TrademarkShow.module.css';
 import { Link, Router } from '../../routes';
-import factory from '../../ethereum/factory';
 import RingLoader from "react-spinners/RingLoader";
+const contract = require("../../ethereum/intellectualproperty");
 
 export default class TrademarkShow extends Component {
     state = {
-        loading: false
+        loading: false,
     }
 
     static async getInitialProps(props) {
-        const address = props.query.address;
-        const compiled_trademark = require("../../ethereum/build/Trademark.json");
-        const trademark = await new web3.eth.Contract(compiled_trademark.abi, address);
+        var id = props.query.address;
 
-        const status = await trademark.methods.getStatus().call();
-        const publicationDate = await trademark.methods.getPublicationDate().call();
-        const statusDate = await trademark.methods.getStatusDate().call();
-        const expirationDate = await trademark.methods.getExpirationDate().call();
-        const owners = await trademark.methods.getOwner().call();
-        const fileHash = await trademark.methods.getHash().call();
-        const markDesc = await trademark.methods.getMarkDesc().call();
-
-        return {
-            address: address,
-            status: status,
-            publicationDate: publicationDate,
-            statusDate: statusDate,
-            expirationDate: expirationDate,
-            owners: owners,
-            fileHash: fileHash,
-            markDesc: markDesc
-        };
-    }
-
-    disableContract = async () => {
-        this.setState({ loading: true });
-        const compiled_trademark = require("../../ethereum/build/Trademark.json");
-
-        const trademark = await new web3.eth.Contract(compiled_trademark.abi, this.props.address);
-        const accounts = await web3.eth.getAccounts();
+        const tokenID = parseInt(id);
 
         try {
-            await factory.methods.disableTrademark(this.props.fileHash, this.props.address)
-                .send({ from: accounts[0], gasLimit: "5000000"})
-                .catch((err) => { throw err; });
+            const tokenURI = await contract.default.methods.tokenURI(tokenID).call();
+            const owner = await contract.default.methods.ownerOf(tokenID).call();
+            const JSONURI = JSON.parse(tokenURI);
 
-            Router.pushRoute(`/intellectualproperty/trademarks/${this.props.address}`);
+            if ((JSONURI.TypeOfIP).toString().toLowerCase() != "trademark") {
+                return {
+                    notTrademark: false,
+                    exists: true
+                }
+            }
+            const publicationDate = JSONURI.PubDate;
+            const expirationDate = JSONURI.ExpirationDate;
+            const fileHash = JSONURI.IpfsHash;
+            const markDesc = JSONURI.MarkDesc;
 
-            this.setState({ loading: false });
-
-            alert("The contract has been disabled.");
+            return {
+                id: id,
+                publicationDate: publicationDate,
+                expirationDate: expirationDate,
+                owner: owner,
+                fileHash: fileHash,
+                markDesc: markDesc,
+                exists: true,
+                isTrademark: true
+            };
         } catch (err) {
-            this.setState({ loading: false });
-            alert("There has been an issue with the transaction, please try again!");
             console.log(err);
-        }       
+            return {
+                exists: false,
+                isTrademark: false
+            }
+        }
+    }
+
+    componentDidMount() {
+        if (!this.props.exists) {
+            alert("ERROR: This IP doesn't exist.");
+            Router.push("/");
+        } else if (!this.props.isTrademark) {
+            alert("ERROR: This IP is not a trademark.");
+            Router.push("/");
+        }
     }
     
     render() {
-        const statusDateObj = new Date(this.props.statusDate * 1000);
-        const formattedStatusDate = 
-            ('0' + statusDateObj.getDate()).slice(-2) + "-" + ('0' + (statusDateObj.getMonth() + 1)).slice(-2) + "-" + statusDateObj.getFullYear();
-
         let formattedPublicationDate;
 
         const publicationDateObj = new Date(this.props.publicationDate * 1000);
@@ -87,23 +84,18 @@ export default class TrademarkShow extends Component {
                     <Layout>
                         <form className={style.form}>
                             <h2>Trademark {this.props.address} </h2>
-                            <p className={style.addressLabel}>Address:</p>
-                            <input className={style.address} type='text' value={this.props.address} readOnly />
-                            <p className={style.statusLabel}>Status:</p>
-                            <input className={style.status} type='text' value={this.props.status} readOnly />
-                            <p className={style.statusDateLabel}>Last status change:</p>
-                            <input className={style.statusDate} type='text' value={formattedStatusDate} readOnly />
+                            <p className={style.addressLabel}>ID:</p>
+                            <input className={style.address} type='text' value={this.props.id} readOnly />
                             <p className={style.publicationDateLabel}>Publication Date:</p>
                             <input className={style.publicationDate} type='text' value={formattedPublicationDate} readOnly />
                             <p className={style.expirationDateLabel}>Expiration date:</p>
                             <input className={style.expirationDate} type='text' value={formattedExpirationDate} readOnly />
                             <p className={style.ownerLabel}>Owner address:</p>
-                            <input className={style.owner} type='text' value={this.props.owners} readOnly />
+                            <input className={style.owner} type='text' value={this.props.owner} readOnly />
                             <p className={style.fileHashLabel}>File hash:</p>
                             <input className={style.fileHash} type='text' value={this.props.fileHash} readOnly />
                             <p className={style.markDescLabel}>Mark description:</p>
                             <input className={style.markDesc} type='text' value={this.props.markDesc} readOnly />
-                            <button className={style.disableButton} type='button' onClick={ this.disableContract }>Disable Trademark</button>
                         </form>
                     </Layout>
                 }
