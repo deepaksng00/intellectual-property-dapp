@@ -3,8 +3,9 @@ import Layout from './Layout';
 import style from '../styles/FormRegisterTrademarkConfirm.module.css';
 import { Router } from '../routes';
 import web3 from '../ethereum/web3';
-import factory from '../ethereum/factory';
 import RingLoader from "react-spinners/RingLoader";
+const contract = require("../ethereum/intellectualproperty");
+
 
 class FormRegisterTrademarkConfirm extends Component {
   state = {
@@ -15,28 +16,44 @@ class FormRegisterTrademarkConfirm extends Component {
     event.preventDefault();
 
     const { values } = this.props;
+    var tokenMetadata = '';
+    // const instance = await IPRegister.deployed();
+
+    const currentTimestamp = new Date().getTime() / 1000;
+    var expirationDate = new Date();
+    expirationDate.setFullYear(expirationDate.getFullYear() + 5);
+    expirationDate = expirationDate.getTime() / 1000;
+
+    // creating metadata for NFT
+    tokenMetadata += "{ ";
+    tokenMetadata += ('"PubDate"'+':"'+currentTimestamp.toString()+'", ');
+    tokenMetadata += ('"ExpirationDate"'+':"'+expirationDate.toString()+'", ');
+    tokenMetadata += ('"IpfsHash"'+':"'+values.fileHash+'", ');
+    tokenMetadata += ('"TypeOfIP"'+':"'+values.typeOfIP+'", ');
+    tokenMetadata += ('"MarkDesc"'+':"'+values.markDesc+'"');
+    tokenMetadata += " }";
+
+    const address = values.address[0];
+    const ipfsHash = values.fileHash;
+
+    console.log(tokenMetadata);
 
     try {
-      this.setState({loading: true});
+      // await contract.default.methods.awardIP(address, ipfsHash, tokenMetadata).send({ from: address, gasLimit: "5000000" })
+                                                                              // .catch( console.log("error") );
+      const numOfTokens = await contract.default.methods.totalSupply().call();
+      const tokenOfUser = await contract.default.methods.tokenOfOwnerByIndex(address, 0).call();
+      const tokenURI = await contract.default.methods.tokenURI(tokenOfUser).call();
+    
+      const JSONURI = JSON.parse(tokenURI);
 
-      await factory.methods.createTrademark(values.markDesc, values.fileHash)
-        .send({ from: values.address[0], gasLimit: "5000000"})
-        .catch(() => {throw 'HashAlreadyUsed';})
-
-      const trademarks = await factory.methods.getTrademarks(values.address[0]).call();
-      const numOfTrademarks = trademarks.length;
-      const address = trademarks[numOfTrademarks-1];
-
-      this.props.changeForm('ip_addr', address);
-      this.props.changeForm('address', values.address[0]);
-
-      this.setState({loading: false})
-
-      this.props.nextStep(1);
+      console.log(JSONURI.PubDate);
+      console.log(JSONURI.ExpirationDate);
+      console.log(JSONURI.TypeOfIP);
+      console.log(JSONURI.MarkDesc);
+      console.log(JSONURI.IpfsHash);
     } catch (error) {
-      this.setState({loading: false})
-      alert("ERROR: The hash has already been registered!");
-      this.props.previousStep(2);
+      console.log(error)
     }
   }
 

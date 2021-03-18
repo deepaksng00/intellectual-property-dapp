@@ -10,7 +10,6 @@ import FormRegisterPatentConfirm from '../../components/FormRegisterPatentConfir
 import FormRegisterDesign from '../../components/FormRegisterDesign';
 import FormRegisterDesignConfirm from '../../components/FormRegisterDesignConfirm';
 import FormRegisterReceipt from '../../components/FormRegisterReceipt';
-
 import web3 from '../../ethereum/web3';
 
 class Register extends Component {

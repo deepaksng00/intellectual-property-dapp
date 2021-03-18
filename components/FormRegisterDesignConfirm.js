@@ -3,7 +3,6 @@ import Layout from './Layout';
 import style from '../styles/FormRegisterDesignConfirm.module.css';
 import { Router } from '../routes';
 import web3 from '../ethereum/web3';
-import factory from '../ethereum/factory';
 import RingLoader from "react-spinners/RingLoader";
 
 class FormRegisterDesignConfirm extends Component {
