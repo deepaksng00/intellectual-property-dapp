@@ -39,8 +39,8 @@ class FormRegisterTrademarkConfirm extends Component {
     console.log(tokenMetadata);
 
     try {
-      // await contract.default.methods.awardIP(address, ipfsHash, tokenMetadata).send({ from: address, gasLimit: "5000000" })
-                                                                              // .catch( console.log("error") );
+      await contract.default.methods.awardIP(address, ipfsHash, tokenMetadata).send({ from: address, gasLimit: "5000000" })
+
       const numOfTokens = await contract.default.methods.totalSupply().call();
       const tokenOfUser = await contract.default.methods.tokenOfOwnerByIndex(address, 0).call();
       const tokenURI = await contract.default.methods.tokenURI(tokenOfUser).call();
@@ -53,7 +53,7 @@ class FormRegisterTrademarkConfirm extends Component {
       console.log(JSONURI.MarkDesc);
       console.log(JSONURI.IpfsHash);
     } catch (error) {
-      console.log(error)
+      console.log("ERROR");
     }
   }
 
