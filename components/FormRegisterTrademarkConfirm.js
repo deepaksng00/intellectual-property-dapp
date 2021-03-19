@@ -38,7 +38,7 @@ class FormRegisterTrademarkConfirm extends Component {
     const ipfsHash = values.fileHash;
 
     try {
-      
+
       await contract.default.methods.awardIP(address, ipfsHash, tokenMetadata).send({ 
         from: address, 
         gasLimit: "5000000" 
@@ -52,6 +52,9 @@ class FormRegisterTrademarkConfirm extends Component {
       console.log(error)
       if ((error.message.toString()).includes("Hash Already Registered")) {
         alert("This invention has already been registered.");
+        this.props.previousStep(2);
+      } else {
+        alert("There has been an error with the transaction. Please try again later.");
         this.props.previousStep(2);
       }
     }

@@ -51,8 +51,13 @@ class FormRegisterPatentConfirm extends Component {
       this.props.nextStep(1);  
     } catch (error) {
       this.setState({ loading: false });
-      alert("ERROR: The hash has already been registered!");
-      this.props.previousStep(5);
+      if ((error.message.toString()).includes("Hash Already Registered")) {
+        alert("This invention has already been registered.");
+        this.props.previousStep(5);
+      } else {
+        alert("There has been an error with the transaction. Please try again later.");
+        this.props.previousStep(5);
+      }
     }
   }
 
