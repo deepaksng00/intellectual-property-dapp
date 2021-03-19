@@ -6,7 +6,7 @@
     grid-template-columns: auto 2fr 1fr 1fr;
     grid-template-areas:
       "title title . ."
-      "addressLabel address disableButton disableButton"
+      "addressLabel address . ."
       "publicationDateLabel publicationDate . ."
       "expirationDateLabel expirationDate . ."
       "ownerLabel owner . ."
@@ -101,8 +101,4 @@
 
 .markDesc {
     grid-area: markDesc;
-}
-
-.disableButton {
-    grid-area: disableButton;
 }
