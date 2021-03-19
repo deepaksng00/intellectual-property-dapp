@@ -14,11 +14,30 @@ class FormRegisterPatentConfirm extends Component {
 
   continueRegistration = async (event) => {
     event.preventDefault();
+
     const { values } = this.props;
+    var tokenMetadata = '';
 
     this.setState({ loading: true });
 
     const inventorAddress_full = values.address1_patent + ", " + values.address2_patent + ", " + values.addressCity_patent + ", " + values.addressCounty_patent + ", " + values.addressPostcode_patent + ", " + values.addressCountry_patent;
+    const currentTimestamp = new Date().getTime() / 1000;
+    var expirationDate = new Date();
+    expirationDate.setFullYear(expirationDate.getFullYear() + 10);
+    expirationDate = expirationDate.getTime() / 1000;
+
+    // creating metadata for NFT
+    tokenMetadata += "{ ";
+    tokenMetadata += ('"PubDate"'+':"'+currentTimestamp.toString()+'", ');
+    tokenMetadata += ('"ExpirationDate"'+':"'+expirationDate.toString()+'", ');
+    tokenMetadata += ('"IpfsHash"'+':"'+values.fileHash+'", ');
+    tokenMetadata += ('"TypeOfIP"'+':"'+"Patent"+'", ');
+    tokenMetadata += ('"Title"'+':"'+values.patentTitle+'", ');
+    tokenMetadata += ('"InventorAddress"'+':"'+inventorAddress_full+'"');
+    tokenMetadata += " }";
+
+    const address = values.address[0];
+    const ipfsHash = values.fileHash;
 
     try {
       await factory.methods.createPatent(values.patentTitle, inventorAddress_full, values.fileHash).send({
