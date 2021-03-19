@@ -28,7 +28,21 @@ export default class PatentShow extends Component {
                 }
             }
 
+            const publicationDate = JSONURI.PubDate;
+            const expirationDate = JSONURI.ExpirationDate;
+            const fileHash = JSONURI.IpfsHash;
+            const title = JSONURI.Title;
+            const inventorAddress = JSONURI.InventorAddress;
 
+            return {
+                id: id,
+                publicationDate: publicationDate,
+                expirationDate: expirationDate,
+                owner: owner,
+                fileHash: fileHash,
+                title: title,
+                inventorAddress: inventorAddress
+            }
         }
         const patent = await new web3.eth.Contract(compiled_patent.abi, address);
 

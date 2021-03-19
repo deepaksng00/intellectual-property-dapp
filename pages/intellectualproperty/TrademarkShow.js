@@ -26,7 +26,7 @@ export default class TrademarkShow extends Component {
                     exists: true
                 }
             }
-            
+
             const publicationDate = JSONURI.PubDate;
             const expirationDate = JSONURI.ExpirationDate;
             const fileHash = JSONURI.IpfsHash;
@@ -41,7 +41,7 @@ export default class TrademarkShow extends Component {
                 markDesc: markDesc,
                 exists: true,
                 isTrademark: true
-            };
+            }
         } catch (err) {
             console.log(err);
             return {
