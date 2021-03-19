@@ -41,7 +41,15 @@ export default class PatentShow extends Component {
                 owner: owner,
                 fileHash: fileHash,
                 title: title,
-                inventorAddress: inventorAddress
+                inventorAddress: inventorAddress,
+                exists: true,
+                isPatent: true
+            }
+        } catch (err) {
+            console.log(err);
+            return {
+                exists: false,
+                isPatent: false
             }
         }
     }
