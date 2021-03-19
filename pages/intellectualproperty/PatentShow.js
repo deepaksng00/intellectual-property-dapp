@@ -54,30 +54,7 @@ export default class PatentShow extends Component {
         }
     }
 
-    disableContract = async () => {
-        this.setState({ loading: true });
-        const compiled_patent = require("../../ethereum/build/Patent.json");
 
-        const patent = await new web3.eth.Contract(compiled_patent.abi, this.props.address);
-        const accounts = await web3.eth.getAccounts();
-
-        try {
-            await factory.methods.disablePatent(this.props.fileHash, this.props.address)
-                .send({ from: accounts[0], gasLimit: "5000000"})
-                .catch((err) => { throw err; });
-
-            Router.pushRoute(`/intellectualproperty/patents/${this.props.address}`);
-            this.setState({ loading: false });
-
-            alert("The contract has been disabled.");
-        } catch (err) {
-            this.setState({ loading: false });
-
-            alert("There has been an issue with the transaction, please try again!");
-            console.log(err);
-        }       
-    }
-    
     render() {
         const statusDateObj = new Date(this.props.statusDate * 1000);
         const formattedStatusDate = 
