@@ -23,7 +23,7 @@ class FormRegisterPatentConfirm extends Component {
     const inventorAddress_full = values.address1_patent + ", " + values.address2_patent + ", " + values.addressCity_patent + ", " + values.addressCounty_patent + ", " + values.addressPostcode_patent + ", " + values.addressCountry_patent;
     const currentTimestamp = new Date().getTime() / 1000;
     var expirationDate = new Date();
-    expirationDate.setFullYear(expirationDate.getFullYear() + 10);
+    expirationDate.setFullYear(expirationDate.getFullYear() + 20);
     expirationDate = expirationDate.getTime() / 1000;
 
     // creating metadata for NFT

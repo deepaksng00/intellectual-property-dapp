@@ -28,6 +28,7 @@ class FormRegisterReceipt extends Component {
       case "Patent": prefix = "PT"; break;
       case "Design": prefix = "DS"; break;
     }
+    
     return (
       <Layout>
         <div className={style.main_section}>

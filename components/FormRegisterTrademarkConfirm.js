@@ -22,7 +22,7 @@ class FormRegisterTrademarkConfirm extends Component {
 
     const currentTimestamp = new Date().getTime() / 1000;
     var expirationDate = new Date();
-    expirationDate.setFullYear(expirationDate.getFullYear() + 5);
+    expirationDate.setFullYear(expirationDate.getFullYear() + 10);
     expirationDate = expirationDate.getTime() / 1000;
 
     // creating metadata for NFT

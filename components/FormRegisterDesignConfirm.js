@@ -12,34 +12,55 @@ class FormRegisterDesignConfirm extends Component {
 
   continueRegistration = async (event) => {
     event.preventDefault();
+
     const { values } = this.props;
+    var tokenMetadata = '';
+
+    this.setState({ loading: true });
+
+    const currentTimestamp = new Date().getTime() / 1000;
+    var expirationDate = new Date();
+    expirationDate.setFullYear(expirationDate.getFullYear() + 5);
+    expirationDate = expirationDate.getTime() / 1000; 
+
+    // creating metadata for NFT
+    tokenMetadata += "{ ";
+    tokenMetadata += ('"PubDate"'+':"'+currentTimestamp.toString()+'", ');
+    tokenMetadata += ('"ExpirationDate"'+':"'+expirationDate.toString()+'", ');
+    tokenMetadata += ('"IpfsHash"'+':"'+values.fileHash+'", ');
+    tokenMetadata += ('"TypeOfIP"'+':"'+"Design"+'", ');
+    tokenMetadata += ('"Comment"'+':"'+values.comment+'"');
+    tokenMetadata += " }";
+
+    const address = values.address[0];
+    const ipfsHash = values.fileHash;
 
     try {
-      this.setState({ loading: true });
-      await factory.methods.createDesign(values.comment, values.fileHash).send({
-        from: values.address[0],
-        gasLimit: "5000000"
-      })
-      .catch(() => { throw 'HashAlreadyUsed' });
-  
-      const designs = await factory.methods.getDesigns(values.address[0]).call();
-      const numOfDesigns = designs.length;
-      const address = designs[numOfDesigns-1];
 
-      this.props.changeForm('ip_addr', address);
-      this.props.changeForm('address', values.address[0]);
+      const tx = await contract.default.methods.awardIP(address, ipfsHash, tokenMetadata).send({
+        from: address,
+        gasLimit: "5000000"
+      });
 
       this.setState({ loading: false });
+
+      const tokenID = tx.events.Transfer.returnValues["tokenId"];
+
+      this.props.changeForm('tokenID', tokenID);
+      this.props.changeForm('address', address);
 
       this.props.nextStep(1);
-    } catch (err) {
+    } catch (error) {
       this.setState({ loading: false });
-      if(err == 'HashAlreadyUsed') {
-        alert("ERROR: The hash has already been registered!");
+
+      if ((error.message.toString()).includes("Hash Already Registered")) {
+        alert("This invention has already been registered.");
+        this.props.previousStep(5);
       } else {
-        console.log(err);
+        alert("There has been an error with the transaction. Please try again later.");
+        console.log(error);
+        this.props.previousStep(8);
       }
-      this.props.previousStep(8);
     }
   }
 
