@@ -3,8 +3,8 @@ import Layout from '../../components/Layout';
 import web3 from '../../ethereum/web3';
 import style from '../../styles/PatentShow.module.css';
 import { Link, Router } from '../../routes';
-import factory from '../../ethereum/factory';
 import RingLoader from "react-spinners/RingLoader";
+const contract = require("../../ethereum/intellectualproperty");
 
 
 export default class PatentShow extends Component {
@@ -13,8 +13,23 @@ export default class PatentShow extends Component {
     }
 
     static async getInitialProps(props) {
-        const address = props.query.address;
-        const compiled_patent = require("../../ethereum/build/Patent.json");
+        const id = props.query.address;
+        const tokenID = parseInt(id);
+
+        try {
+            const tokenURI = await contract.default.methods.tokenURI(tokenID).call();
+            const owner = await contract.default.methods.ownerOf(tokenID).call();
+            const JSONURI = JSON.parse(tokenURI);
+
+            if ((JSONURI.TypeOfIP).toString().toLowerCase() != "patent") {
+                return {
+                    notPatent: false,
+                    exists: true
+                }
+            }
+
+
+        }
         const patent = await new web3.eth.Contract(compiled_patent.abi, address);
 
         const status = await patent.methods.getStatus().call();

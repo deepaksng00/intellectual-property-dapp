@@ -13,7 +13,6 @@ export default class TrademarkShow extends Component {
 
     static async getInitialProps(props) {
         var id = props.query.address;
-
         const tokenID = parseInt(id);
 
         try {
@@ -27,6 +26,7 @@ export default class TrademarkShow extends Component {
                     exists: true
                 }
             }
+            
             const publicationDate = JSONURI.PubDate;
             const expirationDate = JSONURI.ExpirationDate;
             const fileHash = JSONURI.IpfsHash;
