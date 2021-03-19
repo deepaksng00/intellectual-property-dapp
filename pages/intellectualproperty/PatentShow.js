@@ -54,12 +54,17 @@ export default class PatentShow extends Component {
         }
     }
 
+    componentDidMount() {
+        if (!this.props.exists) {
+            alert("ERROR: This IP doens't exist.");
+            Router.push("/");
+        } else if (!this.props.isPatent) {
+            alert("ERROR: The IP associated to this ID is not a patent.");
+            Router.push("/");
+        }
+    }
 
     render() {
-        const statusDateObj = new Date(this.props.statusDate * 1000);
-        const formattedStatusDate = 
-            ('0' + statusDateObj.getDate()).slice(-2) + "-" + ('0' + (statusDateObj.getMonth() + 1)).slice(-2) + "-" + statusDateObj.getFullYear();
-
         let formattedPublicationDate;
 
         const publicationDateObj = new Date(this.props.publicationDate * 1000);
@@ -82,25 +87,20 @@ export default class PatentShow extends Component {
                     <Layout>
                         <form className={style.form}>
                             <h2>Patent {this.props.address} </h2>
-                            <p className={style.addressLabel}>Address:</p>
-                            <input className={style.address} type='text' value={this.props.address} readOnly />
-                            <p className={style.statusLabel}>Status:</p>
-                            <input className={style.status} type='text' value={this.props.status} readOnly />
-                            <p className={style.statusDateLabel}>Last status change:</p>
-                            <input className={style.statusDate} type='text' value={formattedStatusDate} readOnly />
+                            <p className={style.addressLabel}>ID:</p>
+                            <input className={style.address} type='text' value={this.props.id} readOnly />
                             <p className={style.publicationDateLabel}>Publication Date:</p>
                             <input className={style.publicationDate} type='text' value={formattedPublicationDate} readOnly />
                             <p className={style.expirationDateLabel}>Expiration date:</p>
                             <input className={style.expirationDate} type='text' value={formattedExpirationDate} readOnly />
                             <p className={style.ownerLabel}>Owner address:</p>
-                            <input className={style.owner} type='text' value={this.props.owners} readOnly />
+                            <input className={style.owner} type='text' value={this.props.owner} readOnly />
                             <p className={style.fileHashLabel}>File hash:</p>
                             <input className={style.fileHash} type='text' value={this.props.fileHash} readOnly />
                             <p className={style.titleLabel}>Title:</p>
                             <input className={style.title} type='text' value={this.props.title} readOnly />
                             <p className={style.inventorAddressLabel}>Inventor address:</p>
                             <input className={style.inventorAddress} type='text' value={ this.props.inventorAddress } readOnly />
-                            <button className={style.disableButton} type='button' onClick={ this.disableContract }>Disable Patent</button>
                         </form>
                     </Layout>
                 }
