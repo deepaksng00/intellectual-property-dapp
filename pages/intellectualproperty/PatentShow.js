@@ -44,29 +44,6 @@ export default class PatentShow extends Component {
                 inventorAddress: inventorAddress
             }
         }
-        const patent = await new web3.eth.Contract(compiled_patent.abi, address);
-
-        const status = await patent.methods.getStatus().call();
-        const inventorAddress = await patent.methods.getInventorAddress().call();
-        const publicationDate = await patent.methods.getPublicationDate().call();
-        const statusDate = await patent.methods.getStatusDate().call();
-        const expirationDate = await patent.methods.getExpirationDate().call();
-        const owners = await patent.methods.getOwner().call();
-        const fileHash = await patent.methods.getHash().call();
-        const title = await patent.methods.getTitle().call();
-
-        return {
-            address: address,
-            status: status,
-            inventorAddress: inventorAddress,
-            publicationDate: publicationDate,
-            statusDate: statusDate,
-            expirationDate: expirationDate,
-            owners: owners,
-            fileHash: fileHash,
-            title: title,
-            inventorAddress: inventorAddress
-        };
     }
 
     disableContract = async () => {
