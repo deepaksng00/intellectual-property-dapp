@@ -6,7 +6,7 @@
     grid-template-columns: auto 2fr 1fr 1fr;
     grid-template-areas:
       "header header . ."
-      "addressLabel address disableButton disableButton"
+      "addressLabel address . ."
       "publicationDateLabel publicationDate . ."
       "expirationDateLabel expirationDate . ."
       "ownerLabel owner . ."
@@ -110,8 +110,4 @@
 
 .inventorAddress {
     grid-area: inventorAddress;
-}
-
-.disableButton {
-    grid-area: disableButton;
 }
