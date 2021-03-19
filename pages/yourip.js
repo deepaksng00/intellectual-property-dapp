@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Layout from '../components/Layout';
 import web3 from '../ethereum/web3';
-import factory from '../ethereum/factory';
 import IntellectualPropertyItem from '../components/IntellectualPropertyItem';
 import { Router } from '../routes';
 import RingLoader from "react-spinners/RingLoader";

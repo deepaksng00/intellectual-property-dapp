@@ -28,7 +28,7 @@ class Register extends Component {
     addressCountry_patent: '',
     addressPostcode_patent: '',
     comment: '',
-    ip_addr: ''
+    tokenID: ''
   }
 
   async componentDidMount() {
@@ -59,13 +59,13 @@ class Register extends Component {
       address, currentDate, typeOfIP, markDesc, fileHash, patentTitle,
       address1_patent, address2_patent, addressCity_patent,
       addressCounty_patent, addressCountry_patent, addressPostcode_patent,
-      comment, ip_addr } = this.state;
+      comment, tokenID } = this.state;
 
     const values = {
       address, currentDate, typeOfIP, markDesc, fileHash, patentTitle,
       address1_patent, address2_patent, addressCity_patent,
       addressCounty_patent, addressCountry_patent, addressPostcode_patent,
-      comment, ip_addr
+      comment, tokenID
     }
 
     switch(step) {

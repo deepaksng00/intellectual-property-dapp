@@ -41,12 +41,17 @@ class FormRegisterPatentConfirm extends Component {
 
     try {
 
-      await contract.default.methods.awardIP(address, ipfsHash, tokenMetadata).send({
+      const tx = await contract.default.methods.awardIP(address, ipfsHash, tokenMetadata).send({
         from: address,
         gasLimit: "5000000"
       });
 
       this.setState({ loading: false });
+
+      const tokenID = tx.events.Transfer.returnValues["tokenId"];
+
+      this.props.changeForm("tokenID", tokenID);
+      this.props.changeForm("address", address);
 
       this.props.nextStep(1);  
     } catch (error) {
@@ -56,6 +61,7 @@ class FormRegisterPatentConfirm extends Component {
         this.props.previousStep(5);
       } else {
         alert("There has been an error with the transaction. Please try again later.");
+        console.log(error);
         this.props.previousStep(5);
       }
     }
