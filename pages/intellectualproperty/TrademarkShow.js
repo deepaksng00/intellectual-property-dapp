@@ -56,7 +56,7 @@ export default class TrademarkShow extends Component {
             alert("ERROR: This IP doesn't exist.");
             Router.push("/");
         } else if (!this.props.isTrademark) {
-            alert("ERROR: This IP is not a trademark.");
+            alert("ERROR: The IP associated to this ID is not a trademark.");
             Router.push("/");
         }
     }
