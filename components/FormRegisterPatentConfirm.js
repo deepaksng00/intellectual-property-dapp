@@ -40,23 +40,16 @@ class FormRegisterPatentConfirm extends Component {
     const ipfsHash = values.fileHash;
 
     try {
-      await factory.methods.createPatent(values.patentTitle, inventorAddress_full, values.fileHash).send({
-        from: values.address[0],
-        gasLimit: "5000000"
-       })
-       .catch(() => { throw 'HashAlreadyUsed' });
 
-      const patents = await factory.methods.getPatents(values.address[0]).call();
-      const numOfPatents = patents.length;
-      const address = trademarks[numOfTrademarks-1];
-   
-      this.props.changeForm('ip_addr', address);
-      this.props.changeForm('address', values.address[0]);
+      await contract.default.methods.awardIP(address, ipfsHash, tokenMetadata).send({
+        from: address,
+        gasLimit: "5000000"
+      });
 
       this.setState({ loading: false });
-  
-      this.props.nextStep(1);   
-    } catch (err) {
+
+      this.props.nextStep(1);  
+    } catch (error) {
       this.setState({ loading: false });
       alert("ERROR: The hash has already been registered!");
       this.props.previousStep(5);

@@ -38,7 +38,12 @@ class FormRegisterTrademarkConfirm extends Component {
     const ipfsHash = values.fileHash;
 
     try {
-      await contract.default.methods.awardIP(address, ipfsHash, tokenMetadata).send({ from: address, gasLimit: "5000000" });
+      
+      await contract.default.methods.awardIP(address, ipfsHash, tokenMetadata).send({ 
+        from: address, 
+        gasLimit: "5000000" 
+      });
+
       this.setState({ loading: false });
 
       this.props.nextStep(1);
