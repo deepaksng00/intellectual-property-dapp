@@ -55,7 +55,7 @@ class FormRegisterDesignConfirm extends Component {
 
       if ((error.message.toString()).includes("Hash Already Registered")) {
         alert("This invention has already been registered.");
-        this.props.previousStep(5);
+        this.props.previousStep(8);
       } else {
         alert("There has been an error with the transaction. Please try again later.");
         console.log(error);

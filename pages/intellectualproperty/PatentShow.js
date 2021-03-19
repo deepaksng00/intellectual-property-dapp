@@ -23,7 +23,7 @@ export default class PatentShow extends Component {
 
             if ((JSONURI.TypeOfIP).toString().toLowerCase() != "patent") {
                 return {
-                    notPatent: false,
+                    isPatent: false,
                     exists: true
                 }
             }

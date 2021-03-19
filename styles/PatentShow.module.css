@@ -48,22 +48,6 @@
     grid-area: address;
 }
 
-.statusLabel {
-    grid-area: statusLabel;
-}
-
-.status {
-    grid-area: status;
-}
-
-.statusDateLabel {
-    grid-area: statusDateLabel;
-}
-
-.statusDate {
-    grid-area: statusDate;
-}
-
 .publicationDateLabel {
     grid-area: publicationDateLabel;
 }

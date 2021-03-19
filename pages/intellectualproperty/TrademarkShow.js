@@ -22,7 +22,7 @@ export default class TrademarkShow extends Component {
 
             if ((JSONURI.TypeOfIP).toString().toLowerCase() != "trademark") {
                 return {
-                    notTrademark: false,
+                    isTrademark: false,
                     exists: true
                 }
             }

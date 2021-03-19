@@ -6,9 +6,7 @@
     grid-template-columns: auto 2fr 1fr 1fr;
     grid-template-areas:
       "header header . ."
-      "addressLabel address disableButton disableButton"
-      "statusLabel status . ."
-      "statusDateLabel statusDate . ."
+      "addressLabel address . ."
       "publicationDateLabel publicationDate . ."
       "expirationDateLabel expirationDate . ."
       "ownerLabel owner . ."
@@ -49,22 +47,6 @@
     grid-area: address;
 }
 
-.statusLabel {
-    grid-area: statusLabel;
-}
-
-.status {
-    grid-area: status;
-}
-
-.statusDateLabel {
-    grid-area: statusDateLabel;
-}
-
-.statusDate {
-    grid-area: statusDate;
-}
-
 .publicationDateLabel {
     grid-area: publicationDateLabel;
 }
@@ -103,8 +85,4 @@
 
 .comment {
     grid-area: comment;
-}
-
-.disableButton {
-    grid-area: disableButton;
 }
