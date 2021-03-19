@@ -17,7 +17,8 @@ class FormRegisterTrademarkConfirm extends Component {
 
     const { values } = this.props;
     var tokenMetadata = '';
-    // const instance = await IPRegister.deployed();
+    
+    this.setState({ loading: true });
 
     const currentTimestamp = new Date().getTime() / 1000;
     var expirationDate = new Date();
@@ -38,9 +39,11 @@ class FormRegisterTrademarkConfirm extends Component {
 
     try {
       await contract.default.methods.awardIP(address, ipfsHash, tokenMetadata).send({ from: address, gasLimit: "5000000" });
+      this.setState({ loading: false });
 
       this.props.nextStep(1);
     } catch (error) {
+      this.setState({ loading: false });
       console.log(error)
       if ((error.message.toString()).includes("Hash Already Registered")) {
         alert("This invention has already been registered.");
