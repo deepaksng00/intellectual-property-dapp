@@ -4,6 +4,8 @@ import style from '../styles/FormRegisterDesignConfirm.module.css';
 import { Router } from '../routes';
 import web3 from '../ethereum/web3';
 import RingLoader from "react-spinners/RingLoader";
+const contract = require("../ethereum/intellectualproperty");
+
 
 class FormRegisterDesignConfirm extends Component {
   state = {

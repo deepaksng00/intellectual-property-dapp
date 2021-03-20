@@ -28,8 +28,8 @@ class Header extends Component  {
                         <ul>
                             <Link route="/"><li>Home</li></Link>
                             <Link route="/intellectualproperty/register"><li>Register your IP</li></Link>
-                            <Link route="/yourip"><li>Your IP</li></Link>
-                            <Link route="/searchip"><li>Search IP</li></Link>
+                            <Link route="/userip"><li>Your IP</li></Link>
+                            <Link route="/search"><li>Search IP</li></Link>
                         </ul>
                     </div>
                 : 

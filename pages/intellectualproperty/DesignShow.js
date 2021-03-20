@@ -92,7 +92,7 @@ export default class PatentShow extends Component {
                             <p className={style.expirationDateLabel}>Expiration date:</p>
                             <input className={style.expirationDate} type='text' value={formattedExpirationDate} readOnly />
                             <p className={style.ownerLabel}>Owner address:</p>
-                            <input className={style.owner} type='text' value={this.props.owners} readOnly />
+                            <input className={style.owner} type='text' value={this.props.owner} readOnly />
                             <p className={style.fileHashLabel}>File hash:</p>
                             <input className={style.fileHash} type='text' value={this.props.fileHash} readOnly />
                             <p className={style.commentLabel}>Comment:</p>
