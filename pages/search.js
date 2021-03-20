@@ -43,6 +43,7 @@ export default class SearchIP extends Component {
 
             Router.push(`/intellectualproperty/${typeOfIP.toString().toLowerCase()+"s"}/${tokenID}`);
         } catch (error) {
+            this.setState({ loading: false });
             alert("No results found.");
         }
     }
@@ -61,7 +62,7 @@ export default class SearchIP extends Component {
                         <form className={style.form} onSubmit={this.onFormSubmit}>
                             <h2>Search for Intellectual Property</h2>
                             <input id="ipAddress" className={style.ipAddressBar} type="search"/>
-                            <input className={style.button} type="submit" />
+                            <input className={style.button} type="submit" value="Search" />
                         </form>
                     </Layout>
                 }

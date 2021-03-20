@@ -4,6 +4,8 @@ import web3 from '../ethereum/web3';
 import IntellectualPropertyItem from '../components/IntellectualPropertyItem';
 import { Router } from '../routes';
 import RingLoader from "react-spinners/RingLoader";
+const contract = require("../ethereum/intellectualproperty");
+
 
 export default class YourIP extends Component {
     state = {
@@ -25,18 +27,30 @@ export default class YourIP extends Component {
             let trademarks = [];
             let patents = [];
             let designs = [];
-            trademarks = await factory.methods.getTrademarks(address[0]).call();
-            patents = await factory.methods.getPatents(address[0]).call();
-            designs = await factory.methods.getDesigns(address[0]).call();
+
+            const numOfTokens = await contract.default.methods.balanceOf(address[0]).call();
+
+            if (parseInt(numOfTokens) == 0) {
+                this.setState({ isEmpty: true });
+            } else {
+                this.setState({ isEmpty: false });
+                for (var i = 0; i < numOfTokens; i++) {
+                    const currentTokenID = await contract.default.methods.tokenOfOwnerByIndex(address[0], i).call();
+                    const tokenURI = await contract.default.methods.tokenURI(currentTokenID).call();
+                    const JSONURI = JSON.parse(tokenURI);
+                    switch (JSONURI.TypeOfIP.toString().toLowerCase()) {
+                        case "trademark": trademarks.push(currentTokenID); break;
+                        case "patent": patents.push(currentTokenID); break;
+                        case "design": designs.push(currentTokenID); break;
+                    }
+                }
+            }
             
             this.setState({ trademarks });
             this.setState({ patents });
             this.setState({ designs });
 
-            if (trademarks.length == 0 && patents.length == 0 && designs.length == 0) {
-                this.setState({ isEmpty: true });
-            }
-            this.setState({ loading: false });
+            this.setState({ loading: false })
         }
     }
     
@@ -44,26 +58,26 @@ export default class YourIP extends Component {
         if (isEmpty == true) {
             return <IntellectualPropertyItem empty = "True" />
         } else {
-            var trademarkItems = this.state.trademarks.map(address => {
+            var trademarkItems = this.state.trademarks.map(tokenID => {
                 return <IntellectualPropertyItem
                     typeOfIP = "Trademark" 
-                    address = { address } 
+                    address = { "TM" + tokenID.toString() } 
                     empty = "False"
                 />   
             });
     
-            var patentItems = this.state.patents.map(address => {
+            var patentItems = this.state.patents.map(tokenID => {
                 return <IntellectualPropertyItem
                     typeOfIP = "Patent"
-                    address = { address }
+                    address = { "PT" + tokenID.toString() }
                     empty = "False"
                 />
             });
     
-            var designItems = this.state.designs.map(address => {
+            var designItems = this.state.designs.map(tokenID => {
                 return <IntellectualPropertyItem
                     typeOfIP = "Design"
-                    address = { address }
+                    address = { "DS" + tokenID.toString() }
                     empty = "False"
                 />
             });
