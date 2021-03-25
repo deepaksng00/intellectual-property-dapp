@@ -19,6 +19,7 @@ class Register extends Component {
     currentDate: '',
     typeOfIP: '',
     fileHash: '',
+    fileBuffer: '',
     markDesc: '',
     patentTitle: '',
     address1_patent: '',
@@ -56,13 +57,13 @@ class Register extends Component {
   render() {
     const { step } = this.state;
     const {
-      address, currentDate, typeOfIP, markDesc, fileHash, patentTitle,
+      address, currentDate, typeOfIP, markDesc, fileHash, fileBuffer, patentTitle,
       address1_patent, address2_patent, addressCity_patent,
       addressCounty_patent, addressCountry_patent, addressPostcode_patent,
       comment, tokenID } = this.state;
 
     const values = {
-      address, currentDate, typeOfIP, markDesc, fileHash, patentTitle,
+      address, currentDate, typeOfIP, markDesc, fileHash, fileBuffer, patentTitle,
       address1_patent, address2_patent, addressCity_patent,
       addressCounty_patent, addressCountry_patent, addressPostcode_patent,
       comment, tokenID

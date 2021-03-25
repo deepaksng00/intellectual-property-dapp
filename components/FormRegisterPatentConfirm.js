@@ -4,6 +4,7 @@ import style from '../styles/FormRegisterPatentConfirm.module.css';
 import { Router } from '../routes';
 import web3 from '../ethereum/web3';
 import RingLoader from "react-spinners/RingLoader";
+import ipfs from '../ethereum/ipfs';
 const contract = require("../ethereum/intellectualproperty");
 
 
@@ -26,45 +27,54 @@ class FormRegisterPatentConfirm extends Component {
     expirationDate.setFullYear(expirationDate.getFullYear() + 20);
     expirationDate = expirationDate.getTime() / 1000;
 
-    // creating metadata for NFT
-    tokenMetadata += "{ ";
-    tokenMetadata += ('"PubDate"'+':"'+currentTimestamp.toString()+'", ');
-    tokenMetadata += ('"ExpirationDate"'+':"'+expirationDate.toString()+'", ');
-    tokenMetadata += ('"IpfsHash"'+':"'+values.fileHash+'", ');
-    tokenMetadata += ('"TypeOfIP"'+':"'+"Patent"+'", ');
-    tokenMetadata += ('"Title"'+':"'+values.patentTitle+'", ');
-    tokenMetadata += ('"InventorAddress"'+':"'+inventorAddress_full+'"');
-    tokenMetadata += " }";
-
-    const address = values.address[0];
-    const ipfsHash = values.fileHash;
-
-    try {
-
-      const tx = await contract.default.methods.awardIP(address, ipfsHash, tokenMetadata).send({
-        from: address,
-        gasLimit: "5000000"
-      });
-
-      this.setState({ loading: false });
-
-      const tokenID = tx.events.Transfer.returnValues["tokenId"];
-
-      this.props.changeForm("tokenID", tokenID);
-      this.props.changeForm("address", address);
-
-      this.props.nextStep(1);  
-    } catch (error) {
-      this.setState({ loading: false });
-      if ((error.message.toString()).includes("Hash Already Registered")) {
-        alert("This invention has already been registered.");
-        this.props.previousStep(5);
-      } else {
-        alert("There has been an error with the transaction. Please try again later.");
-        console.log(error);
-        this.props.previousStep(5);
+    ipfs.files.add(this.props.values.fileBuffer, async (error, result) => {
+      if (error) {
+        alert("There has been an issue with the file upload.");
+        this.previousStep(5);
       }
-    }
+
+      const ipfsHash = result[0].hash;
+      this.props.changeForm('fileHash', result[0].hash);
+
+      // creating metadata for NFT
+      tokenMetadata += "{ ";
+      tokenMetadata += ('"PubDate"'+':"'+currentTimestamp.toString()+'", ');
+      tokenMetadata += ('"ExpirationDate"'+':"'+expirationDate.toString()+'", ');
+      tokenMetadata += ('"IpfsHash"'+':"'+ipfsHash+'", ');
+      tokenMetadata += ('"TypeOfIP"'+':"'+"Patent"+'", ');
+      tokenMetadata += ('"Title"'+':"'+values.patentTitle+'", ');
+      tokenMetadata += ('"InventorAddress"'+':"'+inventorAddress_full+'"');
+      tokenMetadata += " }";
+
+      const address = values.address[0];
+
+      try {
+
+        const tx = await contract.default.methods.awardIP(address, ipfsHash, tokenMetadata).send({
+          from: address,
+          gasLimit: "5000000"
+        });
+
+        this.setState({ loading: false });
+
+        const tokenID = tx.events.Transfer.returnValues["tokenId"];
+
+        this.props.changeForm("tokenID", tokenID);
+        this.props.changeForm("address", address);
+
+        this.props.nextStep(1);  
+      } catch (error) {
+        this.setState({ loading: false });
+        if ((error.message.toString()).includes("Hash Already Registered")) {
+          alert("This invention has already been registered.");
+          this.props.previousStep(5);
+        } else {
+          alert("There has been an error with the transaction. Please try again later.");
+          console.log(error);
+          this.props.previousStep(5);
+        }
+      }
+    });
   }
 
   backRegistration = e => {
@@ -96,7 +106,7 @@ class FormRegisterPatentConfirm extends Component {
           <Layout>
             <form className={style.form}>
               <h2>Confirm your details</h2>
-              <p className={style.addressLabel}>Address:</p>
+              <p className={style.addressLabel}>Account address:</p>
               <input className={style.address} type='text' value={values.address} readOnly />
               <p className={style.dateLabel}>Date:</p>
               <input className={style.date} type='text' value={values.currentDate} readOnly />

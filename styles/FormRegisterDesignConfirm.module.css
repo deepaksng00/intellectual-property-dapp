@@ -9,10 +9,9 @@
     "dateLabel date"
     "typeOfIPLabel typeOfIP"
     "commentLabel comment"
-    "designHashLabel designHash"
     ". . "
     "back next";
-  grid-template-rows: auto auto auto auto auto auto 50px auto;
+  grid-template-rows: auto auto auto auto auto 50px auto;
 }
 
 .form > h2 {
@@ -56,14 +55,6 @@
 
 .comment {
   grid-area: comment;
-}
-
-.designHashLabel {
-  grid-area: designHashLabel;
-}
-
-.designHash {
-  grid-area: designHash;
 }
 
 .form > button {

@@ -63,31 +63,11 @@ class FormRegisterGeneral extends Component {
 
   file_upload = (event) => {
     event.preventDefault();
-    try {
-      this.setState({loading: true});
-      document.getElementById("LayoutComponent").style.display = "none";
-      document.getElementById("loader").style.display = "flex";
-      const file = document.getElementById("file_upload");
-      if (file.files[0].size > 104857600) {
-        document.getElementById("LayoutComponent").style.display = "grid";
-        document.getElementById("loader").style.display = "none";
-        alert(`${file.files[0].name} is too big! Max size is 100MB`);
-        file.value = "";
-      } else {
-        const reader = new FileReader();
-        reader.onload = () => {
-          var hash = CryptoJS.MD5(CryptoJS.enc.Latin1.parse(reader.result));
-          var md5 = hash.toString(CryptoJS.enc.Hex);
-  
-          this.state.changeForm('fileHash', md5);
-          document.getElementById("LayoutComponent").style.display = "grid";
-          document.getElementById("loader").style.display = "none";
-        }
-        reader.readAsBinaryString(file.files[0]);
-      }
-    } catch (err) {
-      alert("There was an issue with the file!");
-      console.log(err);
+    const file = event.target.files[0];
+    const reader = new window.FileReader();
+    reader.readAsArrayBuffer(file);
+    reader.onloadend = () => {
+      this.props.changeForm('fileBuffer', Buffer(reader.result));
     }
   }
 

@@ -4,6 +4,7 @@ import style from '../styles/FormRegisterDesignConfirm.module.css';
 import { Router } from '../routes';
 import web3 from '../ethereum/web3';
 import RingLoader from "react-spinners/RingLoader";
+import ipfs from '../ethereum/ipfs';
 const contract = require("../ethereum/intellectualproperty");
 
 
@@ -24,46 +25,55 @@ class FormRegisterDesignConfirm extends Component {
     var expirationDate = new Date();
     expirationDate.setFullYear(expirationDate.getFullYear() + 5);
     expirationDate = expirationDate.getTime() / 1000; 
-
-    // creating metadata for NFT
-    tokenMetadata += "{ ";
-    tokenMetadata += ('"PubDate"'+':"'+currentTimestamp.toString()+'", ');
-    tokenMetadata += ('"ExpirationDate"'+':"'+expirationDate.toString()+'", ');
-    tokenMetadata += ('"IpfsHash"'+':"'+values.fileHash+'", ');
-    tokenMetadata += ('"TypeOfIP"'+':"'+"Design"+'", ');
-    tokenMetadata += ('"Comment"'+':"'+values.comment+'"');
-    tokenMetadata += " }";
-
-    const address = values.address[0];
-    const ipfsHash = values.fileHash;
-
-    try {
-
-      const tx = await contract.default.methods.awardIP(address, ipfsHash, tokenMetadata).send({
-        from: address,
-        gasLimit: "5000000"
-      });
-
-      this.setState({ loading: false });
-
-      const tokenID = tx.events.Transfer.returnValues["tokenId"];
-
-      this.props.changeForm('tokenID', tokenID);
-      this.props.changeForm('address', address);
-
-      this.props.nextStep(1);
-    } catch (error) {
-      this.setState({ loading: false });
-
-      if ((error.message.toString()).includes("Hash Already Registered")) {
-        alert("This invention has already been registered.");
-        this.props.previousStep(8);
-      } else {
-        alert("There has been an error with the transaction. Please try again later.");
-        console.log(error);
-        this.props.previousStep(8);
+    
+    ipfs.files.add(this.props.values.fileBuffer, async (error, result) => {
+      if (error) {
+        alert("There has been an issue with the file upload.");
+        this.previousStep(8);
       }
-    }
+
+      const ipfsHash = result[0].hash;
+      this.props.changeForm('fileHash', result[0].hash);
+
+      // creating metadata for NFT
+      tokenMetadata += "{ ";
+      tokenMetadata += ('"PubDate"'+':"'+currentTimestamp.toString()+'", ');
+      tokenMetadata += ('"ExpirationDate"'+':"'+expirationDate.toString()+'", ');
+      tokenMetadata += ('"IpfsHash"'+':"'+ipfsHash+'", ');
+      tokenMetadata += ('"TypeOfIP"'+':"'+"Design"+'", ');
+      tokenMetadata += ('"Comment"'+':"'+values.comment+'"');
+      tokenMetadata += " }";
+
+      const address = values.address[0];
+
+      try {
+
+        const tx = await contract.default.methods.awardIP(address, ipfsHash, tokenMetadata).send({
+          from: address,
+          gasLimit: "5000000"
+        });
+
+        this.setState({ loading: false });
+
+        const tokenID = tx.events.Transfer.returnValues["tokenId"];
+
+        this.props.changeForm('tokenID', tokenID);
+        this.props.changeForm('address', address);
+
+        this.props.nextStep(1);
+      } catch (error) {
+        this.setState({ loading: false });
+
+        if ((error.message.toString()).includes("Hash Already Registered")) {
+          alert("This invention has already been registered.");
+          this.props.previousStep(8);
+        } else {
+          alert("There has been an error with the transaction. Please try again later.");
+          console.log(error);
+          this.props.previousStep(8);
+        }
+      }
+    });
   }
 
   backRegistration = e => {
@@ -105,8 +115,6 @@ class FormRegisterDesignConfirm extends Component {
               <input className={style.typeOfIP} type='text' value={values.typeOfIP} readOnly />
               <p className={style.commentLabel}>Comment:</p>
               <input className={style.comment} type='text' value={values.comment} readOnly />
-              <p className={style.designHashLabel}>Design hash:</p>
-              <input className={style.designHash} type='text' value={values.fileHash} readOnly />
               <button className={style.back} type='button' onClick={ this.backRegistration }>Back</button>
               <button className={style.next} type='button' onClick={ this.continueRegistration }>Register Design</button>
             </form>

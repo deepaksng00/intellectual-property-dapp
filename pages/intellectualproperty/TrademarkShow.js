@@ -92,8 +92,8 @@ export default class TrademarkShow extends Component {
                             <input className={style.expirationDate} type='text' value={formattedExpirationDate} readOnly />
                             <p className={style.ownerLabel}>Owner address:</p>
                             <input className={style.owner} type='text' value={this.props.owner} readOnly />
-                            <p className={style.fileHashLabel}>File hash:</p>
-                            <input className={style.fileHash} type='text' value={this.props.fileHash} readOnly />
+                            <p className={style.imageLabel}>Image:</p>
+                            <a className={style.linkImage} target="_blank" href={`https://ipfs.io/ipfs/${this.props.fileHash}`}><img className={style.image} onClick={ this.expandImage } src={`https://ipfs.io/ipfs/${this.props.fileHash}`} /></a>
                             <p className={style.markDescLabel}>Mark description:</p>
                             <input className={style.markDesc} type='text' value={this.props.markDesc} readOnly />
                         </form>

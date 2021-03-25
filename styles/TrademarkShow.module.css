@@ -10,7 +10,7 @@
       "publicationDateLabel publicationDate . ."
       "expirationDateLabel expirationDate . ."
       "ownerLabel owner . ."
-      "fileHashLabel fileHash . ."
+      "imageLabel image . ."
       "markDescLabel markDesc . .";
 }
 
@@ -71,12 +71,23 @@
     grid-area: owner;
 }
 
-.fileHashLabel {
-    grid-area: fileHashLabel;
+.imageLabel {
+    grid-area: imageLabel;
 }
 
-.fileHash {
-    grid-area: fileHash;
+.linkImage {
+    width: auto;
+    height: auto;
+    grid-area: image;
+}
+
+.image {
+    height: 300px;
+    border: 2px solid white;
+}
+
+.image:hover {
+    cursor: pointer;
 }
 
 .markDescLabel {

@@ -12,7 +12,7 @@
       "ownerLabel owner . ."
       "titleLabel title . ."
       "inventorAddressLabel inventorAddress . ."
-      "fileHashLabel fileHash . .";
+      "imageLabel image . ."
 }
 
 .form > h2 {
@@ -72,12 +72,23 @@
     grid-area: owner;
 }
 
-.fileHashLabel {
-    grid-area: fileHashLabel;
+.imageLabel {
+    grid-area: imageLabel;
 }
 
-.fileHash {
-    grid-area: fileHash;
+.linkImage {
+    width: auto;
+    height: auto;
+    grid-area: image;
+}
+
+.image {
+    height: 300px;
+    border: 2px solid white;
+}
+
+.image:hover {
+    cursor: pointer;
 }
 
 .titleLabel {

@@ -95,8 +95,8 @@ export default class PatentShow extends Component {
                             <input className={style.expirationDate} type='text' value={formattedExpirationDate} readOnly />
                             <p className={style.ownerLabel}>Owner address:</p>
                             <input className={style.owner} type='text' value={this.props.owner} readOnly />
-                            <p className={style.fileHashLabel}>File hash:</p>
-                            <input className={style.fileHash} type='text' value={this.props.fileHash} readOnly />
+                            <p className={style.imageLabel}>Image:</p>
+                            <a className={style.linkImage} target="_blank" href={`https://ipfs.io/ipfs/${this.props.fileHash}`}><img className={style.image} onClick={ this.expandImage } src={`https://ipfs.io/ipfs/${this.props.fileHash}`} /></a>
                             <p className={style.titleLabel}>Title:</p>
                             <input className={style.title} type='text' value={this.props.title} readOnly />
                             <p className={style.inventorAddressLabel}>Inventor address:</p>
