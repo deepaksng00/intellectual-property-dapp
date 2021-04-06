@@ -2,33 +2,43 @@ import React, { Component } from 'react';
 import Layout from './Layout';
 import style from '../styles/FormRegisterLogin.module.css';
 import { Router } from '../routes';
-import web3 from '../ethereum/web3';
+import Web3 from "web3";
 
 class FormRegisterLogin extends Component {
-  continueRegistration = e => {
-    e.preventDefault();
-    this.props.nextStep(1);
+  state = {
+    metamaskLoaded: false
   }
 
-  async componentDidMount() {
-    const address = await web3.eth.getAccounts();
-    if (address == "") {
-      alert("Metamask is not setup correctly, please load Metamask and try again!");
-      Router.pushRoute('/');
+  logIn = async e => {
+    e.preventDefault();
+    let web3;
+    web3 = new Web3(window.ethereum);
+    window.ethereum.enable();
+
+    const accounts = web3.eth.getAccounts();
+
+    if (accounts.length == 0) {
+      this.setState({ metamaskLoaded: false });
+    } else {
+      this.setState({ metamaskLoaded: true });
     }
   }
 
   render() {
     const { values } = this.props;
-    const { nextStep } = this.props;
+    const { nextStep } = this.props
+    const metamaskLoaded = this.state.metamaskLoaded;
 
+    if (metamaskLoaded) {
+      this.props.nextStep(1);
+    }
+    
     return (
       <Layout>
-        <form className={style.form}>
-          <h2>Login</h2>
-          <input type='input' value={ values.address } readOnly />
-          <button type='button' onClick={ this.continueRegistration }>Login</button>
-        </form>
+        <div className={style.grid}>      
+          <img className={style.img} src="/metamask.svg" alt="Metamask Logo" />
+          <button className={style.button} type="button" onClick={ this.logIn }>LOGIN</button>
+        </div>
       </Layout>
     );
   }

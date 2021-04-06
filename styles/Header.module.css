@@ -7,6 +7,7 @@
     grid-template-columns: 1fr 1fr 1fr;
     padding: 40px;
     font-family: 'Noto Sans', sans-serif;
+    color: black;
 }
 
 .header > h1 {
@@ -33,7 +34,6 @@
     width: 30px;
     height: 30px;
     cursor: pointer;
-    filter: invert(1);
     z-index: 200;
     transition: 0.2s;
 }
@@ -47,7 +47,6 @@
     width: 30px;
     height: 30px;
     cursor: pointer;
-    filter: invert(1);
 }
 
 .menu {

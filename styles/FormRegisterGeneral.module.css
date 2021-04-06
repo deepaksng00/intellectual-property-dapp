@@ -1,7 +1,7 @@
 .form {
   padding: 1.5% 4% 1.5% 4%;
   display: grid;
-  color: white;
+  color: black;
   grid-gap: 30px;
   grid-template-areas:
     "title title"
@@ -12,6 +12,9 @@
     "back next";
   grid-template-rows: auto auto auto auto 50px auto;
   font-family: 'Noto Sans', sans-serif;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  height: 85vh;
 }
 
 .form > h2 {
@@ -24,8 +27,8 @@
 
 .date {
   grid-area: date;
-  border-radius: 20px;
-  border: none;
+  border-radius: 5px;
+  border: 1px solid black;
   padding: 1rem;
   font-size: 1rem;
 }
@@ -36,6 +39,9 @@
 
 .typeOfIP {
   grid-area: typeOfIP;
+  border-radius: 5px;
+  border: 1px solid black;
+  padding: 1rem;
 }
 
 .fileLabel {
@@ -45,20 +51,25 @@
 .file {
   grid-area: file;
   font-size: 1rem;
+  border-radius: 5px;
+  border: 1px solid black;
+  padding: 1rem;
 }
 
 .form > button {
-  width: 7rem;
-  border-radius: 20px;
-  padding: 1rem;
+  width: 150px;
+  height: 50px;
   border: none;
-  transition: width 0.2s;
+  border-radius: 5px;
+  background-color: #0061FF;
+  color: white;
+  transition: transform 0.5s;
   justify-self: center;
 }
 
 .form > button:hover {
   cursor: pointer;
-  width: 8rem;
+  transform:scale(1.1,1.1);
 }
 
 .back {
