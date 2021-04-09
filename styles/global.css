@@ -19,3 +19,8 @@ body {
   height: 100vh;
   overflow: none;
 }
+
+.loadingContainer > * {
+  overflow: hidden;
+  filter: invert(1);
+}

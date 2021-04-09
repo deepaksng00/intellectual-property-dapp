@@ -61,8 +61,8 @@ export default class SearchIP extends Component {
                     <Layout>
                         <form className={style.form} onSubmit={this.onFormSubmit}>
                             <h2>Search for Intellectual Property</h2>
-                            <input id="ipAddress" className={style.ipAddressBar} type="search"/>
-                            <input className={style.button} type="submit" value="Search" />
+                            <input id="ipAddress" className={style.ipAddressBar} placeholder="Enter the ID..." type="search"/>
+                            <button className={style.button} type="submit">Search</button>
                         </form>
                     </Layout>
                 }

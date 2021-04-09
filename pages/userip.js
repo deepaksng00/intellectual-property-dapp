@@ -61,7 +61,7 @@ export default class YourIP extends Component {
             var trademarkItems = this.state.trademarks.map(tokenID => {
                 return <IntellectualPropertyItem
                     typeOfIP = "Trademark" 
-                    address = { "TM" + tokenID.toString() } 
+                    address = { tokenID.toString() } 
                     empty = "False"
                 />   
             });
@@ -69,7 +69,7 @@ export default class YourIP extends Component {
             var patentItems = this.state.patents.map(tokenID => {
                 return <IntellectualPropertyItem
                     typeOfIP = "Patent"
-                    address = { "PT" + tokenID.toString() }
+                    address = { tokenID.toString() }
                     empty = "False"
                 />
             });
@@ -77,7 +77,7 @@ export default class YourIP extends Component {
             var designItems = this.state.designs.map(tokenID => {
                 return <IntellectualPropertyItem
                     typeOfIP = "Design"
-                    address = { "DS" + tokenID.toString() }
+                    address = { tokenID.toString() }
                     empty = "False"
                 />
             });

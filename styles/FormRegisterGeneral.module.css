@@ -19,6 +19,7 @@
 
 .form > h2 {
   grid-area: title;
+  color: #0061FF;
 }
 
 .dateLabel {

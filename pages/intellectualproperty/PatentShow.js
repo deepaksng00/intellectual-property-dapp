@@ -88,7 +88,7 @@ export default class PatentShow extends Component {
                         <form className={style.form}>
                             <h2>Patent {this.props.address} </h2>
                             <p className={style.addressLabel}>ID:</p>
-                            <input className={style.address} type='text' value={"PT" + this.props.id} readOnly />
+                            <input className={style.address} type='text' value={this.props.id} readOnly />
                             <p className={style.publicationDateLabel}>Publication Date:</p>
                             <input className={style.publicationDate} type='text' value={formattedPublicationDate} readOnly />
                             <p className={style.expirationDateLabel}>Expiration date:</p>

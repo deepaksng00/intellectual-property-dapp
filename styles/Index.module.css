@@ -1,5 +1,84 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap');
 
+.titleContainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  padding: 40px;
+}
+
+.pageTitle {
+  font-family: 'Noto Sans', sans-serif;
+  font-size: 1.5em;
+  cursor: pointer;
+  text-transform: uppercase;
+  justify-self: center;
+  grid-column-start: 1;
+  grid-column-end: 4;
+  grid-row-start: 0;
+  grid-row-end: 1;
+}
+
+.menu_button {
+  grid-column-start: 3;
+  grid-column-end: 4;
+  grid-row-start: 0;
+  grid-row-end: 1;
+  justify-self: end;
+  background: url('../public/menu.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  filter: invert(1);
+  z-index: 200;
+  transition: 0.2s;
+  align-self: center;
+}
+
+.menu_button.active {
+    position: relative;
+    background: url('../public/cancel.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+
+.menu {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 0;
+    z-index: 100;
+    transition: 0.8s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    opacity: 0;
+}
+  
+.menu.active {
+    width: 20%;
+    background-color: black;
+    opacity: 1;
+}
+
+.menu > ul > li {
+    margin-top: 50px;
+    white-space: nowrap;
+    font-family: 'Noto Sans', sans-serif;
+    cursor: pointer;
+}
+
+.menu > ul > li:hover {
+    opacity: 0.8;
+}
+
 .text {
     margin-top: 2px;
     padding: 200px;
