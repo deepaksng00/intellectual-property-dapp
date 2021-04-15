@@ -4,10 +4,7 @@
   "description": "Intellectual property dAPP developed for my third year project at Manchester Metropolitan University.",
   "main": "index.js",
   "scripts": {
-    "test": "mocha",
-    "dev": "node server.js",
-    "compile": "node ethereum/compile.js",
-    "deploy": "node ethereum/deploy.js"
+    "dev": "node server.js"
   },
   "repository": {
     "type": "git",
