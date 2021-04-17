@@ -16,7 +16,7 @@ class Header extends Component  {
         return (
             <div>
                 <header className={style.header}>
-                    <Link route="/"><h1>Intellectual Property</h1></Link>
+                    <Link route="/"><h1>Intellectual Property </h1></Link>
                     { this.state.active ?
                         <div className={[style.menu_button, style.active].join(" ")} onClick={this.onMenuButtonClick}></div>
                     :

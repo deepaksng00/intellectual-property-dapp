@@ -10,10 +10,8 @@
     "fileLabel file"
     ". ."
     "back next";
-  grid-template-rows: auto auto auto auto 50px auto;
+  grid-template-rows: auto 3em 5em 3em 50px auto;
   font-family: 'Noto Sans', sans-serif;
-  border-top: 1px solid black;
-  border-bottom: 1px solid black;
   height: 85vh;
 }
 
@@ -28,10 +26,9 @@
 
 .date {
   grid-area: date;
-  border-radius: 5px;
-  border: 1px solid black;
-  padding: 1rem;
-  font-size: 1rem;
+  border: 0.5px solid grey;
+  padding-left: 10px;
+  font-size: 1em;
 }
 
 .typeOfIPLabel {
@@ -40,9 +37,9 @@
 
 .typeOfIP {
   grid-area: typeOfIP;
-  border-radius: 5px;
-  border: 1px solid black;
-  padding: 1rem;
+  border: 0.5px solid grey;
+  padding-left: 10px;
+  padding-top: 0.5em;
 }
 
 .fileLabel {
@@ -51,10 +48,10 @@
 
 .file {
   grid-area: file;
-  font-size: 1rem;
-  border-radius: 5px;
-  border: 1px solid black;
-  padding: 1rem;
+  font-size: 1em;
+  border: 0.5px solid grey;
+  padding-top: 10px;
+  padding-left: 10px;
 }
 
 .form > button {
