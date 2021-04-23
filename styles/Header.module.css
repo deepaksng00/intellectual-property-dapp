@@ -1,13 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@600&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans&display=swap');
 
 .header {
     display: grid;
     width: 100%;
     grid-template-columns: 1fr 1fr 1fr;
     padding: 40px;
-    font-family: 'Arapey', serif;
     color: black;
 }
 
@@ -17,10 +14,9 @@
     grid-row-start: 1;
     grid-row-end: 2;
     justify-self: center;
-    font-size: 1.5em;
+    font-size: 1.8em;
     cursor: pointer;
-    font-style: italic;
-    font-size: 35px;
+    text-transform: uppercase;
 }
 
 .menu_button {
@@ -74,7 +70,6 @@
 .menu > ul > li {
     margin-top: 50px;
     white-space: nowrap;
-    font-family: 'Arapey', serif;
     cursor: pointer;
 }
 

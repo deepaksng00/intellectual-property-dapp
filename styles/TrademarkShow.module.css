@@ -12,8 +12,6 @@
       "ownerLabel owner . ."
       "imageLabel image . ."
       "markDescLabel markDesc . .";
-    border-top: 1px solid black;
-    border-bottom: 1px solid black;
 }
 
 .form > h2 {
@@ -23,23 +21,9 @@
 
 .form > input {
     border-radius: 5px;
-    border: 2px solid black;
+    border: 0.5px solid grey;
     padding: 10px;
     font-size: 1rem;
-}
-
-.form > button {
-    width: 150px;
-    border-radius: 20px;
-    padding: 1rem;
-    border: none;
-    transition: width 0.2s;
-    justify-self: center;
-}
-  
-.form > button:hover {
-    width: 200px;
-    cursor: pointer;
 }
 
 .addressLabel {
@@ -87,7 +71,7 @@
 .image {
     height: 300px;
     padding: 5px;
-    border: 2px solid black;
+    border: 0.5px solid grey;
     border-radius: 5px;
 }
 

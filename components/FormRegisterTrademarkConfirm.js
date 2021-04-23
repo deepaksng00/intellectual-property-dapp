@@ -47,7 +47,6 @@ class FormRegisterTrademarkConfirm extends Component {
       tokenMetadata += " }";
 
       try {
-        console.log(tokenMetadata);
         const tx = await contract.default.methods.awardIP(address, ipfsHash, tokenMetadata).send({ 
           from: address, 
           gasLimit: "5000000" 

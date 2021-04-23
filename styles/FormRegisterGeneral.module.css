@@ -11,7 +11,6 @@
     ". ."
     "back next";
   grid-template-rows: auto 3em 5em 3em 50px auto;
-  font-family: 'Noto Sans', sans-serif;
   height: 85vh;
 }
 

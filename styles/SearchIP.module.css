@@ -1,28 +1,33 @@
 .form {
-    padding: 1.5% 4% 1.5% 4%;
-    display: grid;
-    color: white;
-    grid-gap: 30px;
-    grid-template-columns: auto 2fr 1fr 1fr;
-    grid-template-areas:
-        "title title"
-        "ipAddressBar button";
+  padding: 1.5% 4% 1.5% 4%;
+  display: grid;
+  grid-gap: 30px;
+  grid-template-columns: auto 2fr 1fr 1fr;
+  grid-template-rows: 0.2fr 50px 50px 1fr;
+  grid-template-areas:
+    ". ."
+    "title title"
+    "ipAddressBar button"
+    ". .";
+  height: 80vh;
+  color: black;
 }
 
 .form > h2 {
-    grid-area: title;
+  grid-area: title;
 }
 
 .button {
   width: 150px;
-  height: 55px;
+  height: 51px;
   border: none;
   border-radius: 5px;
   background-color: #0061FF;
   color: white;
   transition: transform 0.5s;
   justify-self: left;
-  overflow: hidden
+  overflow: hidden;
+  font-size: 1em;
 }
 
 .button:hover {
@@ -31,18 +36,18 @@
 }
 
 .form > input {
-    border-radius: 5px;
-    border: 1px solid black;
-    padding: 1rem;
-    font-size: 1rem;
-    outline: none;
+  border-radius: 5px;
+  border: 0.5px solid grey;
+  padding: 1em;
+  font-size: 1em;
+  outline: none;
 }
 
 .ipAddressBar {
-    grid-area: ipAddressBar;
-    width: 35rem;
+  grid-area: ipAddressBar;
+  width: 35rem;
 }
 
 .button {
-    grid-area: button;
+  grid-area: button;
 }

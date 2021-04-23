@@ -4,11 +4,9 @@
   color: white;
   grid-template-areas: "img img img"
                        ". loginButton .";
-  font-family: 'Noto Sans', sans-serif;
   justify-content: center;
   height: 80vh;
   grid-gap: 45px;
-
 }
 
 .img {

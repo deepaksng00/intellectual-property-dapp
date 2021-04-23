@@ -12,17 +12,6 @@ export default class SearchIP extends Component {
         loading: false
     }
 
-    async componentDidMount() {
-        this.setState({ loading: true });
-        const address = await web3.eth.getAccounts();
-        if (address == "") {
-            this.setState({ loading: false });
-            alert("Metamask is not setup correctly, please load Metamask and try again!");
-            Router.pushRoute('/');
-        }
-        this.setState({ loading: false });
-    }
-
     onFormSubmit = async (event) => {
         event.preventDefault();
 

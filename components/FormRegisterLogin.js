@@ -12,17 +12,24 @@ class FormRegisterLogin extends Component {
   logIn = async e => {
     e.preventDefault();
     let web3;
-    web3 = new Web3(window.ethereum);
-    window.ethereum.enable();
 
-    const accounts = web3.eth.getAccounts();
-
-    if (accounts.length == 0) {
-      this.setState({ metamaskLoaded: false });
+    if (typeof window.web3 == 'undefined') {
+      alert("Please install Metamask and try again.")
+      Router.push("/");
     } else {
-      this.setState({ metamaskLoaded: true });
+      web3 = new Web3(window.ethereum)
+      window.ethereum.enable();
+
+      const accounts = await web3.eth.getAccounts();
+
+      if (accounts.length == 0) {
+        this.setState({ metamaskLoaded: false });
+      } else {
+        this.setState({ metamaskLoaded: true });
+      }
     }
   }
+
 
   render() {
     const { values } = this.props;

@@ -50,13 +50,25 @@ class Index extends Component {
                     <div className={style.text}>
                         <h1 className={style.title}>The future of intellectual property</h1>
                         <div className={style.paragraphs}>
-                            <p className={style.p1}>Register your intellectual property on the Ethereum blockchain, for simple proof of ownership and easy access!</p>
-                            <br/>
-                            <p className={style.p2}>You only will have access to your intellectual property, using your Ethereum address, you will be able to create and modify your intellectual property, and prove your ownership.</p>
+                            <p className={style.p1}>Register your intellectual property on the Ethereum blockchain, for simple proof of ownership and easy access! You only will have access to your intellectual property, using your Ethereum address, you will be able to create and modify your intellectual property, and prove your ownership.</p>
                         </div>
                     </div>
                 </div>
-                <Footer />
+                { this.state.active ?
+                    <div></div>
+                :
+
+                    <footer className={style.footer}>
+                        <h2>Powered by Ethereum</h2>
+                        <div className={style.ethereumImage}>
+                            <img alt="Ethereum Logo" src="/ethereum.png"/>
+                        </div>
+                        <Link route="/"><h4 className={[style.privacyPolicy, style.footerButton].join(" ")}>Privacy Policy</h4></Link>
+                        <Link route="/"><h4 className={[style.termsAndConditions, style.footerButton].join(" ")}>T&Cs</h4></Link>
+                        <Link route="/"><h4 className={[style.aboutUs, style.footerButton].join(" ")}>About Us</h4></Link>
+                        <Link route="/"><h4 className={[style.contactUs, style.footerButton].join(" ")}>Contact Us</h4></Link>
+                    </footer> 
+                }
             </div>
         );
     }
