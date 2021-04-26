@@ -36,7 +36,6 @@
 }
 
 .form > input {
-  border-radius: 5px;
   border: 0.5px solid grey;
   padding: 1em;
   font-size: 1em;
@@ -50,4 +49,32 @@
 
 .button {
   grid-area: button;
+}
+
+@media only screen and (max-width: 890px) {
+  .form {
+    padding: 20px;
+    display: grid;
+    grid-gap: 30px;
+    grid-template-rows: 0.2fr 20px 50px 50px 1fr;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      ". ."
+      "title title"
+      "ipAddressBar ipAddressBar"
+      "button button"
+      ". .";
+    height: 80vh;
+    color: black;
+  }
+
+  .form > h2 {
+    grid-area: title;
+    font-size: 1.2em;
+  }
+
+  .ipAddressBar {
+    grid-area: ipAddressBar;
+    width: 100%;
+  }
 }
