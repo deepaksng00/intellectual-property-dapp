@@ -23,10 +23,10 @@
 }
 
 .form > input {
-  border-radius: 5px;
   border: 0.5px solid grey;
-  padding: 1rem;
+  padding-left: 10px;
   font-size: 1rem;
+  height: 3em;
 }
 
 .form > button {
@@ -51,10 +51,6 @@
 
 .patentTitle {
   grid-area: patentTitle;
-  border-radius: 20px;
-  border: none;
-  padding: 1rem;
-  font-size: 1rem;
 }
 
 .address1Label {
@@ -71,12 +67,10 @@
 
 .address2 {
   grid-area: address2;
-  font-size: 1rem;
 }
 
 .addressCityLabel {
   grid-area: addressCityLabel;
-  font-size: 1rem;
 }
 
 .city {
@@ -85,7 +79,6 @@
 
 .addressCountyLabel {
   grid-area: addressCountyLabel;
-  font-size: 1rem;
 }
 
 .county {
@@ -94,7 +87,6 @@
 
 .addressPostcodeLabel {
   grid-area: addressPostcodeLabel;
-  font-size: 1rem;
 }
 
 .postcode {
@@ -103,7 +95,6 @@
 
 .addressCountryLabel {
   grid-area: addressCountryLabel;
-  font-size: 1rem;
 }
 
 .country {

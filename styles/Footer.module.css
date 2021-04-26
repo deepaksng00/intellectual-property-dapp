@@ -57,7 +57,7 @@
 @media only screen and (max-width: 890px) {
     .footer {
         display: grid;
-        color: white;
+        color: black;
         grid-template-rows: 1fr auto 1fr 1fr;
         grid-template-columns: 1fr 1fr;
         grid-template-areas:

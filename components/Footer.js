@@ -19,10 +19,10 @@ class Footer extends Component  {
                 <div className={style.ethereumImage}>
                     <img alt="Ethereum Logo" src="/ethereum.png"/>
                 </div>
-                <Link route="/"><h4 className={[style.privacyPolicy, style.footerButton].join(" ")}>Privacy Policy</h4></Link>
-                <Link route="/"><h4 className={[style.termsAndConditions, style.footerButton].join(" ")}>T&Cs</h4></Link>
-                <Link route="/"><h4 className={[style.aboutUs, style.footerButton].join(" ")}>About Us</h4></Link>
-                <Link route="/"><h4 className={[style.contactUs, style.footerButton].join(" ")}>Contact Us</h4></Link>
+                    <Link route="/privacypolicy"><h4 className={[style.privacyPolicy, style.footerButton].join(" ")}>Privacy Policy</h4></Link>
+                    <Link route="/termsandconditions"><h4 className={[style.termsAndConditions, style.footerButton].join(" ")}>T&Cs</h4></Link>
+                    <Link route="/aboutus"><h4 className={[style.aboutUs, style.footerButton].join(" ")}>About Us</h4></Link>
+                    <Link route="/contactus"><h4 className={[style.contactUs, style.footerButton].join(" ")}>Contact Us</h4></Link>
             </footer>     
         );
     }

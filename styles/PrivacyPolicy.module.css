@@ -1,0 +1,14 @@
+.main_container {
+	color: black;
+	padding: 100px;
+}
+
+.main_container > h2 {
+	margin-bottom: 20px;
+}
+
+@media only screen and (max-width: 890px) {
+	.main_container {
+		padding: 40px;
+	}
+}
