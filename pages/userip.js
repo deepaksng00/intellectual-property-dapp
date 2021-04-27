@@ -19,6 +19,7 @@ export default class YourIP extends Component {
     async componentDidMount() {
         this.setState({ loading: true });
         const address = await web3.eth.getAccounts();
+        
         if (address == "") {
             this.setState({ loading: false });
             alert("Metamask is not setup correctly, please load Metamask and try again!");

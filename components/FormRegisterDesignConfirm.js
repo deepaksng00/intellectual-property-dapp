@@ -82,11 +82,10 @@ class FormRegisterDesignConfirm extends Component {
   }
 
   async componentDidMount() {
+    this.setState({ loading: true });
     const address = await web3.eth.getAccounts();
-    if (address == "") {
-      alert("Metamask is not setup correctly, please load Metamask and try again!");
-      Router.pushRoute('/');
-    }
+    this.props.changeForm('address', address);
+    this.setState({ loading: false });
   }
 
   render() {

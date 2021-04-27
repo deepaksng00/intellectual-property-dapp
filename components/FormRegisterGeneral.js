@@ -53,11 +53,7 @@ class FormRegisterGeneral extends Component {
     const { changeForm } = this.props;
     this.setState({ changeForm })
     const address = await web3.eth.getAccounts();
-    if (address == "") {
-      this.setState({ loading: false });
-      alert("Metamask has disconnected, please connect Metamask and try again!");
-      Router.pushRoute('/');
-    }
+    this.props.changeForm('address', address);
     this.setState({ loading: false });
   }
 

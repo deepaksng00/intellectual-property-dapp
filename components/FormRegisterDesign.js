@@ -17,10 +17,7 @@ class FormRegisterDesign extends Component {
 
   async componentDidMount() {
     const address = await web3.eth.getAccounts();
-    if (address == "") {
-      alert("Metamask is not setup correctly, please load Metamask and try again!");
-      Router.pushRoute('/');
-    }
+    this.props.changeForm('address', address);
   }
 
   comment_change = (event) => {

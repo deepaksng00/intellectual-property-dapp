@@ -15,6 +15,10 @@ class Index extends Component {
         this.setState({ active: !this.state.active });
     }
 
+    componentDidMount() {
+        alert("This application is running for testing purposes only! Please DO NOT enter any personal details, as the plaform has not been secured. Thank you.");
+    }
+
     render() {
         return (  
             <div className={style.main_container}>
