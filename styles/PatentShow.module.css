@@ -21,11 +21,9 @@
 }
 
 .form > input {
-    border-radius: 5px;
     border: 0.5px solid grey;
     padding: 10px;
     font-size: 1rem;
-    border-radius: 5px;
 }
 
 .form > button {
@@ -89,6 +87,9 @@
     padding: 5px;
     border: 0.5px solid grey;
     border-radius: 5px;
+    object-fit: contain;
+    max-height: 100%;
+    max-width: 100%;
 }
 
 .image:hover {
@@ -109,4 +110,23 @@
 
 .inventorAddress {
     grid-area: inventorAddress;
+}
+
+@media only screen and (max-width: 890px) {
+    .form {
+        padding: 30px;
+        display: grid;
+        color: black;
+        grid-gap: 30px;
+        grid-template-columns: 100%;
+        grid-template-areas:
+          "header"
+          "address"
+          "publicationDate"
+          "expirationDate"
+          "owner"
+          "title"
+          "inventorAddress"
+          "image";
+    }
 }

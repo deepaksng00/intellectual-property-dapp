@@ -56,3 +56,44 @@
 .homePage {
   grid-area: homePage;
 }
+
+@media only screen and (max-width: 890px) {
+  .main_section {
+    color: black;
+    display: grid;
+    grid-template-rows: auto auto auto auto 40px auto;
+    grid-template-areas:
+      "title title"
+      "p1 p1"
+      "p2 p2"
+      "p3 p3"
+      ". ."
+      "yourIP homePage";
+    justify-items: center;
+    align-content: center;
+    height: 100%;
+    grid-gap: 30px;
+    padding: 20px;
+  }
+
+  .p1 {
+    grid-area: p1;
+    width: 100%;
+    font-size: 1em;
+    overflow-x: scroll;
+  }
+
+  .p2 {
+    grid-area: p2;
+    width: 100%;
+    font-size: 1em;
+    overflow-x: scroll;
+  }
+
+  .p3 {
+    grid-area: p3;
+    width: 100%;
+    font-size: 1em;
+    overflow-x: scroll;
+  }
+}

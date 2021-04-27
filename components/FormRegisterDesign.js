@@ -34,7 +34,7 @@ class FormRegisterDesign extends Component {
         <form className={style.form}>
           <h2>Intellectual Property Registration Form 2/2 (Design)</h2>
           <p className={style.commentLabel}>Comment:</p>
-          <input id="comment" className={style.comment} type='text' value={this.props.comment} onChange={this.comment_change} />
+          <input id="comment" className={style.comment} type='text' value={this.props.values.comment} onChange={this.comment_change} placeholder="Enter a comment for your design..." />
           <button className={style.back} type='button' onClick={ this.backRegistration }>Back</button>
           <button className={style.next} type='button' onClick={ this.continueRegistration }>Next</button>
         </form>

@@ -22,7 +22,7 @@ class Index extends Component {
     render() {
         return (  
             <div className={style.main_container}>
-                <video className={style.showcase_video} src="video.mp4" muted loop autoPlay></video>
+                <video id="video-input" className={style.showcase_video} src="video.mp4" muted autoPlay loop webkit-playsinline playsinline></video>
                 <div className={style.header_text}>
                     <div className={style.titleContainer}>
                         <Link route="/"><h1 className={style.pageTitle}>Intellectual Property</h1></Link>

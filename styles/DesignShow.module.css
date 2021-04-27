@@ -20,7 +20,6 @@
 }
 
 .form > input {
-    border-radius: 5px;
     border: 0.5px solid grey;
     padding: 10px;
     font-size: 1rem;
@@ -72,7 +71,10 @@
     height: 300px;
     padding: 5px;
     border: 0.5px solid grey;
-    border-radius: 2px;
+    border-radius: 5px;
+    object-fit: contain;
+    max-height: 100%;
+    max-width: 100%;
 }
 
 .image:hover {
@@ -85,4 +87,23 @@
 
 .comment {
     grid-area: comment;
+}
+
+
+@media only screen and (max-width: 890px) {
+    .form {
+        padding: 30px;
+        display: grid;
+        color: black;
+        grid-gap: 30px;
+        grid-template-columns: 100%;
+        grid-template-areas:
+          "header"
+          "address"
+          "publicationDate"
+          "expirationDate"
+          "owner"
+          "comment"
+          "image";
+    }
 }

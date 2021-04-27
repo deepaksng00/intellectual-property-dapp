@@ -90,19 +90,19 @@
 }
 
 @media only screen and (max-width: 890px) {
-    .form {
-        padding: 30px;
-        display: grid;
-        color: black;
-        grid-gap: 30px;
-        grid-template-columns: 100%;
-        grid-template-areas:
-          "title"
-          "address"
-          "publicationDate"
-          "expirationDate"
-          "owner"
-          "image"
-          "markDesc";
-    }
+  .form {
+      padding: 30px;
+      display: grid;
+      color: black;
+      grid-gap: 30px;
+      grid-template-columns: 100%;
+      grid-template-areas:
+        "title"
+        "address"
+        "publicationDate"
+        "expirationDate"
+        "owner"
+        "image"
+        "markDesc";
+  }
 }

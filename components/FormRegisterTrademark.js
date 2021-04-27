@@ -49,7 +49,7 @@ class FormRegisterTrademark extends Component {
           <form className={style.form}>
             <h2>Intellectual Property Registration Form 2/2 (Trademark)</h2>
             <p className={style.markDescLabel}>Mark description:</p>
-            <input id="markDesc" className={style.markDesc} placeholder='Enter a description of your trademark' type='text' value={this.props.markDesc} onChange={this.markDesc_change} />
+            <input id="markDesc" className={style.markDesc} placeholder='Enter a description of your trademark' type='text' value={this.props.values.markDesc} onChange={this.markDesc_change} />
             <button className={style.back} type='button' onClick={ this.backRegistration }>Back</button>
             <button className={style.next} type='button' onClick={ this.continueRegistration }>Next</button>
           </form>

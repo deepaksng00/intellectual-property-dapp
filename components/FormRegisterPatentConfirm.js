@@ -83,10 +83,6 @@ class FormRegisterPatentConfirm extends Component {
   }
 
   async componentDidMount() {
-    this.setState({ loading: true });
-    const address = await web3.eth.getAccounts();
-    this.props.changeForm('address', address);
-    this.setState({ loading: false });
   }
 
   render() {

@@ -167,6 +167,11 @@
   cursor: pointer;
 }
 
+.showcase-video::-webkit-media-controls {
+    display:none !important;
+    overflow: none;
+}
+
 @media only screen and (max-width: 890px) {
   .pageTitle {
     justify-self: start;

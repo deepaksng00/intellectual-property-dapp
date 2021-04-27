@@ -18,9 +18,16 @@ export default class YourIP extends Component {
 
     async componentDidMount() {
         this.setState({ loading: true });
-        const address = await web3.eth.getAccounts();
-        
-        if (address == "") {
+
+        ethereum.on('accountsChanged', (accounts) => {
+            if(accounts.length == 0) {
+                alert("Metamask has disconnected!")
+            } else {
+                location.reload()
+            }
+        })
+
+        if (!ethereum.isConnected()) {
             this.setState({ loading: false });
             alert("Metamask is not setup correctly, please load Metamask and try again!");
             Router.pushRoute('/');
@@ -29,29 +36,33 @@ export default class YourIP extends Component {
             let patents = [];
             let designs = [];
 
-            const numOfTokens = await contract.default.methods.balanceOf(address[0]).call();
+            const address = await web3.eth.getAccounts();
 
-            if (parseInt(numOfTokens) == 0) {
-                this.setState({ isEmpty: true });
-            } else {
-                this.setState({ isEmpty: false });
-                for (var i = 0; i < numOfTokens; i++) {
-                    const currentTokenID = await contract.default.methods.tokenOfOwnerByIndex(address[0], i).call();
-                    const tokenURI = await contract.default.methods.tokenURI(currentTokenID).call();
-                    const JSONURI = JSON.parse(tokenURI);
-                    switch (JSONURI.TypeOfIP.toString().toLowerCase()) {
-                        case "trademark": trademarks.push(currentTokenID); break;
-                        case "patent": patents.push(currentTokenID); break;
-                        case "design": designs.push(currentTokenID); break;
+            if(address != 0) {
+                const numOfTokens = await contract.default.methods.balanceOf(address[0]).call();
+
+                if (parseInt(numOfTokens) == 0) {
+                    this.setState({ isEmpty: true });
+                } else {
+                    this.setState({ isEmpty: false });
+                    for (var i = 0; i < numOfTokens; i++) {
+                        const currentTokenID = await contract.default.methods.tokenOfOwnerByIndex(address[0], i).call();
+                        const tokenURI = await contract.default.methods.tokenURI(currentTokenID).call();
+                        const JSONURI = JSON.parse(tokenURI);
+                        switch (JSONURI.TypeOfIP.toString().toLowerCase()) {
+                            case "trademark": trademarks.push(currentTokenID); break;
+                            case "patent": patents.push(currentTokenID); break;
+                            case "design": designs.push(currentTokenID); break;
+                        }
                     }
                 }
-            }
-            
-            this.setState({ trademarks });
-            this.setState({ patents });
-            this.setState({ designs });
+                
+                this.setState({ trademarks });
+                this.setState({ patents });
+                this.setState({ designs });
 
-            this.setState({ loading: false })
+                this.setState({ loading: false })
+            }
         }
     }
     
@@ -99,7 +110,7 @@ export default class YourIP extends Component {
 
                     <Layout>
                         { this.renderIP(this.state.isEmpty) }
-                    </Layout>  
+                    </Layout>
                 }
             </div>
         )

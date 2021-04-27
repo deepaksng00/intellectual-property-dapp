@@ -134,3 +134,27 @@
 .back {
   grid-area: back;
 }
+
+@media only screen and (max-width: 890px) {
+  .form {
+    padding: 20px;
+    display: grid;
+    color: black;
+    grid-gap: 30px;
+    grid-template-areas:
+      "title title"
+      "address address"
+      "date date"
+      "typeOfIP typeOfIP"
+      "patentTitle patentTitle"
+      "address1 address1"
+      "address2 address2"
+      "city city"
+      "county county"
+      "postcode postcode"
+      "country country"
+      ". . "
+      "back next";
+    grid-template-rows: auto auto auto auto auto auto 50px auto;
+  }
+}

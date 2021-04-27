@@ -55,3 +55,27 @@
 .back {
   grid-area: back;
 }
+
+@media only screen and (max-width: 890px) {
+  .form {
+    padding: 20px;
+    display: grid;
+    color: black;
+    grid-template-areas:
+      "title title"
+      "markDesc markDesc"
+      ". ."
+      "back next";
+    grid-template-rows: 4em 5em 50px auto;
+  }
+
+  .markDesc {
+    grid-area: markDesc;
+    margin-top: 10px;
+    height: 3em;
+  }
+
+  .markDescLabel {
+    display:none;
+  }
+}

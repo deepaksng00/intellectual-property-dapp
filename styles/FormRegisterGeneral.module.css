@@ -83,3 +83,21 @@
   justify-content: center;
   align-items: center;
 }
+
+@media only screen and (max-width: 890px) {
+  .form {
+    padding: 20px;
+    display: grid;
+    color: black;
+    grid-gap: 30px;
+    grid-template-areas:
+      "title title"
+      "date date"
+      "typeOfIP typeOfIP"
+      "file file"
+      ". ."
+      "back next";
+    grid-template-rows: 5em 3em 5em 3em 50px auto;
+    height: 85vh;
+  }  
+}
