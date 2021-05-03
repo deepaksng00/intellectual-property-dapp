@@ -28,6 +28,8 @@ class FormRegisterTrademarkConfirm extends Component {
 
     const address = values.address[0];
 
+    // ipfs upload
+
     ipfs.files.add(this.props.values.fileBuffer, async (error, result) => {
       if (error) {
         alert("There has been an issue with the file upload.");

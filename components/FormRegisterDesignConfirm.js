@@ -21,11 +21,15 @@ class FormRegisterDesignConfirm extends Component {
 
     this.setState({ loading: true });
 
+    // converting timestamp to a UNIX timestamp
+
     const currentTimestamp = new Date().getTime() / 1000;
     var expirationDate = new Date();
     expirationDate.setFullYear(expirationDate.getFullYear() + 5);
     expirationDate = expirationDate.getTime() / 1000; 
     
+    // ipfs file upload
+
     ipfs.files.add(this.props.values.fileBuffer, async (error, result) => {
       if (error) {
         alert("There has been an issue with the file upload.");
@@ -48,6 +52,7 @@ class FormRegisterDesignConfirm extends Component {
 
       try {
 
+        // awarding ip with transaction
         const tx = await contract.default.methods.awardIP(address, ipfsHash, tokenMetadata).send({
           from: address,
           gasLimit: "5000000"
@@ -55,6 +60,7 @@ class FormRegisterDesignConfirm extends Component {
 
         this.setState({ loading: false });
 
+        // getting tokenid from transaction report
         const tokenID = tx.events.Transfer.returnValues["tokenId"];
 
         this.props.changeForm('tokenID', tokenID);
@@ -64,6 +70,7 @@ class FormRegisterDesignConfirm extends Component {
       } catch (error) {
         this.setState({ loading: false });
 
+        // checking error message for 'hash already registered' error
         if ((error.message.toString()).includes("Hash Already Registered")) {
           alert("This invention has already been registered.");
           this.props.previousStep(8);

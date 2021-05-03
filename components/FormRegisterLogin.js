@@ -13,6 +13,7 @@ class FormRegisterLogin extends Component {
     e.preventDefault();
     let web3;
 
+    // check metamask installation
     if (typeof window.web3 == 'undefined') {
       alert("Please install Metamask and try again.")
       Router.push("/");
@@ -43,7 +44,7 @@ class FormRegisterLogin extends Component {
     return (
       <Layout>
         <div className={style.grid}>      
-          <img className={style.img} src="/metamask.svg" alt="Metamask Logo" />
+          <a className={style.img} href="https://metamask.io/" target="_blank"><img className={style.img} src="/metamask.svg" alt="Metamask Logo" /></a>
           <button className={style.button} type="button" onClick={ this.logIn }>LOGIN</button>
         </div>
       </Layout>

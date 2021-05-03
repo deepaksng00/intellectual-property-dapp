@@ -7,6 +7,7 @@ class Footer extends Component  {
         active: false
     }
 
+    // set active state
     onMenuButtonClick = e => {
         e.preventDefault();
         this.setState({ active: !this.state.active });

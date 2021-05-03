@@ -4,6 +4,8 @@ import Link from 'next/link'
 import Head from 'next/head'
 import NProgress from 'nprogress'
 
+// setting loading animation
+
 Router.events.on('routeChangeStart', (url) => {
   console.log(`Loading: ${url}`)
   NProgress.start()

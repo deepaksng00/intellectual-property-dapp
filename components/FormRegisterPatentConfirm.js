@@ -27,6 +27,8 @@ class FormRegisterPatentConfirm extends Component {
     expirationDate.setFullYear(expirationDate.getFullYear() + 20);
     expirationDate = expirationDate.getTime() / 1000;
 
+
+    // ipfs file upload
     ipfs.files.add(this.props.values.fileBuffer, async (error, result) => {
       if (error) {
         alert("There has been an issue with the file upload.");

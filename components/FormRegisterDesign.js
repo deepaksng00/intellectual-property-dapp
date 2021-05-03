@@ -16,11 +16,13 @@ class FormRegisterDesign extends Component {
   }
 
   async componentDidMount() {
+    // verify accounts
     const address = await web3.eth.getAccounts();
     this.props.changeForm('address', address);
   }
 
   comment_change = (event) => {
+    // update state
     const { changeForm } = this.props;
     changeForm('comment', document.getElementById("comment").value);
   }

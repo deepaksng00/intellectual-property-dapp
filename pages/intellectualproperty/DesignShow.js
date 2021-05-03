@@ -12,6 +12,8 @@ export default class PatentShow extends Component {
         loading: false
     }
 
+    // server-side js rendering
+    
     static async getInitialProps(props) {
         const id = props.query.address;
         const tokenID = parseInt(id);

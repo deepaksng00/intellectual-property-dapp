@@ -13,6 +13,8 @@ import FormRegisterReceipt from '../../components/FormRegisterReceipt';
 import web3 from '../../ethereum/web3';
 
 class Register extends Component {
+  // state for inheritance
+
   state = {
     step: 1,
     address: '',

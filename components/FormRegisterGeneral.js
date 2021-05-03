@@ -57,13 +57,19 @@ class FormRegisterGeneral extends Component {
     this.setState({ loading: false });
   }
 
+  // checking file size limit and making file into a string to store in state
   file_upload = (event) => {
     event.preventDefault();
     const file = event.target.files[0];
-    const reader = new window.FileReader();
-    reader.readAsArrayBuffer(file);
-    reader.onloadend = () => {
-      this.props.changeForm('fileBuffer', Buffer(reader.result));
+    if (file.size > 10485760) {
+      alert("File size is over 10MB");
+      event.target.value = "";
+    } else {
+      const reader = new window.FileReader();
+        reader.readAsArrayBuffer(file);
+        reader.onloadend = () => {
+        this.props.changeForm('fileBuffer', Buffer(reader.result));
+      }
     }
   }
 
@@ -97,7 +103,8 @@ class FormRegisterGeneral extends Component {
               <label htmlFor="design">  Design</label>
             </div>
             <p className={style.fileLabel}>File: </p>
-            <input id="file_upload" className={style.file} onChange={this.file_upload} type="file"/>
+            <input id="file_upload" className={style.file} onChange={this.file_upload} type="file" accept="image/jpeg, image/png"/>
+            <p className={style.sizeLimit}>10MB file size limit</p>
             <button className={style.back} type='button' onClick={ this.previousRegistration }>Back</button>
             <button className={style.next} type='button' onClick={ this.continueRegistration }>Next</button>
           </form>

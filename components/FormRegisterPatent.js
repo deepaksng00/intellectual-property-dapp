@@ -20,6 +20,8 @@ class FormRegisterTrademark extends Component {
     this.props.changeForm('address', address);
   }
 
+  // state updates
+
   patentTitle_change = (event) => {
     const { changeForm } = this.props;
     changeForm('patentTitle', document.getElementById("patentTitle").value);

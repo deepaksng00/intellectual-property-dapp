@@ -8,9 +8,10 @@
     "dateLabel date"
     "typeOfIPLabel typeOfIP"
     "fileLabel file"
+    ". sizeLimit"
     ". ."
     "back next";
-  grid-template-rows: auto 3em 5em 3em 50px auto;
+  grid-template-rows: auto 3em 5em 3em 1em 50px auto;
   height: 85vh;
 }
 
@@ -51,6 +52,12 @@
   border: 0.5px solid grey;
   padding-top: 10px;
   padding-left: 10px;
+}
+
+.sizeLimit {
+  grid-area: sizeLimit;
+  justify-self: end;
+  margin-top: -25px;
 }
 
 .form > button {
@@ -95,9 +102,16 @@
       "date date"
       "typeOfIP typeOfIP"
       "file file"
+      ". sizeLimit"
       ". ."
       "back next";
     grid-template-rows: 5em 3em 5em 3em 50px auto;
     height: 85vh;
-  }  
+  }
+
+  .sizeLimit {
+    grid-area: sizeLimit;
+    justify-self: end;
+    margin-top: -25px;
+  } 
 }
