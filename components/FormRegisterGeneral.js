@@ -61,14 +61,24 @@ class FormRegisterGeneral extends Component {
   file_upload = (event) => {
     event.preventDefault();
     const file = event.target.files[0];
-    if (file.size > 10485760) {
-      alert("File size is over 10MB");
-      event.target.value = "";
-    } else {
-      const reader = new window.FileReader();
-        reader.readAsArrayBuffer(file);
-        reader.onloadend = () => {
-        this.props.changeForm('fileBuffer', Buffer(reader.result));
+    if (typeof file != 'undefined') {
+      if (file.size > 10485760) {
+        alert("File size is over 10MB");
+        event.target.value = "";
+      } else {
+        // getting file extension
+        const fileExtension = file.name.split('.').pop().toLowerCase();
+
+        if (fileExtension == 'png' || fileExtension == 'jpg' || fileExtension == 'jpeg') {
+          const reader = new window.FileReader();
+          reader.readAsArrayBuffer(file);
+          reader.onloadend = () => {
+            this.props.changeForm('fileBuffer', Buffer(reader.result));
+          }
+        } else {
+          alert("The only files allowed are 'png' 'jpg' or 'jpeg'");
+          event.target.value = "";
+        }
       }
     }
   }
